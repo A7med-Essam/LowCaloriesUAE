@@ -1,0 +1,83 @@
+<div class="content rounded-lg p-5 pb-0 shadow-lg bg-white"  style="height: 775px;overflow: auto;">
+    <h4 class="txt-main mb-3">{{"profile.settings.title" | translate}}</h4>
+    <div class="row">
+        <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer d-flex justify-content-between align-items-center" 
+                (mouseover)="hover(earth, '../../../../../assets/images/profile/settings/earth_white.png');" 
+                (mouseout)="unhover(earth, '../../../../../assets/images/profile/settings/earth_green.png');"
+                style="padding: 13px;">
+                <div>
+                    <img src="../../../../../assets/images/profile/settings/earth_green.png" #earth class="img-fluid me-2" alt="" style="width: 22px;">
+                    <span class="txt-font">{{"profile.settings.language" | translate}}</span>
+                </div>
+                <p-dropdown [options]="lang" [(ngModel)]="currentLang" (onChange)="changeLang(currentLang)" optionLabel="name" optionValue="code"></p-dropdown>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer"  (click)="getMenu()"
+                (mouseover)="hover(menu, '../../../../../assets/images/profile/settings/menu_white.png');" 
+                (mouseout)="unhover(menu, '../../../../../assets/images/profile/settings/menu_green.png');"
+                style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/menu_green.png" #menu class="img-fluid me-2" alt="" style="width: 18px;">
+                <span class="txt-font">{{"profile.settings.menu" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" (click)="getBranches()"
+                (mouseover)="hover(branch, '../../../../../assets/images/profile/settings/branch_white.png');" 
+                (mouseout)="unhover(branch, '../../../../../assets/images/profile/settings/branch_green.png');"
+                style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/branch_green.png" #branch class="img-fluid me-2" alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.ourBranches" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" (click)="getTerms()"
+                (mouseover)="hover(mark, '../../../../../assets/images/profile/settings/mark_white.png');" 
+                (mouseout)="unhover(mark, '../../../../../assets/images/profile/settings/mark_green.png');"
+                style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/mark_green.png" #mark class="img-fluid me-2" alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.terms" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" (click)="getNotifications()"
+                (mouseover)="hover(Notifications, '../../../../../assets/images/profile/settings/notification_white.png');" 
+                (mouseout)="unhover(Notifications, '../../../../../assets/images/profile/settings/notification_green.png');"
+                style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/notification_green.png" #Notifications class="img-fluid me-2" alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.notification" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-md-6 mt-3">
+            <h6 class="txt-main mb-3">{{"profile.settings.lowCalories" | translate}}</h6>
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/facebook.png" class="img-fluid me-2" alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.facebook" | translate}}</span>
+            </div>
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/whatsapp.png" class="img-fluid me-2" alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.whatsApp" | translate}}</span>
+            </div>
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/instagram.png" class="img-fluid me-2" alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.instegram" | translate}}</span>
+            </div>
+        </div>
+        <div class="col-md-6 mt-3">
+            <h6 class="txt-main mb-3">{{"profile.settings.chefGourmet" | translate}}</h6>
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/facebook.png" class="img-fluid me-2" alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.facebook" | translate}}</span>
+            </div>
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/whatsapp.png" class="img-fluid me-2" alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.whatsApp" | translate}}</span>
+            </div>
+            <div class="settings bg-white px-3 rounded-md shadow-lg my-2 pointer" style="padding: 12px;">
+                <img src="../../../../../assets/images/profile/settings/instagram.png" class="img-fluid me-2" alt="" style="width: 22px;">
+                <span class="txt-font">{{"profile.settings.instegram" | translate}}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,326 @@
+[lang="ar"] {
+
+    // fonts
+    body {
+        font-family: 'Cairo' !important;
+    }
+
+    .header-font {
+        font-family: 'Cairo' !important;
+    }
+
+    .txt-font {
+        font-family: 'Cairo' !important;
+    }
+
+    .txt-font-bold {
+        font-family: 'Cairo' !important;
+    }
+
+    .txt-font-Black {
+        font-family: 'Cairo' !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Cairo' !important;
+    }
+
+    // bootstrap classes
+    .position-left {
+        right: 0;
+        left: auto;
+    }
+
+    .position-right {
+        left: 0;
+        right: auto;
+    }
+
+    .text-start {
+        text-align: right !important;
+    }
+
+    .text-end {
+        text-align: left !important;
+    }
+
+    .ms-5 {
+        margin-left: auto;
+        margin-right: 3rem !important;
+    }
+
+    .ms-4 {
+        margin-left: auto;
+        margin-right: 1.5rem !important;
+    }
+
+    .ms-3 {
+        margin-left: auto;
+        margin-right: 1rem !important;
+    }
+
+    .ms-2 {
+        margin-left: auto;
+        margin-right: 0.5rem !important;
+    }
+
+    .ms-1 {
+        margin-left: auto;
+        margin-right: 0.25rem !important;
+    }
+
+    .ms-0 {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+    .me-5 {
+        margin-right: auto;
+        margin-left: 3rem !important;
+    }
+
+    .me-4 {
+        margin-right: auto;
+        margin-left: 1.5rem !important;
+    }
+
+    .me-3 {
+        margin-right: auto;
+        margin-left: 1rem !important;
+    }
+
+    .me-2 {
+        margin-right: auto;
+        margin-left: 0.5rem !important;
+    }
+
+    .me-1 {
+        margin-right: auto;
+        margin-left: 0.25rem !important;
+    }
+
+    .me-0 {
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+    }
+
+    .ps-5 {
+        padding-left: auto;
+        padding-right: 3rem !important;
+    }
+
+    .ps-4 {
+        padding-left: auto;
+        padding-right: 1.5rem !important;
+    }
+
+    .ps-3 {
+        padding-left: auto;
+        padding-right: 1rem !important;
+    }
+
+    .ps-2 {
+        padding-left: auto;
+        padding-right: 0.5rem !important;
+    }
+
+    .ps-1 {
+        padding-left: auto;
+        padding-right: 0.25rem !important;
+    }
+
+    .ps-0 {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .pe-5 {
+        padding-right: auto;
+        padding-left: 3rem !important;
+    }
+
+    .pe-4 {
+        padding-right: auto;
+        padding-left: 1.5rem !important;
+    }
+
+    .pe-3 {
+        padding-right: auto;
+        padding-left: 1rem !important;
+    }
+
+    .pe-2 {
+        padding-right: auto;
+        padding-left: 0.5rem !important;
+    }
+
+    .pe-1 {
+        padding-right: auto;
+        padding-left: 0.25rem !important;
+    }
+
+    .pe-0 {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .border-end {
+        border-left: 1px solid #dee2e6 !important;
+        border-right: none !important;
+    }
+
+    .border-start {
+        border-right: 1px solid #dee2e6 !important;
+        border-left: none !important;
+    }
+
+    // navbar
+    .bg-img-main {
+        background-position: right center;
+    }
+
+    .dropdown-menu[data-bs-popper] {
+        left: 100%;
+        right: auto;
+    }
+
+    .dropstart .dropdown-toggle::before {
+        margin-left: 0.255em;
+        border-left: 0.3em solid;
+
+        margin-right: none;
+        border-right: none;
+    }
+
+    // calendar
+    .p-calendar-w-btn .p-inputtext {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .p-calendar-w-btn .p-datepicker-trigger {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .p-datepicker-prev {
+        order: 1;
+    }
+
+    .p-datepicker-next {
+        order: -1;
+    }
+
+    // stepper
+    .screen-indicator.step1::after {
+        content: 'الخطوة الأولي' !important;
+    }
+
+    .screen-indicator.step2::after {
+        content: 'الخطوة الثانيه' !important;
+    }
+
+    .screen-indicator.step3::after {
+        content: 'الخطوة الثالثه' !important;
+    }
+
+    .screen-indicator.step4::after {
+        content: 'الخطوة الرابعه' !important;
+    }
+
+    .screen-indicator.step5::after {
+        content: 'الخطوة الخامسه' !important;
+    }
+
+    // prime ng 
+    .p-float-label>label {
+        right: 0.75rem;
+        left: auto;
+    }
+
+    #SubscribtionModal .delivery-day::after {
+        left: 12px;
+        right: auto;
+    }
+
+    // calendar
+    .restricted .subDay .status:after {
+        content: 'مقيد' !important;
+        right: 23px;
+        left: auto !important;
+        font-family: 'Cairo' !important;
+        white-space: nowrap;
+    }
+
+    .preparing .subDay .status:after {
+        content: 'يتم التحضير' !important;
+        right: 24px;
+        left: auto !important;
+        font-family: 'Cairo' !important;
+        white-space: nowrap;
+    }
+
+    .off .subDay .status:after {
+        content: 'متوقف' !important;
+        right: 24px;
+        left: auto !important;
+        font-family: 'Cairo' !important;
+        white-space: nowrap;
+    }
+
+    .hold .subDay .status:after {
+        content: 'معطل' !important;
+        right: 28px;
+        left: auto !important;
+        font-family: 'Cairo' !important;
+        white-space: nowrap;
+    }
+
+    .delivered .subDay .status:after {
+        content: 'تم التوصيل' !important;
+        display: flex;
+        right: 28px;
+        left: auto !important;
+        font-family: 'Cairo' !important;
+        white-space: nowrap;
+    }
+
+    // calendar weeks
+    .Weeks_Container .name {
+        border-left: 1px solid rgb(188, 188, 188) !important;
+        border-right: none !important;
+
+        &:last-child {
+            border-left: none !important;
+        }
+    }
+
+    .Weeks_Container .active {
+        padding-bottom: 3px !important;
+    }
+
+    // All programs
+    #AllPrograms .owl-item:first-child {
+        margin-right: 100px !important;
+    }
+
+    // boot -> profile
+    .content .user .bubble:before {
+        right: auto !important;
+        left: -3px;
+    }
+
+    .me-auto {
+        margin-right: 0px !important;
+        margin-left: auto !important;
+    }
+}

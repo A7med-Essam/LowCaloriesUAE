@@ -1,0 +1,20 @@
+/* icons */
+.bg-img-main .icons .item {
+    transition: $transitionTime;
+    cursor: pointer;
+}
+
+.bg-img-main .icons .item:hover {
+    background-color: $main !important;
+    color: $white !important;
+}
+
+
+
+.icon-controller{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    z-index: 99;
+}

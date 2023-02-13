@@ -1,0 +1,63 @@
+@import '../variables/colors.scss';
+.plans .owl-item {
+    padding: 20px 0px 40px;
+}
+
+.plans .item {
+    transition: $transitionTime;
+}
+
+.plans .item:hover {
+    color: $white !important;
+    background-color: $main !important;
+}
+
+.plans .item:hover .text-muted {
+    color: $white !important;
+    transition: $transitionTime;
+}
+
+.plans .item:hover button {
+    background-color: $white;
+    color: $main !important;
+}
+
+.plans .owl-stage {
+    display: flex;
+}
+
+.plans .owl-item .item{
+    min-height: 100%;
+}
+
+.categories .owl-item{
+    text-align: center;
+    padding: 0px 12px;
+}
+
+.categories .owl-item:first-child{
+    padding: 0px 12px 0px 0px;
+}
+
+.categories .item{
+    box-shadow: 0 8px 12px rgba(0,0,0,.175);
+}
+
+.categories .item.active{
+    background-color: $main !important;
+    color: $white;
+}
+
+.owl-carousel > div {
+    padding: 20px 0px;
+}
+
+.categories .item {
+    transition: $transitionTime;
+}
+
+.categories .item:hover {
+    color: $white !important;
+    background-color: $main !important;
+    cursor: pointer;
+}

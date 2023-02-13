@@ -1,0 +1,263 @@
+<div class="content rounded-lg p-5 shadow-lg bg-white" style="min-height: 775px;">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4 class="txt-main m-0" *ngIf="!isCompleted">{{"profile.personalInformation.title" | translate}}</h4>
+        <fa-icon [icon]="faBack" *ngIf="isEditable" (click)="isEditable = false;" class="txt-main pointer"></fa-icon>
+        <h6 class="txt-main pointer m-0" (click)="isEditable = true; setEditProfileForm()" *ngIf="user?.has_profile == 'yes' && !isEditable">
+            <fa-icon [icon]="faEdit" class="mx-2"></fa-icon>
+            <span>{{"buttons.edit" | translate}}</span>
+        </h6>
+        <h6 class="txt-main pointer m-0" (click)="isCompleted = true" *ngIf="user?.has_profile == 'no'&& !isCompleted">
+            <fa-icon [icon]="faClipboard" class="mx-2"></fa-icon>
+            <span>{{"profile.personalInformation.completeYourProfile" | translate}}</span>
+        </h6>
+    </div>
+    <div class="row" *ngIf="!isCompleted && !isEditable">
+        <div class="col-lg-6" *ngIf="user?.name">
+            <div class="bg-white shadow-lg rounded my-2 p-3 d-flex align-items-center" style="min-height: 60px; word-break:break-all;">
+                <img src="../../../../../assets/images/profile/person_green.png" class="img-fluid me-3 pointer" style="width: 18px;" alt=""> 
+                <span>{{user.name}}</span>
+            </div>
+        </div>
+        <div class="col-lg-6" *ngIf="user?.profile?.gender">
+            <div class="bg-white shadow-lg rounded my-2 p-3 d-flex align-items-center" style="min-height: 60px; word-break:break-all;">
+                <img src="../../../../../assets/images/profile/gender.png" class="img-fluid me-3 pointer" style="width: 18px;" alt=""> 
+                <span>{{user.profile.gender}}</span>
+            </div>
+        </div>
+        <div class="col-lg-6" *ngIf="user?.email">
+            <div class="bg-white shadow-lg rounded my-2 p-3 d-flex align-items-center" style="min-height: 60px; word-break:break-all;">
+                <img src="../../../../../assets/images/profile/email.png" class="img-fluid me-3 pointer" style="width: 18px;" alt=""> 
+                <span>{{user.email}}</span>
+            </div>
+        </div>
+        <div class="col-lg-6" *ngIf="user?.profile?.date_of_birth">
+            <div class="bg-white shadow-lg rounded my-2 p-3 d-flex align-items-center" style="min-height: 60px; word-break:break-all;">
+                <img src="../../../../../assets/images/profile/calendar.png" class="img-fluid me-3 pointer" style="width: 18px;" alt=""> 
+                <span>{{user.profile.date_of_birth}}</span>
+            </div>
+        </div>
+        <div class="col-lg-6" *ngIf="user?.mobile">
+            <div class="bg-white shadow-lg rounded my-2 p-3 d-flex align-items-center" style="min-height: 60px; word-break:break-all;">
+                <img src="../../../../../assets/images/profile/phone.png" class="img-fluid me-3 pointer" style="width: 18px;" alt=""> 
+                <span>{{user.mobile}}</span>
+            </div>
+        </div>
+        <div class="col-lg-6" *ngIf="user?.profile?.height">
+            <div class="bg-white shadow-lg rounded my-2 p-3 d-flex align-items-center" style="min-height: 60px; word-break:break-all;">
+                <img src="../../../../../assets/images/profile/height.png" class="img-fluid me-3 pointer" style="width: 18px;" alt=""> 
+                <span>{{user.profile.height}}</span>
+            </div>
+        </div>
+        <div class="col-lg-6" *ngIf="user?.profile?.second_mobile">
+            <div class="bg-white shadow-lg rounded my-2 p-3 d-flex align-items-center" style="min-height: 60px; word-break:break-all;">
+                <img src="../../../../../assets/images/profile/phone.png" class="img-fluid me-3 pointer" style="width: 18px;" alt=""> 
+                <span>{{user.profile.second_mobile}}</span>
+            </div>
+        </div>
+        <div class="col-lg-6" *ngIf="user?.profile?.weight">
+            <div class="bg-white shadow-lg rounded my-2 p-3 d-flex align-items-center" style="min-height: 60px; word-break:break-all;">
+                <img src="../../../../../assets/images/profile/weight.png" class="img-fluid me-3 pointer" style="width: 18px;" alt=""> 
+                <span>{{user.profile.weight}}</span>
+            </div>
+        </div>
+        <div class="col-12" *ngFor="let address of user?.addresses;let i = index">
+            <div class="bg-white shadow-lg rounded my-2 p-3 d-flex align-items-center flex-wrap">
+                <div class="d-flex align-items-center flex-wrap">
+                    <img src="../../../../../assets/images/profile/location.png" class="img-fluid me-3 pointer" style="width: 18px;" alt=""> 
+                    <div><span class="txt-main">{{"profile.myAddresses.address" | translate}}: </span> <span>{{address?.address}}</span></div>
+                </div>
+                <div class="mx-4">
+                    <span class="txt-main">{{"profile.myAddresses.area" | translate}}: </span> 
+                    <span>
+                        {{address?.area?.area_en}}
+                    <!-- {{AreasName[i][translate.currentLang] | titlecase}} -->
+                    </span>
+                </div>
+                <div class="mx-4">
+                    <span class="txt-main">{{"profile.myAddresses.emirate" | translate}}: </span> 
+                    <span>
+                        {{address?.area?.emirate?.name}}
+                        <!-- {{EmiratesName[i][translate.currentLang] | titlecase}} -->
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" *ngIf="isLoaded">
+            <div class="row">
+                <div class="col-lg-6">
+                    <p-skeleton width="100%" height="3.2rem" styleClass="my-2"></p-skeleton>
+                </div>
+                <div class="col-lg-6">
+                    <p-skeleton width="100%" height="3.2rem" styleClass="my-2"></p-skeleton>
+                </div>
+                <div class="col-lg-6">
+                    <p-skeleton width="100%" height="3.2rem" styleClass="my-2"></p-skeleton>
+                </div>
+                <div class="col-lg-6">
+                    <p-skeleton width="100%" height="3.2rem" styleClass="my-2"></p-skeleton>
+                </div>
+                <div class="col-lg-6">
+                    <p-skeleton width="100%" height="3.2rem" styleClass="my-2"></p-skeleton>
+                </div>
+                <div class="col-lg-6">
+                    <p-skeleton width="100%" height="3.2rem" styleClass="my-2"></p-skeleton>
+                </div>
+                <div class="col-lg-6">
+                    <p-skeleton width="100%" height="3.2rem" styleClass="my-2"></p-skeleton>
+                </div>
+                <div class="col-lg-6">
+                    <p-skeleton width="100%" height="3.2rem" styleClass="my-2"></p-skeleton>
+                </div>
+                <div class="col-12">
+                    <p-skeleton width="100%" height="3.2rem" styleClass="my-2"></p-skeleton>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isCompleted">
+        <form [formGroup]='CompleteProfileForm' (ngSubmit)='onSubmit(CompleteProfileForm)'>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <p-calendar dateFormat="dd-mm-yy" placeholder="dd-mm-yy" formControlName='date_of_birth' ngClass="text-center"></p-calendar>
+                        <fa-icon [icon]="faCalendar" class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger " *ngIf="CompleteProfileForm.get('date_of_birth')?.touched &&
+                        CompleteProfileForm.get('date_of_birth')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <span class="p-float-label">
+                            <input type="text" pInputText  formControlName='second_mobile' ngClass="w-100 text-center" maxlength="10"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
+                            <label for="text-center w-100">{{"profile.personalInformation.secondMobile" | translate}}</label>
+                        </span>
+                        <fa-icon [icon]="faPhone" class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger " *ngIf="CompleteProfileForm.get('second_mobile')?.touched &&
+                        CompleteProfileForm.get('second_mobile')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <span class="p-float-label">
+                            <input  type="number" pInputText formControlName='height' ngClass="w-100 text-center"> 
+                            <label for="text-center w-100">{{"profile.personalInformation.height" | translate}}</label>
+                        </span>
+                        <img src="../../../../../assets/images/profile/height.png" alt="" class="icon-controller position-left txt-main img-fluid" style="width: 16px;">
+                        <small class="text-danger " *ngIf="CompleteProfileForm.get('height')?.touched &&
+                        CompleteProfileForm.get('height')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <span class="p-float-label">
+                            <input  type="number" pInputText formControlName='weight' ngClass="w-100 text-center"> 
+                            <label for="text-center w-100">{{"profile.personalInformation.weight" | translate}}</label>
+                        </span>
+                        <fa-icon [icon]="faWeight"   class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger " *ngIf="CompleteProfileForm.get('weight')?.touched &&
+                        CompleteProfileForm.get('weight')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="my-3 position-relative text-center">
+                        <p-dropdown [options]="genderType" formControlName='gender' placeholder='{{"profile.personalInformation.gender" | translate}}'></p-dropdown>
+                        <fa-icon [icon]="faVenusMars" class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger " *ngIf="CompleteProfileForm.get('gender')?.touched &&
+                        CompleteProfileForm.get('gender')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <button [disabled]="CompleteProfileForm.invalid" class="btn bg-main text-white rounded-pill px-5 py-3 header-font mt-4 f-size-md">{{"buttons.save" | translate}}</button>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="isEditable">
+        <form [formGroup]='EditProfileForm' (ngSubmit)='onSubmitEdit(EditProfileForm)'>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <span class="p-float-label">
+                            <input  type="text" pInputText formControlName='name' ngClass="w-100 text-center"> 
+                            <label for="text-center w-100">{{"profile.personalInformation.name" | translate}}</label>
+                        </span>
+                        <fa-icon [icon]="faUser" class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger " *ngIf="EditProfileForm.get('name')?.touched &&
+                        EditProfileForm.get('name')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <span class="p-float-label">
+                            <input  type="text" pInputText formControlName='email' ngClass="w-100 text-center"> 
+                            <label for="text-center w-100">{{"profile.personalInformation.email" | translate}}</label>
+                        </span>
+                        <fa-icon [icon]="faEnvelope"   class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger " *ngIf="EditProfileForm.get('email')?.touched &&
+                        EditProfileForm.get('email')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <span class="p-float-label">
+                            <input readonly type="text" pInputText formControlName='mobile' ngClass="w-100 text-center"
+                            maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"> 
+                            <label for="text-center w-100">{{"profile.personalInformation.mobile" | translate}}</label>
+                        </span>
+                        <fa-icon [icon]="faPhone" class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger" *ngIf="EditProfileForm.get('mobile')?.touched &&
+                        EditProfileForm.get('mobile')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <span class="p-float-label">
+                            <input  type="text" pInputText formControlName='second_mobile' ngClass="w-100 text-center"
+                            maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"> 
+                            <label for="text-center w-100">{{"profile.personalInformation.secondMobile" | translate}}</label>
+                        </span>
+                        <fa-icon [icon]="faPhone" class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger " *ngIf="EditProfileForm.get('second_mobile')?.touched &&
+                        EditProfileForm.get('second_mobile')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <span class="p-float-label">
+                            <input  type="number" pInputText formControlName='height' ngClass="w-100 text-center"> 
+                            <label for="text-center w-100">{{"profile.personalInformation.height" | translate}}</label>
+                        </span>
+                        <img src="../../../../../assets/images/profile/height.png" alt="" class="icon-controller position-left txt-main img-fluid" style="width: 16px;">
+                        <small class="text-danger " *ngIf="EditProfileForm.get('height')?.touched &&
+                        EditProfileForm.get('height')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <span class="p-float-label">
+                            <input  type="number" pInputText formControlName='weight' ngClass="w-100 text-center"> 
+                            <label for="text-center w-100">{{"profile.personalInformation.weight" | translate}}</label>
+                        </span>
+                        <fa-icon [icon]="faWeight"   class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger " *ngIf="EditProfileForm.get('weight')?.touched &&
+                        EditProfileForm.get('weight')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative text-center">
+                        <p-dropdown [options]="genderType" formControlName='gender' placeholder='{{"profile.personalInformation.gender" | translate}}'></p-dropdown>
+                        <fa-icon [icon]="faVenusMars" class="icon-controller position-left txt-main"></fa-icon>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="my-3 position-relative">
+                        <p-calendar dateFormat="dd-mm-yy" placeholder="dd-mm-yy" formControlName='date_of_birth' ngClass="text-center"></p-calendar>
+                        <fa-icon [icon]="faCalendar"   class="icon-controller position-left txt-main"></fa-icon>
+                        <small class="text-danger " *ngIf="EditProfileForm.get('date_of_birth')?.touched &&
+                        EditProfileForm.get('date_of_birth')?.invalid">{{"errors.required" | translate}}</small>
+                    </div>
+                </div>
+                <button [disabled]="EditProfileForm.invalid" class="btn bg-main text-white rounded-pill px-5 py-3 header-font mt-4 f-size-md">{{"buttons.save" | translate}}</button>
+            </div>
+        </form>
+    </div>
+</div>

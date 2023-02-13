@@ -1,0 +1,29 @@
+@import '../../../../../assets/styles/variables/colors.scss';
+:host{
+    ::ng-deep .p-button{
+        background-color: $main !important;
+        border: $main !important;
+    }
+    ::ng-deep .p-confirm-dialog-accept{
+        background-color: $danger !important;
+    }
+    ::ng-deep .p-button-icon{
+        display: none;
+    }
+
+    ::ng-deep .p-dialog-footer{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    ::ng-deep .p-dialog-mask > div{
+        width: 570px;
+    }
+
+    @media all and (max-width:600px){
+        ::ng-deep .p-dialog-mask > div{
+            width: 400px;
+        }
+    }
+}
+

@@ -1,0 +1,90 @@
+<section class="bg-img-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1 class="fa-3x">
+                    <span class="txt-main">
+                        {{Programs?.name}}
+                    </span>
+                </h1>
+                <b class="text-muted txt-font">
+                    <small>
+                        {{Programs?.description}}
+                    </small>
+                </b>
+                <div class="stepper-wrapper my-5 pb-3" #indicators>
+                    <div class="progress" #progressElm></div>
+                        <div class="screen-indicator completed step1">1</div>
+                        <div class="screen-indicator step2">2</div>
+                        <div class="screen-indicator step3">3</div>
+                        <div class="screen-indicator step4">4</div>
+                        <div class="screen-indicator step5">5</div>
+                </div>
+                <input type="number" #planId hidden [value]="Programs?.id">
+                <app-step1 (countChanged1)="countChangedHandler1($event)" (countChanged2)="countChangedHandler2($event)" [custom_detail]="custom_detail" *ngIf="currIndex == 1 && isLoaded"></app-step1>
+                <app-step2  (isValidForm)="getFormStatus($event)" (SubscribtionDetailsData)="SubscribtionDetailsDataHandler($event)" [Programs]="Programs" *ngIf="currIndex == 2 && isLoaded"></app-step2>
+                <div class="row mx-0" *ngIf="!isLoaded">
+                    <div class="col-12 my-4">
+                        <p-skeleton width="50%" height="2rem" styleClass="my-2"></p-skeleton>
+                    </div>
+                    <div class="col-12 my-4">
+                        <p-skeleton width="15%" height="1rem" styleClass="my-1"></p-skeleton>
+                        <p-skeleton width="10%" height="1rem" styleClass="my-1"></p-skeleton>
+                        <p-skeleton width="20%" height="2rem" styleClass="my-2"></p-skeleton>
+                    </div>
+                    <div class="col-12 my-4">
+                        <p-skeleton width="15%" height="1rem" styleClass="my-1"></p-skeleton>
+                        <p-skeleton width="10%" height="1rem" styleClass="my-1"></p-skeleton>
+                        <p-skeleton width="20%" height="2rem" styleClass="my-2"></p-skeleton>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="(currIndex == 3 || currIndex == 4 || currIndex == 5)">
+                <app-step3 *ngIf="currIndex == 3" [SubscribtionDetailsData]="SubscribtionDetailsData"
+                    (categories2)="getCategories($event)"
+                    (MealsSelected)="getSelectedMealsStatus($event)"
+                    (FinalMeals)="getSelectedMeals($event)"
+                    (checkOutPrice)="getPrice($event)"
+                    (Cards)="getCardsOfDates($event)"></app-step3>
+                <app-step4 *ngIf="currIndex == 4" [ClientMeals]="ClientMeals" [SubscribtionDetailsData]="SubscribtionDetailsData" [Cards]="Cards" [cat]="cat"></app-step4>
+                <app-step5 *ngIf="currIndex == 5" [checkOutPrice]="checkOutPrice" [SubscribtionData]="SubscribtionDetailsData" [ProgramDetails]="Programs"></app-step5>
+            </div>
+            <div class="col-lg-5 flex-center my-3 d-none d-lg-flex" *ngIf="!(currIndex == 3 || currIndex == 4 || currIndex == 5)">
+                <img [src]="Programs?.image" class="w-80" alt="">
+            </div>
+            <div *ngIf="!(currIndex == 5)" class="row mx-auto" [ngClass]="{'px-5': (currIndex == 3 || currIndex == 4)}">
+                <div class="col-lg-3 col-6" *ngIf="!(currIndex == 1)" >
+                    <button data-bs-toggle="modal" [attr.data-bs-target]="currIndex == 3?'#goBackWarningModal':'' || currIndex == 4?'#goBackWarningModal':''" 
+                    (click)="currIndex == 2?previous():'' "
+                            class="btn bg-black text-white px-5 py-2 mt-4 w-100 font-weight-500" type="button" id="previous-btn" #prevBtn>
+                        <span class="px-2">{{"customPlan.button.back" | translate}}</span>
+                    </button>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <button class="btn bg-main text-white px-5 py-2 mt-4 w-100 font-weight-500" 
+                    [ngClass]="{'disabled': currIndex == 1 || currIndex == 3}" type="button" id="next-btn" #nextBtn
+                    (click)="next();"><span class="px-2">{{"customPlan.button.next" | translate}}</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" tabindex="-1" id="goBackWarningModal" aria-labelledby="goBackWarningModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <h6>{{"modals.goBackWarning.title" | translate}}</h6>
+                <button type="button" class="btn-close bg-main2 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="txt-main">{{"modals.goBackWarning.msg" | translate}}</h6>
+            </div>
+            <div class="modal-footer container d-flex justify-content-between">
+                <button type="button" class="btn bg-black rounded-pill mx-2 w-40 text-white py-2 txt-font-bold f-size-md"
+                    data-bs-dismiss="modal" (click)="previous()">{{"modals.back" | translate}}</button>
+                <button type="button" class="btn bg-main rounded-pill mx-2 w-40 text-white py-2 txt-font-bold f-size-md"
+                    data-bs-dismiss="modal">{{"modals.close" | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

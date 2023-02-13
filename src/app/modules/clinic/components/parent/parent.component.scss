@@ -1,0 +1,74 @@
+@import "../../../../../assets/styles/variables/colors.scss";
+@import "../../../../../assets/styles/variables/general.scss";
+
+/* stepper */
+.stepper-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.stepper-wrapper::before {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: $gray-light;
+    position: absolute;
+    z-index: -2;
+}
+
+.progress {
+    content: "";
+    width: 0%;
+    height: 2px;
+    background-color: $main;
+    position: absolute;
+    z-index: -1;
+    transition: $transitionTime-md;
+}
+
+.screen-indicator {
+    border-radius: 50%;
+    border: 2px solid $gray-light;
+    background-color: $white;
+    padding: 2px 10px;
+    color: $gray;
+    transition: $transitionTime-md;
+    position: relative;
+}
+
+.screen-indicator::after{
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: $gray;
+}
+.screen-indicator.completed::after{
+    color: $main;
+    transition: $transitionTime-md;
+}
+
+.screen-indicator.step1::after{
+    content: 'Step1';
+}
+.screen-indicator.step2::after{
+    content: 'Step2';
+}
+.screen-indicator.step3::after{
+    content: 'Step3';
+}
+.screen-indicator.step4::after{
+    content: 'Step4';
+}
+.screen-indicator.step5::after{
+    content: 'Step5';
+}
+
+.completed {
+    border-color: $main;
+    color: $white;
+    background-color: $main;
+}

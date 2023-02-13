@@ -1,0 +1,79 @@
+<section class="bg-img-main abu-dhabi">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="fa-4x">
+                    <span class="txt-main">
+                        {{emirateName}}
+                    </span>
+                </h1>
+                <div class="row icons my-5" *ngIf="Branches.length > 0; else skeleton">
+                    <div class="col-lg-4 col-md-6 my-3" *ngFor="let Branch of Branches;let i = index">
+                            <div class="item shadow-lg bg-white py-4 rounded-lg text-center header-font h-100" style="cursor:auto"
+                            (mouseover)="hover(phone,phone2,branch,location,clock)" 
+                            (mouseout)="unhover(phone,phone2,branch,location,clock)">
+                                <div class="container">
+                                    <div class="mb-3">
+                                        <img src="../../../../../../../assets/images/abu-dhabi/branch_green.png"    class="img-fluid float-start width-50px" alt="" #branch>
+                                        <a [href]="'tel:'+Branch?.mobile">
+                                            <img src="../../../../../../../assets/images/abu-dhabi/phone_green.png"   class="img-fluid float-end width-50px" alt="" #phone>
+                                        </a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <h6 class="text-start">
+                                        {{Branch?.name}}
+                                    </h6>
+                                    <div class="d-flex_ align-items-center mt-3">
+                                        <div>
+                                            <img src="../../../../../../../assets/images/abu-dhabi/location_green.png" class="img-fluid" alt="" #location>
+                                            <a [href]="Branch?.location_url" class="text-reset mx-2 txt-font">
+                                                <small>
+                                                    {{"contacts.branches.details.country" | translate}}, 
+                                                    {{emirateName}},
+                                                    {{Branch?.name}}
+                                                </small>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="text-start text-muted mt-3">
+                                        <small class="txt-font">
+                                            {{Branch?.description}}
+                                        </small>
+                                    </p>
+                                    <hr style="height: 0.5px;">
+                                    <div class="d-flex align-items-center">
+                                        <img src="../../../../../../../assets/images/abu-dhabi/clock_green.png" class="img-fluid" alt="" #clock>
+                                            <small class="mx-2 txt-main txt-font">
+                                                {{"contacts.branches.details.time" | translate}} {{Branch?.from}} {{"contacts.branches.details.to" | translate}} {{Branch?.to}} 
+                                            </small>
+                                    </div>
+                                    <hr style="height: 0.5px;">
+                                    <div class="d-flex align-items-center">
+                                        <a [href]="'tel:'+Branch?.mobile">
+                                            <img src="../../../../../../../assets/images/abu-dhabi/phone_green_x5.png" class="img-fluid" alt="" #phone2>
+                                        </a>
+                                        <small class="mx-2 txt-main txt-font">
+                                            {{Branch?.mobile}}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <ng-template #skeleton>
+                    <div class="row mx-0">
+                        <div class="col-12 my-5">
+                            <p-skeleton width="30%" height="2rem" styleClass="my-3"></p-skeleton>
+                        </div>
+                        <div class="col-md-4">
+                            <p-skeleton width="100%" height="20rem" styleClass="my-3"></p-skeleton>
+                        </div>
+                        <div class="col-md-4">
+                            <p-skeleton width="100%" height="20rem" styleClass="my-3"></p-skeleton>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</section>

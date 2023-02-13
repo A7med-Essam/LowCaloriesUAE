@@ -1,0 +1,470 @@
+<section class="bg-img-main">
+    <div class="container">
+        <h1 class="fa-4x">
+            <span class="txt-main">{{"checkout.title" | translate}}</span>
+        </h1>
+        <div class="row mt-5">
+            <div class="col-lg-3 col-md-4 my-3">
+                <div class="item shadow-lg bg-white py-4 rounded-lg text-center h-100">
+                    <img [src]="plan_img" class="img-fluid w-50 mx-auto mb-3" alt="">
+                    <h6>{{Menu_Name}}</h6>
+                    <div><small>{{"checkout.numberofMeals" | translate}}:</small><span> {{SubscribtionData?.meal_types?.length?SubscribtionData?.meal_types?.length:SubscribtionData?.meal_count?SubscribtionData?.meal_count:0}}</span></div>
+                    <div><small>{{"checkout.numberofDays" | translate}}:</small><span> {{SubscribtionData?.subscription_days?SubscribtionData?.subscription_days:SubscribtionData?.sub_days}}</span></div>
+                    <div class="mt-3">
+                        <a class="txt-main pointer" data-bs-toggle="modal" data-bs-target="#SubscribtionModal">{{"checkout.viewMore" | translate}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8 my-3">
+                <div class="item shadow-lg bg-white py-4 rounded-lg text-center h-100">
+                    <div class="container">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <img id="meal_img" src="../../../../assets/images/check-out/noun-gift-46445.png"
+                                class="img-fluid" alt="">
+                            <h5 class="txt-main mb-0 mx-2">{{"checkout.giftCode" | translate}}</h5>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-center mt-3 mb-4">
+                            <input type="text" class="form-control" placeholder='{{"checkout.enterGiftCode" | translate}}' #inputGiftCode>
+                            <button class="btn bg-main text-white px-5 ms-2 font-weight-500"
+                                (click)="applyGiftCode(inputGiftCode)">{{"buttons.apply" | translate}}</button>
+                        </div>
+                        <hr>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"checkout.total" | translate}}</span> <span class="txt-main">{{ProgramPrices.price}} {{"currency" | translate}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"checkout.giftCodeApply" | translate}}</span> <span class="txt-main">{{ProgramPrices.code_apply}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"checkout.bagPrice" | translate}}</span> <span class="txt-main">{{ProgramPrices.bag_price}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"checkout.vat" | translate}}</span> <span class="txt-main">{{ProgramPrices.vat * 100}}%</span>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3 font-weight-500">
+                                <span>{{"checkout.grandTotal" | translate}}</span> <span class="txt-main">{{ProgramPrices.grand_total}}
+                                    {{"currency" | translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 my-3">
+                <div class="item shadow-lg bg-white py-4 rounded-lg text-center">
+                    <div class="container">
+                        <div class="d-flex justify-content-between flex-wrap">
+                            <h5>{{"checkout.enterYourLocation" | translate}}</h5>
+                            <h6 id="locationBtn" class="txt-main pointer ms-4" data-bs-toggle="modal"
+                                data-bs-target="#LocationModal" #LocationBtn (click)="getAddresses()">
+                                <u>{{"checkout.selectYourCurrentLocation" | translate}}</u>
+                            </h6>
+                        </div>
+                        
+                        <form class="mt-4 text-start" *ngIf="isNewLocation&&!isLogin" [formGroup]='NewAddressForm'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <input  type="text" pInputText ngClass="w-100" formControlName='name'> 
+                                            <label for="float-input">{{"userInfo.username" | translate}}</label>
+                                        </span>
+                                        <small class="text-danger" *ngIf="NewAddressForm.get('name')?.touched &&
+                                        NewAddressForm.get('name')?.invalid">{{"errors.required" | translate}}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <input  type="text" pInputText ngClass="w-100" formControlName='email'> 
+                                            <label for="float-input">{{"userInfo.email" | translate}}</label>
+                                        </span>
+                                        <small class="text-danger " 
+                                            *ngIf="NewAddressForm.get('email')?.touched && NewAddressForm.get('email')?.hasError('required')">
+                                            {{"errors.required" | translate}}
+                                        </small>
+                                        <small class="text-danger " 
+                                        *ngIf="NewAddressForm.get('email')?.touched && NewAddressForm.get('email')?.hasError('email')">
+                                        {{"errors.email" | translate}}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <input  type="text" pInputText ngClass="w-100" formControlName='mobile' maxlength="10"
+                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"> 
+                                            <label for="float-input">{{"userInfo.mobile" | translate}}</label>
+                                        </span>
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1" *ngIf="NewAddressForm.get('mobile')?.touched &&
+                                            NewAddressForm.get('mobile')?.hasError('required')">{{"errors.required" | translate}}</small>
+                                        </div>
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1" *ngIf="NewAddressForm.get('mobile')?.touched &&
+                                            NewAddressForm.get('mobile')?.hasError('pattern')">{{"errors.mobile" | translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3 text-start">
+                                        <p-dropdown [options]="emirate" optionLabel="name" optionValue="id" formControlName='emirate' placeholder='{{"location.emirate" | translate}}'
+                                        (ngModelChange)="getAreas2($event)"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3 text-start">
+                                        <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id" placeholder='{{"location.area" | translate}}' formControlName='area_id'></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <input  type="text" pInputText ngClass="w-100" formControlName='address'> 
+                                            <label for="float-input">{{"location.address" | translate}}</label>
+                                        </span>
+                                        <small class="text-danger " *ngIf="NewAddressForm.get('address')?.touched &&
+                                        NewAddressForm.get('address')?.invalid">{{"errors.required" | translate}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-3">
+                                <p class="m-0 font-weight-500">{{"checkout.weAccept" | translate}}:</p>
+                                <img src="../../../../assets/images/check-out/payment-method.png" id="visa_img"
+                                    class="img-fluid mx-1" alt="">
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-3">
+                                <input type="checkbox" data-bs-toggle="modal" data-bs-target="#TermsModal" (click)="getTerms()" #termsInput formControlName="terms"
+                                (click)="onTermsChange(termsInput)">
+                                <small class="mx-2 font-weight-500">{{"checkout.IAccept1" | translate}} <a class="txt-main pointer" data-bs-toggle="modal"
+                                    data-bs-target="#TermsModal" (click)="getTerms()">{{"checkout.termsAndConditions" | translate}}</a> {{"checkout.IAccept2" | translate}}</small>
+                            </div>
+                            <button class="btn bg-main text-white w-100" type="button" [disabled]="NewAddressForm.invalid"
+                            (click)="getCheckOut_WithOutAuth(NewAddressForm)" >{{"buttons.checkOut" | translate}}</button>
+                        </form>
+
+                        <form class="mt-4" *ngIf="!isNewLocation" [formGroup]='OldAddressForm'>
+                            <div class="form-group text-start">
+                                <label>{{"location.emirate" | translate}}</label>
+                                <input type="text" class="form-control my-2" readonly formControlName='emirate'>
+                                <label>{{"location.area" | translate}}</label>
+                                <input type="text" class="form-control my-2" readonly formControlName='area'>
+                                <label>{{"location.address" | translate}}</label>
+                                <input type="text" class="form-control my-2" readonly formControlName='address'>
+                                <input type="text" class="form-control my-2" readonly hidden formControlName="address_id">
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-3">
+                                <p class="m-0 font-weight-500">{{"checkout.weAccept" | translate}}:</p>
+                                <img src="../../../../assets/images/check-out/payment-method.png" id="visa_img"
+                                    class="img-fluid mx-1" alt="">
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-3">
+                                <input type="checkbox" formControlName='AcceptTerms' data-bs-toggle="modal"
+                                    data-bs-target="#TermsModal" (click)="getTerms()">
+                                <small class="mx-2 font-weight-500">{{"checkout.IAccept1" | translate}} <a class="txt-main pointer" data-bs-toggle="modal"
+                                    data-bs-target="#TermsModal" (click)="getTerms()">{{"checkout.termsAndConditions" | translate}}</a> {{"checkout.IAccept2" | translate}}</small>
+                            </div>
+                            <button class="btn bg-main text-white w-100" type="button" [disabled]="OldAddressForm.invalid"
+                            (click)="getCheckOut_WithAuth()" >{{"buttons.checkOut" | translate}}</button>
+                        </form>
+
+                        <form [formGroup]='AddressForm2' *ngIf="isNewLocation&&isLogin">
+                            <div class="my-4 text-start">
+                                <p-dropdown [options]="cities" optionLabel="name" optionValue="id" formControlName='city_id'
+                                    placeholder='{{"location.emirate" | translate}}' (ngModelChange)="getAreas($event)"></p-dropdown>
+                            </div>
+                            <div class="my-4 text-start">
+                                <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id" placeholder='{{"location.area" | translate}}'
+                                    formControlName='area_id'></p-dropdown>
+                            </div>
+                            <div class="my-4">
+                                <span class="p-float-label">
+                                    <input type="text" pInputText [style]="{'width':'100%'}"
+                                        formControlName='address' />
+                                    <label>{{"location.address" | translate}}</label>
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-3">
+                                <p class="m-0 font-weight-500">{{"checkout.weAccept" | translate}}:</p>
+                                <img src="../../../../assets/images/check-out/payment-method.png" id="visa_img"
+                                    class="img-fluid mx-1" alt="">
+                            </div>
+                            <div class="d-flex justify-content-start align-items-center my-3">
+                                <input type="checkbox" formControlName='terms' data-bs-toggle="modal"
+                                    data-bs-target="#TermsModal" (click)="getTerms()">
+                                <small class="mx-2 font-weight-500">{{"checkout.IAccept1" | translate}} <a class="txt-main pointer" data-bs-toggle="modal"
+                                    data-bs-target="#TermsModal" (click)="getTerms()">{{"checkout.termsAndConditions" | translate}}</a> {{"checkout.IAccept2" | translate}}</small>
+                            </div>
+                            <button class="btn bg-main text-white w-100" type="button" [disabled]="AddressForm2.invalid"
+                            (click)="getCheckOut_WithAuth()" >{{"buttons.checkOut" | translate}}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Location Modal -->
+<div class="modal fade" id="LocationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="LocationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 type="button" class="txt-main txt-font-bold f-size-sm m-0" data-bs-toggle="modal"
+                data-bs-target="#AddNewAddressModal" (click)="getCities()">+ {{"buttons.addNewAddress" | translate}}</h5>
+                <button type="button" class="btn-close bg-main2 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div *ngFor="let Address of Addresses"
+                    class="item d-flex justify-content-between py-3 px-4 bg-white shadow rounded-lg align-items-center my-3 text-center">
+                    <fa-icon [icon]="faTrash" class="text-danger pointer mx-2 f-size-md" (click)="getLocationId(addressId)"
+                        data-bs-toggle="modal" data-bs-target="#ConfirmModal"></fa-icon>
+                    <div class="location-list">
+                        <div>
+                            <input type="text" #addressId hidden [value]="Address?.id">
+                            <span #address>{{Address?.address}}</span>
+                            <br>
+                            <span #area class="d-none">{{Address?.area?.area_en}}</span>
+                            <span #areaId class="d-none">{{Address?.area?.id}}</span>
+                            <span #emirate class="d-none">{{Address?.area?.emirate?.name}}</span>
+                        </div>
+                    </div>
+                    <div class="switchLocation">
+                        <input type="radio" name="address" (click)="setAddress(address,addressId,emirate,area,areaId,SelectedBtn);">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer container d-flex justify-content-between">
+                <button type="button" class="btn bg-main rounded-pill text-white py-2 txt-font-bold f-size-sm mx-3 px-5"
+                    data-bs-dismiss="modal" (click)="getOldLocation()" disabled #SelectedBtn>{{"buttons.select" | translate}}</button>
+                <button *ngIf="!isNewLocation" type="button"
+                    class="btn bg-main rounded-pill text-white py-2 txt-font-bold f-size-sm mx-3 px-5"
+                    data-bs-dismiss="modal" (click)="getNewLocation()">{{"buttons.addNewAddress" | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- subscribtion info modal -->
+<div class="modal fade" id="SubscribtionModal" tabindex="-1" aria-labelledby="SubscribtionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-lg">
+            <div class="modal-body">
+                <div class="text-end">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="text-center">
+                    <img [src]="plan_img" class="img-fluid" style="width: 150px;" alt="">
+                    <h5 class="txt-main mt-2">{{Menu_Name}}</h5>
+                </div>
+                <h6 class="txt-main">{{"modals.subscribtion.deliveryDays" | translate}}:</h6>
+                <div class="row">
+                    <div class="col-sm-4 col-6" *ngFor="let day of SubscribtionData?.delivery_days;let i = index">
+                        <div class="delivery-day bg-main text-white rounded py-2 px-3 position-relative my-1">
+                            {{deliveryDays[i]?.[translate.currentLang] | titlecase}}
+                        </div>
+                    </div>
+                </div>
+                <hr style="height: .5px;">
+                <div class="d-flex justify-content-between">
+                    <h6 class="txt-main">{{"modals.subscribtion.numberOfMeals" | translate}}:</h6>
+                    <span>{{SubscribtionData?.meal_types?.length?SubscribtionData?.meal_types?.length:SubscribtionData?.meal_count?SubscribtionData?.meal_count:0}}</span>
+                </div>
+                <hr class="my-2" style="height: .5px;">
+                <div class="d-flex justify-content-between">
+                    <h6 class="txt-main">{{"modals.subscribtion.numberOfSnacks" | translate}}:</h6>
+                    <span>{{SubscribtionData?.SnacksType?.length?SubscribtionData?.SnacksType?.length:SubscribtionData?.snack_count?SubscribtionData?.snack_count:0}}</span>
+                </div>
+                <hr class="my-2" style="height: .5px;">
+                <div class="d-flex justify-content-between">
+                    <h6 class="txt-main">{{"modals.subscribtion.startDate" | translate}}:</h6>
+                    <span>{{SubscribtionData?.start_date}}</span>
+                </div>
+                <hr class="my-2" style="height: .5px;">
+                <div class="d-flex justify-content-between">
+                    <h6 class="txt-main">{{"modals.subscribtion.subscriptionDays" | translate}}:</h6>
+                    <span>{{SubscribtionData?.subscription_days?SubscribtionData?.subscription_days:SubscribtionData?.sub_days}}</span>
+                </div>
+                <div class="mt-4">
+                    <button _ngcontent-qrg-c63="" type="button" data-bs-dismiss="modal"
+                    class="btn bg-main rounded-pill w-100 text-white py-3 txt-font-bold f-size-md">{{"buttons.close" | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- add new address modal  -->
+<div class="modal fade" id="AddNewAddressModal" tabindex="-1" aria-labelledby="AddNewAddressModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="m-0">{{"checkout.enterNewLocation" | translate}}</h6>
+                <button type="button" class="btn-close bg-main2 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]='AddressForm' (ngSubmit)='addNewAddress(AddressForm)'>
+                    <div class="my-4">
+                        <p-dropdown [options]="cities" optionLabel="name" optionValue="id" formControlName='city_id'
+                            placeholder='{{"location.emirate" | translate}}' (ngModelChange)="getAreas($event)"></p-dropdown>
+                    </div>
+                    <div class="my-4">
+                        <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id" placeholder='{{"location.area" | translate}}'
+                            formControlName='area_id'></p-dropdown>
+                    </div>
+                    <div class="my-4">
+                        <span class="p-float-label">
+                            <input type="text" id="float-input1" pInputText [style]="{'width':'100%'}"
+                                formControlName='address' />
+                            <label for="float-input1">{{"location.address" | translate}}</label>
+                        </span>
+                    </div>
+                    <button type="submit" class="btn bg-main rounded-pill w-100 text-white py-3 txt-font-bold f-size-md"
+                        data-bs-dismiss="modal">{{"buttons.addNewAddress" | translate}}</button>
+                </form>
+            </div>
+            <div class="modal-footer container">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- terms modal -->
+<!-- <div class="modal fade" id="TermsModal" tabindex="-1" aria-labelledby="TermsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3 class="txt-main mb-4 text-center">{{'terms.title' | translate}}</h3>
+                <ol style="list-style: decimal-leading-zero;">
+                    <li>{{'terms.desc.role1' | translate}}</li>
+                    <li>{{'terms.desc.role2' | translate}}</li>
+                    <li>{{'terms.desc.role3' | translate}}</li>
+                    <li>{{'terms.desc.role4' | translate}}</li>
+                    <li>{{'terms.desc.role5' | translate}}</li>
+                    <li>{{'terms.desc.role6' | translate}}</li>
+                    <li>{{'terms.desc.role7' | translate}}</li>
+                </ol>
+                <h3 class="txt-main my-4 text-center">{{'terms.title2' | translate}}</h3>
+                <p>{{'terms.title2_desc' | translate}}</p>
+            </div>
+            <div class="modal-footer container">
+                <button type="button" class="btn bg-main rounded-pill w-100 text-white py-2 txt-font-bold f-size-md"
+                    data-bs-dismiss="modal">{{'terms.accept' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- terms modal -->
+<div class="modal fade" id="TermsModal" tabindex="-1" aria-labelledby="TermsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div *ngFor="let term of terms">
+                    <h3 class="txt-main mb-4 text-center">{{term.header}}</h3>
+                    <div class="mb-4" [innerHTML]="term.description"></div>
+                </div>
+            </div>
+            <div class="modal-footer container">
+                <button type="button" class="btn bg-main rounded-pill w-100 text-white py-2 txt-font-bold f-size-md"
+                    data-bs-dismiss="modal">{{'terms.accept' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm modal -->
+<div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="m-0">{{"checkout.enterNewLocation" | translate}}</h6>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>{{"modals.deleteAddressWarning" | translate}}</h5>
+            </div>
+            <div class="modal-footer container d-flex justify-content-between">
+                <button type="button" class="btn bg-black rounded-pill px-5 text-white py-2 txt-font-bold f-size-md"
+                    data-bs-toggle="modal" data-bs-target="#LocationModal">{{"buttons.back" | translate}}</button>
+                <button type="button" class="btn bg-main rounded-pill px-5 text-white py-2 txt-font-bold f-size-md"
+                    data-bs-dismiss="modal" (click)="deleteLocation()">{{"buttons.confirm" | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal  -->
+<div class="modal fade" id="LoginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="LoginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>{{"Auth.login.loginForm" | translate}}</h5>
+                <button type="button" class="btn-close bg-main2 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <section>
+                    <div class="container">
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="text-center">
+                                    <img src="../../../../../assets/images/logo/LC_LOGO (1).png" alt="" class="img-fluid">
+                                </div>
+                                <h1 class="my-4 text-center h2">
+                                    <span class="txt-main">{{"Auth.login.title" | translate}}</span>
+                                </h1>
+                                <div class="text-center w-75 m-auto txt-font">
+                                    <form [formGroup]='loginForm' (ngSubmit)='onLoginSubmit(loginForm)'>
+                                        <div class="my-3 position-relative">
+                                            <input class="p-3 form-controller" placeholder="{{'Auth.login.email' | translate}}" type="email" formControlName='email' />
+                                                <fa-icon [icon]="faEnvelope" class="icon-controller txt-main position-left"></fa-icon>
+                                                <div class="text-start">
+                                                    <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
+                                                    loginForm.get('email')?.hasError('email')">{{'errors.email' | translate}}</small>
+                                                    <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
+                                                    loginForm.get('email')?.hasError('required')">{{'errors.required' | translate}}</small>
+                                                </div>
+                                        </div>
+                                        <div class="my-3 position-relative">
+                                            <input class="p-3 form-controller" placeholder="{{'Auth.login.password' | translate}}" type="password" #PasswordInput  formControlName='password' />
+                                                <fa-icon [icon]="faLock" class="txt-main icon-controller position-left"></fa-icon>
+                                                <fa-icon [icon]="faEye"  class="txt-main icon-controller position-right" (click)="togglePassword(PasswordInput)" ></fa-icon>
+                                                <div class="text-start">
+                                                    <small class="text-danger ms-1" *ngIf="loginForm.get('password')?.touched &&
+                                                    loginForm.get('password')?.hasError('required')">{{'errors.required' | translate}}</small>
+                                                </div>
+                                        </div>
+                                        <p class="txt-main my-0 text-end" data-bs-dismiss="modal">
+                                            <a [routerLink]="['../../../../auth/forgot-password']" class="text-reset text-decoration-none">{{'Auth.login.forgot' | translate}}</a>
+                                        </p>
+                                        <p class="txt-main mt-1 mb-4 text-start">
+                                            <input type="checkbox" id="rememberMe"> <label class="mx-1" for="rememberMe">{{'Auth.login.remember' | translate}}</label>
+                                        </p>
+                                        <button class="btn bg-main text-white rounded-pill px-5 py-3 header-font f-size-md w-100" type="submit" data-bs-dismiss="modal"
+                                        [disabled]="loginForm.invalid">{{'Auth.login.login' | translate}}</button>
+                                    </form>
+                                </div>
+                                <div class="text-center mt-4 txt-font"  data-bs-dismiss="modal">
+                                    <p>{{'Auth.login.noAccount' | translate}} 
+                                        <a class="txt-main" [routerLink]="['../../../../auth/register']">{{'Auth.login.register' | translate}}</a>
+                                    </p>
+                                    <p>{{'Auth.login.termsAgree' | translate}} <a class="txt-main pointer" data-bs-toggle="modal"
+                                        data-bs-target="#TermsModal" (click)="getTerms()">{{'Auth.login.terms' | translate}}</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

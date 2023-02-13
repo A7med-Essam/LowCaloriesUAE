@@ -1,0 +1,75 @@
+@import "../../../../../assets/styles/variables/colors.scss";
+
+.register-group {
+  position: relative;
+}
+
+.register-group input {
+  position: relative;
+  z-index: 9;
+  background: transparent;
+  padding: 5px
+}
+
+.register-group label {
+  position: absolute;
+  left: 50%;
+  top: 15px;
+  z-index: 1;
+  color: $gray-light;
+  transform: translateX(-50%);
+}
+
+.register-group label.required::after {
+  content: " *";
+  color: $red;
+}
+
+.register-group label.Optional::after {
+  content: "(Optional)";
+  color: $gray-light;
+  position: absolute;
+  left: 120%;
+}
+
+@media all and (max-width:1200px) {
+  .register-group {
+    width: 100% !important;
+  }
+}
+
+#style-4{
+  height: 570px;
+  overflow: auto;
+  padding: 0px 30px;
+}
+
+// ng prime override style
+:host {
+  ::ng-deep .p-dropdown {
+    width: 100%;
+    margin: auto;
+    border: 0;
+    box-shadow: none !important;
+    outline: none !important;
+    border-bottom: $main 1px solid;
+    border-radius: 0;
+  }
+  
+  ::ng-deep .p-dropdown .p-dropdown-label.p-placeholder{
+    color: $gray-light !important;
+  }
+
+  ::ng-deep .p-dropdown-label{
+    margin-left: 70px;
+    color: $black !important;
+  }
+
+  ::ng-deep .p-dropdown:hover{
+    border-bottom: $main 1px solid !important;
+  }
+  
+  ::ng-deep .p-dropdown:not(.p-disabled) {
+    border-bottom: $main 1px solid !important;
+  }
+}

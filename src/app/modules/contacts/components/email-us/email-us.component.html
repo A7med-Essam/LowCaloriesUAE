@@ -1,0 +1,87 @@
+<section class="bg-img-main">
+    <div class="container" >
+        <div class="row">
+            <div class="col-lg-6">
+                <h1 class="fa-4x">
+                    <span class="txt-main">
+                        {{"contacts.emailUs.title" | translate}}
+                    </span>
+                </h1>
+                <p class="text-muted txt-font">
+                    {{"contacts.emailUs.desc" | translate}}
+                </p>
+                <form [formGroup]='EmailForm' (ngSubmit)='onSubmit(EmailForm)'>
+                    <div class="row">
+                        <div class="col-lg-6 my-2">
+                            <label class="mb-2" for="">{{"contacts.emailUs.name" | translate}}<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" placeholder='{{"contacts.emailUs.name" | translate}}' formControlName="name" pInputText>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="EmailForm.get('name')?.touched &&
+                                EmailForm.get('name')?.hasError('required')">{{"errors.required" | translate}}</small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 my-2">
+                            <label class="mb-2" for="">{{"contacts.emailUs.email" | translate}}<span class="text-danger">*</span></label>
+                            <input type="Email" class="form-control" placeholder='{{"contacts.emailUs.email" | translate}}'  formControlName="email" pInputText>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="EmailForm.get('email')?.touched &&
+                                EmailForm.get('email')?.hasError('required')">{{"errors.required" | translate}}</small>
+                            </div>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="EmailForm.get('email')?.touched &&
+                                EmailForm.get('email')?.hasError('email')">{{"errors.email" | translate}}</small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 my-2">
+                            <label class="mb-2" for="">{{"contacts.emailUs.subject" | translate}}<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" placeholder='{{"contacts.emailUs.subject" | translate}}'  formControlName="subject" pInputText>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="EmailForm.get('subject')?.touched &&
+                                EmailForm.get('subject')?.hasError('required')">{{"errors.required" | translate}}</small>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 my-2">
+                            <label class="mb-2" for="">{{"contacts.emailUs.mobile" | translate}}<span class="text-danger">*</span></label>
+
+
+                            <input type="text" pInputText placeholder='{{"contacts.emailUs.mobile" | translate}}' [style]="{'width':'100%'}" maxlength="10"
+                            formControlName="mobile" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"/>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="EmailForm.get('mobile')?.touched &&
+                                EmailForm.get('mobile')?.hasError('required')">{{"errors.required" | translate}}</small>
+                            </div>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="EmailForm.get('mobile')?.touched &&
+                                EmailForm.get('mobile')?.hasError('pattern')">{{"errors.mobile" | translate}}</small>
+                            </div>
+                        </div>
+                        <div class="col-12 my-2">
+                            <label class="mb-2" for="">{{"contacts.emailUs.message" | translate}}<span class="text-danger">*</span></label>
+                            <textarea rows="5" class="form-control"  formControlName="message"></textarea>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="EmailForm.get('message')?.touched &&
+                                EmailForm.get('message')?.hasError('required')">{{"errors.required" | translate}}</small>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button class="btn bg-main text-white px-5 py-2">{{"buttons.send" | translate}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 flex-center my-3">
+                <img src="../../../../../assets/images/kisspng-hamburg.png" class="w-80" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<p-dialog [header]="'modals.email.title' | translate"  [style]="{width: '35vw'}" [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="EmailMessageModal" [transitionOptions]="'200ms'">
+    <div class="text-center">
+        <h6>{{emailMessage}}</h6>
+    </div>
+    <div class="mt-4">
+        <button  type="button" class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md w-100" 
+        (click)="EmailMessageModal=false">{{"buttons.close" | translate}}</button>
+    </div>
+</p-dialog>

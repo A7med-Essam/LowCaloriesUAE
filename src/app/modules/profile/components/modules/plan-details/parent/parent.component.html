@@ -1,0 +1,124 @@
+<section class="bg-img-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 ">
+                <div class="list bg-white rounded-lg shadow-lg position-relative text-center">
+                    <div>
+                        <img src="../../../../../assets/images/profile/Group 38953.png" class="img-fluid" alt="">
+                        <img [src]="user?.image"
+                        #userImage class="img-fluid rounded-circle" id="profile-img" alt="">
+                        <img src="../../../../../assets/images/profile/camera.png" (click)="importImage(userImage)" class="img-fluid" id="edit-img" alt="">
+                    </div>
+                    <div class="mt-5">
+                        <h4 class="txt-main m-0">{{user?.name}}</h4>
+                        <span class="txt-font-bold">{{user?.email}}</span>
+                    </div>
+                    <div class="mt-4">
+                        <ul class="txt-font-bold">
+                            <li class="p-3 pointer" routerLink="../../controls/1" (click)="scrollToContent()">
+                                <img src="../../../../../assets/images/profile/person_green.png"
+                                src1="../../../../../assets/images/profile/person_white.png"
+                                src2="../../../../../assets/images/profile/person_green.png"
+                                class="img-fluid me-3 pointer" style="width: 18px;" alt=""> <span>{{"profile.personalInformation.title" | translate}}</span>
+                            </li>
+                            <li class="active p-3 pointer" routerLink="../../controls/2" (click)="scrollToContent()">
+                                <img src="../../../../../assets/images/profile/plans_white.png"
+                                src1="../../../../../assets/images/profile/plans_white.png"
+                                src2="../../../../../assets/images/profile/plans_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.myPlans.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" routerLink="../../controls/3" (click)="scrollToContent()">
+                                <img src="../../../../../assets/images/profile/location_green.png"
+                                src1="../../../../../assets/images/profile/location_white.png"
+                                src2="../../../../../assets/images/profile/location_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt="">  <span>{{"profile.myAddresses.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" routerLink="../../controls/4" (click)="scrollToContent()">
+                                <img src="../../../../../assets/images/profile/lock_green.png"
+                                src1="../../../../../assets/images/profile/lock_white.png"
+                                src2="../../../../../assets/images/profile/lock_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.changePassword.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" routerLink="../../controls/5" (click)="scrollToContent()">
+                                <img src="../../../../../assets/images/profile/menu_green.png"
+                                src1="../../../../../assets/images/profile/menu_white.png"
+                                src2="../../../../../assets/images/profile/menu_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.menu.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" routerLink="../../controls/6" (click)="scrollToContent()">
+                                <img src="../../../../../assets/images/profile/chat_green.png"
+                                src1="../../../../../assets/images/profile/chat_white.png"
+                                src2="../../../../../assets/images/profile/chat_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.chatWithUs.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" routerLink="../../controls/7" (click)="scrollToContent()">
+                                <img src="../../../../../assets/images/profile/ask_green.png"
+                                src1="../../../../../assets/images/profile/ask_white.png"
+                                src2="../../../../../assets/images/profile/ask_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""><span>{{"profile.askUs.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" routerLink="../../controls/8" (click)="scrollToContent()">
+                                <img src="../../../../../assets/images/profile/setting_green.png"
+                                src1="../../../../../assets/images/profile/setting_white.png"
+                                src2="../../../../../assets/images/profile/setting_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""><span>{{"profile.settings.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" (click)="logout()">
+                                <img src="../../../../../assets/images/profile/power_green.png" class="img-fluid me-3 " style="width: 18px;" alt=""><span>{{"profile.logOut" | translate}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8" #content>
+                <div class="content rounded-lg p-4 pb-3 shadow-lg bg-white" *ngIf="!toggleCalendar" style="height: 775px;overflow: auto;">
+                    <h4 class="txt-main mb-3">{{"buttons.details" | translate}}</h4>
+                    <!-- <div class="categories d-flex flex-wrap" *ngIf="planStatus">
+                        <div class="shadow-lg bg-white txt-font-bold calendar me-3 my-2 pointer" [class.active]="currentTap == 1"
+                        (click)="toggle(1)">Calendar</div>
+                        <div class="shadow-lg bg-white txt-font-bold weeks my-2 pointer" [class.active]="currentTap == 2" 
+                        (click)="toggle(2)">Weeks</div>
+                    </div> -->
+                    <app-calendar (getDetails)="getDetails($event)" (DayDetails)="getDayDetails($event)" [planDetails]="planDetails" *ngIf="currentTap == 1 && planStatus"></app-calendar>
+                    <app-weeks *ngIf="currentTap == 2 && !planStatus" [planWeeks]="planWeeks"></app-weeks>
+                </div>
+                <div class="content rounded-lg p-5 pb-3 shadow-lg bg-white"  *ngIf="toggleCalendar" style="height: 775px;overflow: auto;">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                        <h4 class="txt-main my-3">{{DayDetails?.day_name}},{{DayDetails?.date | date: 'MMM d'}}</h4>
+                        <button (click)="toggleCalendar = false" class="btn bg-main px-5 py-2 text-white">{{"buttons.back" | translate}}</button>
+                    </div>
+
+                    <div class="rounded-md p-3 pb-3 my-3 shadow-lg bg-white" *ngFor="let meal of DayDetails.meals">
+                        <h5 class="meal_name">{{meal?.meal_name}}</h5>
+                        <div class="row">
+                            <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.calories" | translate}}</span>
+                                    <span class="font-weight-600 txt-font">{{meal?.calories}}</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.fat" | translate}}</span>
+                                    <span class="font-weight-600 txt-font">{{meal?.fats}}</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.protein" | translate}}</span>
+                                    <span class="font-weight-600 txt-font">{{meal?.protiens}}</span>
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.carb" | translate}}</span>
+                                    <span class="font-weight-600 txt-font">{{meal?.carb}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

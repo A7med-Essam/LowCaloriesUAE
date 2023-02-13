@@ -1,0 +1,36 @@
+@import '../../../../../../../assets/styles/variables/colors.scss';
+
+.Weeks_Container .active{
+    color: $main !important;
+    border-bottom: 3px solid $main;
+}
+
+.Weeks_Container .name{
+    border-right: 1px solid rgb(188, 188, 188);
+    text-align: center;
+    &:last-child{
+        border-right: none;
+    }
+}
+
+@media screen and (max-width: 991.5px) {
+    .meal_name {
+        font-size: 17px;
+        text-align: center;
+    }
+}
+@media screen and (max-width: 500px) {
+    .meal_name {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .Weeks_Container{
+        width: 205px !important;
+        .name{
+            border-right: none !important;
+            border-left: none !important;
+        }
+    }
+}

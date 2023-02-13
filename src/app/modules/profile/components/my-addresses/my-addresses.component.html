@@ -1,0 +1,103 @@
+<div class="content rounded-lg p-5 pb-3 shadow-lg bg-white" style="height: 775px;overflow: auto;">
+    <h4 class="txt-main m-0">{{"profile.myAddresses.title" | translate}}</h4>
+    <div *ngIf="Addresses.length > 0;else skeleton">
+        <div *ngFor="let Address of Addresses;let i = index" class="d-flex flex-wrap justify-content-between py-3 px-2 bg-white shadow rounded-md align-items-center my-3 text-center">
+            <div class="d-flex align-items-center">
+                <fa-icon [icon]="faLocation" class="txt-main mx-2 fa-2x mb-3"></fa-icon>
+                <div class="text-start">
+                    <u class="txt-font-bold"> 
+                        {{"country" | translate}},
+                        {{Address?.area?.emirate?.name}},
+                        {{Address?.area?.area_en}}
+                    </u>
+                    <div class="text-muted">
+                        <u>{{Address?.address}}</u>
+                    </div>
+                </div>
+            </div>
+            <div class="text-start">
+                <h6 class="txt-main pointer m-2 px-3" (click)="editAddressModal=true;setEditAddressForm(Address)">
+                    <fa-icon [icon]="faEdit" class="mx-2"></fa-icon>
+                    <span>{{"buttons.edit" | translate}}</span>
+                </h6>
+                <h6 class="text-danger pointer m-2 px-3" (click)="confirm(Address.id)">
+                    <fa-icon [icon]="faDelete" class="mx-2"></fa-icon>
+                    <span>{{"buttons.delete" | translate}}</span>
+                </h6>
+            </div>
+        </div>
+    </div>
+    <ng-template #skeleton>
+        <div class="row mx-0">
+            <div class="col-12">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-12">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+        </div>
+    </ng-template>
+    <div class="text-end mt-4">
+        <button class="btn bg-main py-2 px-4 text-white rounded-md txt-font-bold" (click)="addNewAddressModal=true;">
+            <span class="px-3">{{"buttons.addNewAddress" | translate}}</span>
+        </button>
+    </div>
+    <p-confirmDialog header='{{"modals.deleteAddressWarning.title" | translate}}' icon="pi pi-exclamation-triangle"></p-confirmDialog>
+</div>
+
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="addNewAddressModal" [transitionOptions]="'200ms'">
+        <div class="text-center">
+            <form [formGroup]='AddressForm'>
+                <div class="my-4 text-start">
+                    <p-dropdown [options]="emirate" optionLabel="name" optionValue="id" formControlName='city_id'
+                        placeholder='{{"profile.myAddresses.emirate" | translate}}' (onChange)="getAllAreas($event)"></p-dropdown>
+                </div>
+                <div class="my-4 text-start">
+                    <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id" placeholder='{{"profile.myAddresses.area" | translate}}'
+                        formControlName='area_id'></p-dropdown>
+                </div>
+                <div class="my-4">
+                    <span class="p-float-label">
+                        <input type="text" id="float-input1" pInputText [style]="{'width':'100%'}"
+                            formControlName='address' />
+                        <label for="float-input1">{{"profile.myAddresses.address" | translate}}</label>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div class="mt-4">
+            <button  type="button" class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md w-100" 
+            (click)="addNewAddressModal=false;addNewAddress(AddressForm)">{{"buttons.addNewAddress" | translate}}</button>
+        </div>
+</p-dialog>
+
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="editAddressModal" [transitionOptions]="'200ms'">
+    <div class="text-center">
+        <form [formGroup]='editAddressForm'>
+            <div class="my-4 text-start">
+                <p-dropdown [options]="emirate" optionLabel="name" optionValue="id" formControlName='city_id'
+                    placeholder='{{"profile.myAddresses.emirate" | translate}}' (onChange)="getAllAreas($event)"></p-dropdown>
+            </div>
+            <div class="my-4 text-start">
+                <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id" placeholder='{{"profile.myAddresses.area" | translate}}'
+                    formControlName='area_id'></p-dropdown>
+            </div>
+            <div class="my-4">
+                <span class="p-float-label">
+                    <input type="text" id="float-input1" pInputText [style]="{'width':'100%'}"
+                        formControlName='address' />
+                    <label for="float-input1">{{"profile.myAddresses.address" | translate}}</label>
+                </span>
+                <span class="p-float-label d-none">
+                    <input type="text" id="float-input1" pInputText [style]="{'width':'100%'}"
+                        formControlName='address_id' />
+                    <label for="float-input1"></label>
+                </span>
+            </div>
+        </form>
+    </div>
+    <div class="mt-4">
+        <button  type="button" class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md w-100" 
+        (click)="editAddressModal=false;editAddress(editAddressForm)">{{"buttons.editAddress" | translate}}</button>
+    </div>
+</p-dialog>

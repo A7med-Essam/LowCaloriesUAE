@@ -1,0 +1,131 @@
+<section>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <img src="../../../../../assets/images/logo/LC_LOGO (1).png" alt="" class="img-fluid pointer" routerLink="../../home">
+                </div>
+                <p class="text-center text-muted txt-font mt-3">{{'Auth.register.title' | translate}}</p>
+                <form [formGroup]='registerForm' (ngSubmit)='onSubmit(registerForm)'>
+                    <div class="d-grid text-center w-75 m-auto txt-font register-group" id="style-4">
+                        <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" required="required" type="text" formControlName='name'/>
+                            <label class="required">{{'Auth.register.fullname' | translate}}</label>
+                            <fa-icon [icon]="faUser"   class="icon-controller position-left txt-main"></fa-icon>
+                            <small class="text-danger " *ngIf="registerForm.get('name')?.touched &&
+                                registerForm.get('name')?.invalid">{{'errors.required' | translate}}</small>
+                        </div>
+                        <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" required="required" type="text" formControlName='email'/>
+                            <label class="required">{{'Auth.register.email' | translate}}</label>
+                            <fa-icon [icon]="faEnvelope"   class="icon-controller position-left txt-main"></fa-icon>
+                            <small class="text-danger " 
+                                *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')">
+                                {{'errors.required' | translate}}
+                            </small>
+                            <small class="text-danger " 
+                            *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')">
+                            {{'errors.email' | translate}}
+                            </small>
+                        </div>
+                        <!-- <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" required="required" type="date" formControlName='profile[date_of_birth]'/>
+                            <label class="required">Date of birth</label>
+                            <fa-icon [icon]="faCalendar"   class="icon-controller position-left txt-main"></fa-icon>
+                            <small class="text-danger " *ngIf="registerForm.get('profile[date_of_birth]')?.touched &&
+                                registerForm.get('profile[date_of_birth]')?.invalid">This field is required</small>
+                        </div> -->
+                        <div class="my-3 position-relative">
+                            <!-- <input class="p-3 form-controller" required="required" type="number" formControlName='mobile'/> -->
+                            <input  type="text" required="required" pInputText formControlName='mobile' ngClass="p-3 form-controller"
+                            maxlength="10" minlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"> 
+                            <label class="required">{{'Auth.register.phone' | translate}}</label>
+                            <fa-icon [icon]="faPhone"   class="icon-controller position-left txt-main"></fa-icon>
+                            <!-- <small class="text-danger" *ngIf="registerForm.get('mobile')?.touched &&
+                                registerForm.get('mobile')?.invalid">{{'errors.required' | translate}}
+                            </small> -->
+                            <small class="text-danger" 
+                                *ngIf="registerForm.get('mobile')?.touched && registerForm.get('mobile')?.hasError('required')">
+                                {{'errors.required' | translate}}
+                            </small>
+                            <small class="text-danger" 
+                            *ngIf="registerForm.get('mobile')?.touched && registerForm.get('mobile')?.hasError('maxlength')">
+                            {{'errors.mobile' | translate}}
+                        </small>
+                            <small class="text-danger" 
+                            *ngIf="registerForm.get('mobile')?.touched && registerForm.get('mobile')?.hasError('minlength')">
+                            {{'errors.mobile' | translate}}
+                            </small>
+                        </div>
+                        <div class="my-3 position-relative">
+                            <input class="p-3 form-controller PasswordInput1" required="required" type="password" #PasswordInput1 formControlName='password'/>
+                            <label class="required">{{'Auth.register.password' | translate}}</label>
+                            <fa-icon [icon]="faLock"   class="icon-controller position-left txt-main"></fa-icon>
+                            <fa-icon [icon]="faEye1"  class="icon-controller txt-main position-right" (click)="togglePassword(PasswordInput1)"></fa-icon>
+                            <small class="text-danger " 
+                                *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required')">
+                                {{'errors.required' | translate}}
+                            </small>
+                            <small class="text-danger " 
+                            *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('pattern')">
+                                {{'errors.password_pattern' | translate}}
+                            </small>
+                        </div>
+                        <div class="my-3 position-relative">
+                            <input class="p-3 form-controller PasswordInput2" required="required" type="password" #PasswordInput2 formControlName='confirm_password'/>
+                            <label class="required">{{'Auth.register.confirm' | translate}}</label>
+                            <fa-icon [icon]="faLock"   class="icon-controller position-left txt-main"></fa-icon>
+                            <fa-icon [icon]="faEye2"  class="icon-controller txt-main position-right" (click)="togglePassword(PasswordInput2)"></fa-icon>
+                            <small class="text-danger " *ngIf="registerForm.get('confirm_password')?.touched && 
+                                registerForm.get('confirm_password')?.invalid">{{'errors.confirm' | translate}}
+                            </small>
+                        </div>
+                        <!-- <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" required="required" type="number" formControlName='second_mobile'/>
+                            <label class="Optional">Second phone number</label>
+                            <fa-icon [icon]="faPhone"   class="icon-controller position-left txt-main"></fa-icon>
+                        </div> -->
+                        <!-- <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" required="required" type="number" formControlName='profile[height]'/>
+                            <label class="Optional">Height</label>
+                            <img src="../../../../../assets/images/profile/height.png" alt="" class="icon-controller position-left txt-main img-fluid" style="width: 16px;">
+                        </div> -->
+                        <!-- <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" required="required" type="number" formControlName='profile[weight]'/>
+                            <label class="Optional">Weight</label>
+                            <fa-icon [icon]="faWeight"   class="icon-controller position-left txt-main"></fa-icon>
+                        </div> -->
+                        <!-- <div class="my-3 position-relative">
+                            <p-dropdown [options]="genderType" formControlName='profile[gender]' placeholder="Gender (Optional)"></p-dropdown>
+                            <fa-icon [icon]="faVenusMars"   class="icon-controller position-left txt-main"></fa-icon>
+                        </div> -->
+                        <!-- <div class="my-3 position-relative">
+                            <p-dropdown [options]="emirate" optionLabel="name" optionValue="id" formControlName='emirate_id' placeholder="Emirate (Optional)"
+                            (ngModelChange)="getAreas($event)"></p-dropdown>
+                            <fa-icon [icon]="faLocation"   class="icon-controller position-left txt-main"></fa-icon>
+                        </div> -->
+                        <!-- <div class="my-3 position-relative">
+                            <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id" placeholder="Area (Optional)" formControlName='address[area_id]'></p-dropdown>
+                            <fa-icon [icon]="faLocation"   class="icon-controller position-left txt-main"></fa-icon>
+                        </div> -->
+                        <!-- <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" required="required" type="text" formControlName='address[address]'/>
+                            <label class="Optional">Address</label>
+                            <fa-icon [icon]="faLocation"   class="icon-controller position-left txt-main"></fa-icon>
+                        </div> -->
+                        <!-- <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" required="required" type="text" formControlName='address[landline]'/>
+                            <label class="Optional">Landline</label>
+                            <fa-icon [icon]="faLocation"   class="icon-controller position-left txt-main"></fa-icon>
+                        </div> -->
+                        <button [disabled]="registerForm.invalid" class="btn bg-main text-white rounded-pill px-5 py-3 header-font mt-4 f-size-md">{{'Auth.register.register' | translate}}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 flex-center my-3 d-none d-md-flex">
+                <img src="../../../../../assets/images/kisspng-hamburg.png" class="w-80" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+

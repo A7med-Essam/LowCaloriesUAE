@@ -1,0 +1,159 @@
+        <div class="shadow-lg bg-white rounded-md mt-2 mb-4 Weeks_Container d-flex flex-wrap" style="width: fit-content;">
+            <span class="name px-4 py-2 pointer" #week (click)="toggleWeeks(week);currentWeek = (i+1)" *ngFor="let item of planWeeks;let i = index">
+                <span class="pb-2" [class.active]="i == 0">{{"calendar.weeks.week"+(i+1) | translate}}</span>
+            </span>
+        </div>
+        <!-- <ng-template #other_content>
+            <div class="shadow-lg bg-white rounded-md mt-2 mb-4 Weeks_Container d-flex flex-wrap">
+                <p-skeleton width="8rem" height="2rem" styleClass="m-1"></p-skeleton>
+                <p-skeleton width="8rem" height="2rem" styleClass="m-1"></p-skeleton>
+            </div>
+        </ng-template> -->
+
+    <ng-container *ngIf="currentWeek == 1">
+        <div *ngIf="planWeeks?.[0];else other_content">
+            <div *ngFor="let week of planWeeks?.[0]">
+                <h4 class="txt-main mb-3">{{week?.dayname}}</h4>
+                <div class="rounded-md p-3 pb-3 my-3 shadow-lg bg-white" *ngFor="let item of week.meals">
+                    <h5 class="meal_name">{{item?.mealName}}</h5>
+                    <div class="row">
+                        <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                            <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.calories" | translate}}</span>
+                                <span class="font-weight-600 txt-font">{{item?.calories}}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                            <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.fat" | translate}}</span>
+                                <span class="font-weight-600 txt-font">{{item?.fats}}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                            <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.protein" | translate}}</span>
+                                <span class="font-weight-600 txt-font">{{item?.protiens}}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                            <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                                <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.carb" | translate}}</span>
+                                <span class="font-weight-600 txt-font">{{item?.carb}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #other_content>
+                <p-skeleton width="100%" height="10rem" styleClass="m-3"></p-skeleton>
+                <p-skeleton width="100%" height="10rem" styleClass="m-3"></p-skeleton>
+                <p-skeleton width="100%" height="10rem" styleClass="m-3"></p-skeleton>
+                <p-skeleton width="100%" height="10rem" styleClass="m-3"></p-skeleton>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="currentWeek == 2">
+        <div *ngFor="let week of planWeeks?.[1]">
+            <h4 class="txt-main mb-3">{{week?.dayname}}</h4>
+            <div class="rounded-md p-3 pb-3 my-3 shadow-lg bg-white" *ngFor="let item of week.meals">
+                <h5 class="meal_name">{{item?.mealName}}</h5>
+                <div class="row">
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.calories" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.calories}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.fat" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.fats}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.protein" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.protiens}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.carb" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.carb}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="currentWeek == 3">
+        <div *ngFor="let week of planWeeks?.[2]">
+            <h4 class="txt-main mb-3">{{week?.dayname}}</h4>
+            <div class="rounded-md p-3 pb-3 my-3 shadow-lg bg-white" *ngFor="let item of week.meals">
+                <h5 class="meal_name">{{item?.mealName}}</h5>
+                <div class="row">
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.calories" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.calories}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.fat" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.fats}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.protein" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.protiens}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.carb" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.carb}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="currentWeek == 4">
+        <div *ngFor="let week of planWeeks?.[3]">
+            <h4 class="txt-main mb-3">{{week?.dayname}}</h4>
+            <div class="rounded-md p-3 pb-3 my-3 shadow-lg bg-white" *ngFor="let item of week.meals">
+                <h5 class="meal_name">{{item?.mealName}}</h5>
+                <div class="row">
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.calories" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.calories}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.fat" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.fats}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.protein" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.protiens}}</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-4 col-sm-6 my-2 postion-relative">
+                        <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                            <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main" style="top: 0;font-size:12px ;">{{"nutrition.carb" | translate}}</span>
+                            <span class="font-weight-600 txt-font">{{item?.carb}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>

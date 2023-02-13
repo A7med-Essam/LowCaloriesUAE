@@ -1,0 +1,94 @@
+<section class="bg-img-main p-0 plans">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="fa-4x">
+                    <span class="txt-main">{{'allPrograms.title' | translate}}</span>
+                </h1>
+                <p class="text-muted txt-font">{{'allPrograms.desc' | translate}}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="AllPrograms" *ngIf="Programs.length > 0;else other_content">
+        <owl-carousel-o [options]="customOptions" *ngIf="toggleCarousel">
+            <ng-container *ngFor="let Program of Programs; let i = index">
+                <ng-template carouselSlide>
+                    <div class="item shadow-lg bg-white py-4 text-center header-font py-5 h-100">
+                        <div class="container text-center d-flex justify-content-between flex-column align-items-center h-100">
+                            <div>
+                                <img [src]="Program?.image" class="img-fluid w-80 mb-4 mx-auto" alt="">
+                                <h3>
+                                    {{Program?.name}}
+                                </h3>
+                                <p class="text-muted txt-font">
+                                    {{Program?.description}}
+                                </p>
+                            </div>
+                            <button class="btn bg-main header-font text-white rounded-pill py-2 px-4" 
+                            *ngIf="Program?.type == 'Custom' " 
+                            [routerLink]="['/plans/custom', Program?.id]">
+                                {{'allPrograms.subscribe' | translate}}
+                            </button>
+                            <button class="btn bg-main header-font text-white rounded-pill py-2 px-4" 
+                            *ngIf="Program?.type == 'Normal' " 
+                            [routerLink]="['/plans/normal', Program?.id]">
+                                {{'allPrograms.subscribe' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+    </div>
+    
+    <div *ngIf="!toggleCarousel">
+        <div class="row mx-0" *ngIf="Programs.length > 0;else other_content">
+            <div class="col-md-6 my-2" *ngFor="let Program of Programs; let i = index">
+                <div class="item shadow-lg bg-white py-4 text-center header-font py-5 h-100"> 
+                    <div class="container d-flex justify-content-between flex-column align-items-center h-100">
+                        <div>
+                            <img [src]="Program?.image" class="img-fluid mb-4 w-80 mx-auto" alt="">
+                            <h3>
+                                    {{Program?.name}}
+                            </h3>
+                            <p class="text-muted txt-font">
+                                    {{Program?.description}}
+                            </p>
+                        </div>
+                        <button class="btn bg-main header-font text-white rounded-pill py-2 px-4" 
+                        *ngIf="Program?.type == 'Custom' " 
+                        [routerLink]="['/plans/custom', Program?.id]">
+                            {{'allPrograms.subscribe' | translate}}
+                        </button>
+                        <button class="btn bg-main header-font text-white rounded-pill py-2 px-4" 
+                        *ngIf="Program?.type == 'Normal' " 
+                        [routerLink]="['/plans/normal', Program?.id]">
+                            {{'allPrograms.subscribe' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <ng-template #other_content>
+        <div class="container">
+            <div class="row mx-0">
+                <div class="col-xl-3 col-lg-3 col-md-6">
+                    <p-skeleton width="100%" height="28rem" styleClass="my-3"></p-skeleton>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6">
+                    <p-skeleton width="100%" height="28rem" styleClass="my-3"></p-skeleton>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6">
+                    <p-skeleton width="100%" height="28rem" styleClass="my-3"></p-skeleton>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-6">
+                    <p-skeleton width="100%" height="28rem" styleClass="my-3"></p-skeleton>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</section>
+

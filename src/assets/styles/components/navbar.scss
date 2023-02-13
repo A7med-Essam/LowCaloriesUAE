@@ -1,0 +1,11 @@
+.navbar-nav .active {
+    color: $main !important;
+}
+
+.nav-link {
+    transition: $transitionTime;
+}
+
+.nav-link:not(.active):hover {
+    color: $main !important;
+}

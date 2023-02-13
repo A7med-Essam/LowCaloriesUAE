@@ -1,0 +1,91 @@
+@import '../../../../../../../assets/styles/variables/colors.scss';
+.categories .weeks, .categories .calendar{
+    width: 130px;
+    text-align: center;
+    padding: 13px 35px;
+    border-radius: 8px;
+}
+
+.categories .active{
+    background-color: $main !important;
+    color: $white !important;
+}
+
+#profile-img{
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    transform: translateX(-50%);
+}
+
+#edit-img{
+    position: absolute;
+    top: 125px;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transform: translateX(-50%);
+}
+
+.list ul{
+    list-style: none;
+    text-align: start;
+    padding: 0;
+}
+
+.list ul li span{
+    cursor: pointer;
+}
+
+.list ul li.active{
+    background-color: $main;
+    color: $white;
+}
+
+@media all and (max-width:767px){
+    #profile-img{
+        top: 140px !important;
+    }
+    #edit-img{
+        top: 205px !important;
+    }
+}
+
+
+
+@media all and (max-width:500px){
+    #profile-img{
+        top: 80px !important;
+    }
+    
+    #edit-img{
+        top: 145px !important;
+    }
+}
+
+@media all and (max-width:991.5px) and (min-width:767px){
+    #profile-img{
+        top: 140px !important;
+    }
+    
+    #edit-img{
+        top: 200px !important;
+    }
+}
+
+@media all and (max-width:330px){
+    #profile-img{
+        width: 90px;
+        top: 50px !important;
+        height: 90px;
+    }
+    
+    #edit-img{
+        height: 40px;
+        top: 113px !important;
+        width: 40px;
+    }
+}

@@ -1,0 +1,27 @@
+:host {
+    ::ng-deep .p-dropdown {
+        border: 0;
+
+        &:hover {
+            border: 0;
+        }
+
+        &:focus {
+            border: 0;
+        }
+    }
+
+    ::ng-deep .p-dropdown:not(.p-disabled).p-focus {
+        border: 0 !important;
+    }
+}
+
+
+// #myVideo {
+//     position: fixed;
+//     right: 0;
+//     bottom: 0;
+//     min-width: 100%;
+//     min-height: 100%;
+//     opacity: .5;
+// }

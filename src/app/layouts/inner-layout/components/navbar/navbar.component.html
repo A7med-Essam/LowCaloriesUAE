@@ -1,0 +1,118 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" [routerLink]="['../home']" >
+            <img src="../../../../../assets/images/logo/LC_LOGO (1).png" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
+                <li class="nav-item mx-2">
+                    <a class="nav-link txt-black header-font pointer" routerLink="../home" routerLinkActive="active">{{ "navbar.home" | translate | uppercase}}</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link txt-black header-font pointer" routerLink="./plans" routerLinkActive="active">{{'navbar.monthlyPlans' | translate |uppercase}}</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link txt-black header-font pointer" routerLink="./clinic" routerLinkActive="active">{{'navbar.clinicReservation' | translate |uppercase}}</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a class="nav-link txt-black header-font pointer" routerLink="./menu" routerLinkActive="active">{{'navbar.menu' | translate |uppercase}}</a>
+                </li>
+                <li class="nav-item ml-2">
+                    <a class="nav-link txt-black header-font pointer" routerLink="./contacts" routerLinkActive="active">{{'navbar.contactUs' | translate |uppercase}}</a>
+                </li>
+                <li class="nav-item ml-2" (click)="changeLang(availableLang)">
+                    <a class="nav-link txt-black header-font pointer">{{availableLang | uppercase}}</a>
+                </li>
+            </ul>
+            <div class="flex-center">
+                <div class="dropdown dropstart" *ngIf="isLogin">
+                    <button class="btn dropdown-toggle txt-main d-flex align-items-center" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img [src]="User?.image"
+                        style="width: 40px;height: 40px;order: 2;" class="img-fluid rounded-circle" alt="">
+                        <span class="text-muted ms-2 me-1 txt-font-bold" style="order: 1">{{User?.name}}</span>
+                    </button>
+                    <ul class="dropdown-menu p-0 border-0 rounded-md shadow-lg text-start" aria-labelledby="dropdownMenuButton1">
+                        <div class="menu-header d-flex align-items-center py-3 bg-main rounded-md flex-wrap text-start">
+                            <img [src]="User?.image" style="height:90px;"
+                            class="ms-4 img-fluid rounded-circle" alt="">
+                            <div class="text-white ms-4">
+                                <h5 class="username">{{User?.name}}</h5>
+                                <span class="useremail">{{User?.email}}</span>
+                            </div>
+                        </div>
+                        <div class="menu-body bg-white rounded-md">
+                            <ul class="txt-font-bold ps-0 profileList" style="list-style: none;">
+                                <li class="p-3 pointer" #PersonalInfo routerLink="./profile/controls/1">
+                                    <img src="../../../../../assets/images/profile/person_green.png"
+                                    src1="../../../../../assets/images/profile/person_white.png"
+                                    src2="../../../../../assets/images/profile/person_green.png"
+                                    class="img-fluid me-3 pointer" style="width: 18px;" alt=""> <span>{{'navbar.personalInformation' | translate}}</span>
+                                </li>
+                                <li class="p-3 pointer" #Plans routerLink="./profile/controls/2">
+                                    <img src="../../../../../assets/images/profile/plans_green.png"
+                                    src1="../../../../../assets/images/profile/plans_white.png"
+                                    src2="../../../../../assets/images/profile/plans_green.png"
+                                    class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{'navbar.myPlans' | translate}}</span>
+                                </li>
+                                <li class="p-3 pointer" #Addresses routerLink="./profile/controls/3">
+                                    <img src="../../../../../assets/images/profile/location_green.png"
+                                    src1="../../../../../assets/images/profile/location_white.png"
+                                    src2="../../../../../assets/images/profile/location_green.png"
+                                    class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{'navbar.myAddresses' | translate}}</span>
+                                </li>
+                                <li class="p-3 pointer" #ChangePassword routerLink="./profile/controls/4">
+                                    <img src="../../../../../assets/images/profile/lock_green.png"
+                                    src1="../../../../../assets/images/profile/lock_white.png"
+                                    src2="../../../../../assets/images/profile/lock_green.png"
+                                    class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{'navbar.changePassword' | translate}}</span>
+                                </li>
+                                <li class="p-3 pointer" #Menu routerLink="./profile/controls/5">
+                                    <img src="../../../../../assets/images/profile/menu_green.png"
+                                    src1="../../../../../assets/images/profile/menu_white.png"
+                                    src2="../../../../../assets/images/profile/menu_green.png"
+                                    class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{'navbar.menu' | translate}}</span>
+                                </li>
+                                <li class="p-3 pointer" #Chat routerLink="./profile/controls/6">
+                                    <img src="../../../../../assets/images/profile/chat_green.png"
+                                    src1="../../../../../assets/images/profile/chat_white.png"
+                                    src2="../../../../../assets/images/profile/chat_green.png"
+                                    class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{'navbar.chatWithUs' | translate}}</span>
+                                </li>
+                                <li class="p-3 pointer" #Ask routerLink="./profile/controls/7">
+                                    <img src="../../../../../assets/images/profile/ask_green.png"
+                                    src1="../../../../../assets/images/profile/ask_white.png"
+                                    src2="../../../../../assets/images/profile/ask_green.png"
+                                    class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{'navbar.askUs' | translate}}</span>
+                                </li>
+                                <li class="p-3 pointer" #Settings routerLink="./profile/controls/8">
+                                    <img src="../../../../../assets/images/profile/setting_green.png"
+                                    src1="../../../../../assets/images/profile/setting_white.png"
+                                    src2="../../../../../assets/images/profile/setting_green.png"
+                                    class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{'navbar.settings' | translate}}</span>
+                                </li>
+                                <li class="p-3 pointer" (click)="logOut()">
+                                    <img src="../../../../../assets/images/profile/power_green.png" class="img-fluid me-3 " style="width: 18px;" alt=""> 
+                                    <span>
+                                        {{'navbar.logout' | translate}}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="over-flow-shadow"></div>
+                    </ul>
+                </div>
+                <button class="login-btn btn mx-2 bg-main text-white header-font rounded-pill  py-2"  routerLink="../auth/login" *ngIf="!isLogin">
+                    <span class="flex-center">{{'navbar.login' | translate}}</span>
+                </button>
+                <button class="register-btn btn mx-2 bg-black text-white header-font rounded-pill py-2 " routerLink="../auth/register" *ngIf="!isLogin">
+                    <span class="flex-center">{{'navbar.register' | translate}}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>

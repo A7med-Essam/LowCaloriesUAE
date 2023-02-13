@@ -1,0 +1,147 @@
+// Defaults
+.rounded-lg {
+    border-radius: 18px;
+}
+
+.rounded-md {
+    border-radius: 6px;
+}
+
+.font-weight-500{
+    font-weight: 500;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.f-size-lg{
+    font-size: $f-size-lg;
+}
+
+.f-size-md{
+    font-size: $f-size-md;
+}
+
+.f-size-sm{
+    font-size: $f-size-sm;
+}
+
+.f-size-xs{
+    font-size: $f-size-xs;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.position-left{
+    left: 0;
+}
+
+.position-right{
+    right: 0;
+}
+
+.w-40{
+    width: 40% !important;
+}
+.w-60{
+    width: 60% !important;
+}
+.w-70{
+    width: 70% !important;
+}
+.w-80{
+    width: 80% !important;
+}
+.w-90{
+    width: 90% !important;
+}
+
+.zindex_minus{
+    z-index: -2;
+}
+
+.bg-img-main {
+    background-image: url("../../../assets/images/kisspng-hamburg-bg.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 55%;
+    padding: 35px 0px;
+}
+
+
+// scroller
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px $main;
+	background-color: $off-white;
+}
+
+::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: $off-white;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: $main;
+	border: 2px solid $main;
+}
+
+// Normal Plan Check Days
+.deliveredDays .item{
+    transition: $transitionTime;
+    cursor: pointer;
+}
+.deliveredDays .item.active{
+    color: $white;
+    background-color: $main !important;
+    position: relative;
+    padding-right: 40px !important;
+}
+.deliveredDays .item.active::after{
+    content: '\f058';
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    font-size: 18px;
+    animation: mymove 0.8s;
+}
+
+.deliveredDays .item:hover{
+    background-color: $main !important;
+    color: $white;
+}
+
+/*Prevent text selection*/
+span{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+// selection
+::selection {
+    background: $main !important;
+    /* WebKit/Blink Browsers */
+    color: $white !important;
+}
+
+::-moz-selection {
+    background: $main !important;
+    /* Gecko Browsers */
+    color: $white !important;
+}
+
+// keyframes
+@keyframes mymove {
+    from {right: 20px;}
+    to {right: 10px;}
+}
+

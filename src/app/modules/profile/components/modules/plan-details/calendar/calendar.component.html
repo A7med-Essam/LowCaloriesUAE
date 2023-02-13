@@ -1,0 +1,104 @@
+<div class="rounded-md p-2 my-3 shadow-lg bg-white" *ngIf="getDetails">
+    <!-- <div class="wrapper">
+        <div class="container-calendar">
+            <div class="d-flex justify-content-between align-items-center mx-3 mt-3">
+                <div class="button-container-calendar d-flex justify-content-end">
+                    <fa-icon [icon]="faChevronLeft" class="icon mx-2"></fa-icon>
+                    <fa-icon [icon]="faChevronRight" class="icon mx-2"></fa-icon>
+                </div>
+            </div>
+            
+            <table class="table-calendar d-none" id="calendar" data-lang="en">
+                <thead id="thead-month"></thead>
+                <tbody id="calendar-body"></tbody>
+            </table>
+            
+            <div class="footer-container-calendar d-none">
+                    <label for="month">Jump To: </label>
+                    <select id="month" onchange="jump()">
+                        <option value=0>Jan</option>
+                        <option value=1>Feb</option>
+                        <option value=2>Mar</option>
+                        <option value=3>Apr</option>
+                        <option value=4>May</option>
+                        <option value=5>Jun</option>
+                        <option value=6>Jul</option>
+                        <option value=7>Aug</option>
+                        <option value=8>Sep</option>
+                        <option value=9>Oct</option>
+                        <option value=10>Nov</option>
+                        <option value=11>Dec</option>
+                    </select>
+                    <select id="year" onchange="jump()"></select>       
+            </div>
+        </div>
+    </div> -->
+    <!-- <h6 class="text-start p-3">May, 2022</h6> -->
+    <div class="row mx-2" *ngIf="planDetails.length > 0 ;else other_content">
+        <div class="col px-1 preparing" style="max-width: fit-content;" *ngFor="let plan of planDetails">
+            <div class="subDay text-center rounded-md p-2 pt-1 my-2 shadow-lg bg-white" (click)="getDetailsComponent();getDayDetails(plan?.date)">
+                <div class="text-start mb-2 txt-font f-size-sm">{{plan?.day_name}},{{plan?.date | date: 'MMM d'}}</div>
+                <div class="status"></div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #other_content>
+            <div class="d-flex flex-wrap">
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+                <p-skeleton width="5rem" height="3rem" styleClass="m-2"></p-skeleton>
+            </div>
+    </ng-template>
+</div>

@@ -1,0 +1,58 @@
+<section  class="landing bg-img-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h1 class="fa-4x">
+                    {{ "landing.welcome" | translate}} <span class="txt-main">{{ "landing.title" | translate}}</span>
+                </h1>
+                <p class="text-muted txt-font">{{ "landing.desc" | translate}}</p>
+
+                <div class="row icons w-90">
+                        <div class="col-md-6 my-3">
+                                <div class="item shadow-lg bg-white py-4 rounded-lg text-center header-font"  #MonthlyPlans routerLink="../plans"
+                                (mouseover)="hover(MonthlyPlans, '../../../../../assets/images/home-page/plan_white.png');" 
+                                (mouseout)="unhover(MonthlyPlans, '../../../../../assets/images/home-page/plan_green.png');">
+                                    <div class="flex-center flex-column h-100">
+                                        <img src="../../../../../assets/images/home-page/plan_green.png"  alt="">
+                                        <div class="pt-2">{{ "landing.monthlyPlans" | translate}}</div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-md-6 my-3">
+                                <div class="item shadow-lg bg-white py-4 rounded-lg text-center header-font"   #Menu routerLink="../menu"
+                                (mouseover)="hover(Menu, '../../../../../assets/images/home-page/menu_white.png');" 
+                                (mouseout)="unhover(Menu, '../../../../../assets/images/home-page/menu_green.png');">
+                                    <div class="flex-center flex-column h-100">
+                                        <img src="../../../../../assets/images/home-page/menu_green.png"  alt="" >
+                                        <div class="pt-2">{{ "landing.menu" | translate}}</div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-md-6 my-3">
+                                <div class="item shadow-lg bg-white py-4 rounded-lg text-center header-font"   #ClinicReservation routerLink="../clinic"
+                                (mouseover)="hover(ClinicReservation, '../../../../../assets/images/home-page/reservation_white.png');"
+                                (mouseout)="unhover(ClinicReservation, '../../../../../assets/images/home-page/reservation_green.png');">
+                                    <div class="flex-center flex-column h-100">
+                                        <img src="../../../../../assets/images/home-page/reservation_green.png" class="clinicReservationImg" alt="" >
+                                        <div class="pt-2">{{ "landing.clinicReservation" | translate}}</div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-md-6 my-3">
+                                <div class="item shadow-lg bg-white py-4 rounded-lg text-center header-font"   #ContactUs routerLink="../contacts"
+                                (mouseover)="hover(ContactUs, '../../../../../assets/images/home-page/contact_white.png');" 
+                                (mouseout)="unhover(ContactUs, '../../../../../assets/images/home-page/contact_green.png');">
+                                    <div class="flex-center flex-column h-100">
+                                        <img src="../../../../../assets/images/home-page/contact_green.png"  alt="" >
+                                        <div class="pt-2">{{ "landing.contactUs" | translate}}</div>
+                                    </div>
+                                </div>
+                        </div>
+                </div>
+            </div>
+            <div class="col-lg-6 flex-center my-3">
+                <img src="../../../../../assets/images/kisspng-hamburg.png" class="w-80" alt="">
+            </div>
+        </div>
+    </div>
+</section>

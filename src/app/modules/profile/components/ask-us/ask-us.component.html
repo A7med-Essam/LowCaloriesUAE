@@ -1,0 +1,39 @@
+<div class="content rounded-lg p-5 pb-3 shadow-lg bg-white" style="height: 775px;overflow: auto;">
+    <h4 class="txt-main mb-3">{{"profile.askUs.title" | translate}}</h4>
+    <div *ngIf="Questions.length > 0 ;else skeleton">
+        <div class="rounded-lg p-4 pb-3 shadow-lg bg-white my-4" *ngFor="let Question of Questions; let i = index">
+            <div *ngFor="let q of Question">
+                <div *ngIf="!q?.has_answers">
+                    <img  src="../../../../../assets/images/profile/ask/Group 38939.png" class="img-fluid" style="width: 40px;" alt="">
+                    <span class="txt-font-bold mx-1">{{q?.question | titlecase}}</span>
+                </div>
+            </div>
+            <div class="ms-5 d-flex flex-wrap">
+                <div *ngFor="let q of Question">
+                    <div *ngIf="q?.has_answers" class="question rounded py-2 px-3 shadow-lg bg-white m-2 pointer" style="width: fit-content;"
+                        (click)="getMoreQuestions(q.id);getSelectedQuestion(q.question,q.id);">
+                        {{q?.question | titlecase}}
+                    </div>
+                </div>
+            </div>
+            <div class="user text-end mt-4" *ngFor="let answer of CurrentSelectedAnswers">
+                <div *ngFor="let q of Question">
+                    <div *ngIf="answer?.id == q.id">
+                        <div class="bubble shadow-lg">
+                            <span style="z-index: 99; position: relative;">{{answer?.SelectedAnswer | titlecase}}</span>
+                        </div>
+                        <img src="../../../../../assets/images/profile/ask/imgbin-fat-eating-man-a-fat-man-man-eating-hamburger-sLXU5abu1Msc4F54zGyrNRLvm.png" 
+                        class="img-fluid rounded" width="40px" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #skeleton>
+        <div class="row mx-0">
+            <div class="col-12">
+                <p-skeleton width="100%" height="8rem" styleClass="my-3"></p-skeleton>
+            </div>
+        </div>
+    </ng-template>
+</div>

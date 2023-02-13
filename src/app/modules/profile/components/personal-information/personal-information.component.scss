@@ -1,0 +1,21 @@
+:host{
+    ::ng-deep .p-dropdown, ::ng-deep .p-inputtext{
+        border: 0 !important;
+        border-bottom: 1px solid black !important;
+        border-radius: 0 !important;
+    }
+
+    ::ng-deep .p-dropdown .p-inputtext{
+        border: 0 !important;
+    }
+
+    ::ng-deep .p-float-label > label{
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    ::ng-deep .p-calendar .p-inputtext {
+        text-align: center;
+    }
+}
+

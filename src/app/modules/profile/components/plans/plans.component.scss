@@ -1,0 +1,16 @@
+@import '../../../../../assets/styles/variables/colors.scss';
+@import '../../../../../assets/styles/variables/general.scss';
+
+@media all and (max-width:992px) {
+    .plans{
+        justify-content: center;
+    }
+}
+
+.plans{
+    transition: $transitionTime;
+}
+
+.plans:hover{
+    background-color: $gray-light3 !important;
+}

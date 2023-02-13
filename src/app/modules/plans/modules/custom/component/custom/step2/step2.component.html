@@ -1,0 +1,51 @@
+<div>
+    <h4>
+        {{ "customPlan.step2.desc" | translate }}
+    </h4>
+        <form class="mt-4" [formGroup]='ProgramDetailsForm'>
+            <div class="row">
+                <div class="col-md-6 my-2">
+                    <div class="mb-2"><label>{{ "customPlan.step2.numberOfDays" | translate }} <span class="text-danger">*</span></label></div>
+                    <p-dropdown [options]="Days" formControlName='Number_of_Days' (onChange)="onChange($event)"
+                    optionLabel="value" optionValue="value" autoWidth="false" [style]="{'width':'100%'}" placeholder='{{ "customPlan.step2.numberOfDays" | translate }}'></p-dropdown>
+                    <small class="text-danger " *ngIf="ProgramDetailsForm.get('Number_of_Days')?.touched &&
+                    ProgramDetailsForm.get('Number_of_Days')?.invalid">{{ "errors.required" | translate }}</small>
+                </div>
+                <div class="col-md-6 my-2">
+                    <label class="mb-2">{{ "customPlan.step2.startDate" | translate }} <span class="text-danger">*</span></label>
+                    <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true" (onSelect)="onSelectedDate($event,deliveredDays)" 
+                    placeholder="dd-mm-yy" formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="disabledDays"></p-calendar>
+                    <small class="text-danger " *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
+                    ProgramDetailsForm.get('Start_Date')?.invalid">{{ "errors.required" | translate }}</small>
+                </div>
+                <div class="col-12 my-2">
+                    <label>{{ "customPlan.step2.deliveryDays.title" | translate }} <span class="text-danger">*</span></label>
+                    <div><small><span class="text-muted">{{ "customPlan.step2.deliveryDays.desc" | translate }}</span></small></div>
+                    <div class="row mt-3 deliveredDays" #deliveredDays>
+                        <div class="col-md-3 col-6 col-xl-3 col-lg-4" *ngFor="let delivery_day of Programs?.delivery_days; let i = index">
+                            <label class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md dayWeek" [for]="'day'+i"
+                                [attr.day]="getDayNumber(delivery_day?.day_name)" #CurrentDay 
+                                [attr.dayName]="delivery_day?.day_name" (click)="checkDeliveryDays(CurrentDay);">
+                                {{deliveryNames[i][translate.currentLang] | titlecase}}
+                            </label>
+                            <input type="checkbox" hidden  formControlName='CheckDays' [id]="'day'+i">
+                        </div>
+                        <div class="col-md-3 col-6 col-xl-3 col-lg-4" *ngIf="is7Week">
+                            <label class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md allWeek" day="8" [for]="'day8'"
+                            (click)="checkAllWeekBtn(AllWeek);" #AllWeek>{{"normalPlan.step1.allWeek" | translate}}</label>
+                            <input type="checkbox" hidden  formControlName='CheckDays' [id]="'day8'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+</div>
+
+<p-dialog [modal]="true" [(visible)]="displayDeliveryMsg" [style]="{width: '50vw'}">
+    <h6 class="txt-font text-center">
+        {{DeliveryMsg}}
+    </h6>
+    <hr>
+    <button type="button" class="btn bg-main rounded-pill w-100 text-white py-3 txt-font-bold f-size-md" (click)="displayDeliveryMsg=false"
+    data-bs-dismiss="modal">{{"buttons.confirm" | translate}}</button>
+</p-dialog>

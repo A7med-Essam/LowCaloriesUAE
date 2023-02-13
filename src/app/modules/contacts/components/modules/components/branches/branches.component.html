@@ -1,0 +1,54 @@
+<section class="bg-img-main Branches">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h1 class="fa-4x">
+                    <span class="txt-main">{{"contacts.branches.title" | translate}}</span>
+                </h1>
+                <p class="text-muted txt-font">{{"contacts.branches.desc" | translate}}</p>
+
+                <div class="row icons w-90" *ngIf="Emirates.length > 0; else skeleton">
+                        <div class="col-md-6 my-3" *ngFor="let Emirate of Emirates; let i = index">
+                            <div class=" item shadow-lg bg-white py-1 rounded-lg text-center header-font d-flex px-4"  #Branch 
+                            routerLink="../details/{{Emirate?.id}}"
+                            (mouseover)="hover(Branch, '../../../../../assets/images/branches/location_white.png');"
+                            (mouseout)="unhover(Branch, '../../../../../assets/images/branches/location_green.png');">
+                                <div class="flex-center flex-row h-100" >
+                                    <img src="../../../../../assets/images/branches/location_green.png"  alt="">
+                                    <div class="px-3">
+                                            {{Emirate?.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <ng-template #skeleton>
+                    <div class="row mx-0 w-90">
+                        <div class="col-md-6">
+                            <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+                        </div>
+                        <div class="col-md-6">
+                            <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+                        </div>
+                        <div class="col-md-6">
+                            <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+                        </div>
+                        <div class="col-md-6">
+                            <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+                        </div>
+                        <div class="col-md-6">
+                            <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+                        </div>
+                        <div class="col-md-6">
+                            <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="col-lg-6 flex-center my-3">
+                <img src="../../../../../assets/images/kisspng-hamburg.png" class="w-80" alt="">
+            </div>
+        </div>
+    </div>
+</section>

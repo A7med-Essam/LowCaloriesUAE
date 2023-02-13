@@ -1,0 +1,51 @@
+<section class="bg-img-main">
+    <div class="container">
+        <div class="row" style="height: 600px;">
+            <div [ngClass]="{'col-lg-6': (currIndex == 1), 'col-xl-8': (currIndex == 2)}">
+                <h1 class="fa-3x">
+                    <span class="txt-main">{{"clinic.title" | translate}}</span>
+                </h1>
+                <div class="stepper-wrapper my-5 pb-3" #indicators>
+                    <div class="progress" #progressElm></div>
+                    <div class="screen-indicator completed step1">1</div>
+                    <div class="screen-indicator step2">2</div>
+                </div>
+                <app-step1 *ngIf="currIndex == 1" 
+                    [Clinic]="Clinic" 
+                    (isValidForm)="getFormStatus($event)" 
+                    (EmirateId)="getEmirateId($event)" 
+                    (ClinicForm)="getClinicForm($event)"
+                    [ClinicForm2]="ClinicForm">
+                </app-step1>
+                <app-step2 *ngIf="currIndex == 2" 
+                    [Emirate_appointments]="Emirate_appointments" 
+                    (isSelectedTime)="GetTimeStatus($event)" 
+                    (SubInfo)="GetSubInfo($event)" 
+                    [ClinicForm]="ClinicForm">
+                </app-step2>
+                <button *ngIf="currIndex == 1" class="btn bg-main text-white px-5 py-2 mt-4 font-weight-500" #nextBtn
+                    [ngClass]="{'disabled': currIndex == 1 && InValid}"
+                    id="next-btn" (click)="next();"><span class="px-2">{{"buttons.next" | translate}}</span>
+                </button>
+                <div class="d-flex mb-3">
+                    <button *ngIf="currIndex == 2" class="btn bg-black text-white px-5 py-2 mt-4 font-weight-500 mx-2" (click)="previous();"><span class="px-2">
+                        {{"buttons.back" | translate}}
+                    </span>
+                    </button>
+                    <button class="btn bg-main text-white px-5 py-2 mt-4 w-100 font-weight-500 mx-2" id="next-btn"
+                          *ngIf="isSelectedTime && currIndex == 2" (click)="getCheckOut()">
+                        <span class="px-2">{{"buttons.checkOut" | translate}}</span>
+                    </button>
+                </div>
+            </div>
+            <div class="my-3 flex-center" [ngClass]="{'col-lg-6': (currIndex == 1), 'col-xl-4': (currIndex == 2)}">
+                <div style="position: relative;text-align: center;">
+                    <img src="../../../../../assets/images/clinic_reservation/car.png" class="img-fluid" alt="">
+                    <div style="position: absolute; top: 50%;">
+                        <img src="../../../../../assets/images/clinic_reservation/car2.png" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

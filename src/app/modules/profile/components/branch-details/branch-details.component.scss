@@ -1,0 +1,17 @@
+@import "../../../../../assets/styles/variables/colors.scss";
+
+.abu-dhabi .text-muted {
+    transition: all 0.5s;
+}
+
+.abu-dhabi .icons .item:hover .text-muted {
+    color: $white !important;
+}
+
+.abu-dhabi .icons .item:hover small {
+    color: $white !important;
+}
+
+.width-50px{
+    width: 50px;
+}

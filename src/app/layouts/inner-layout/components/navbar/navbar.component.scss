@@ -1,0 +1,83 @@
+@import '../../../../../assets/styles/variables/colors.scss';
+.navbar{
+  img{
+    width: 90px;
+  }
+  .navbar-toggler{
+    box-shadow: none;
+  }
+  button.login-btn,button.register-btn{
+    width: 120px;
+    span{
+      padding-bottom: 2px;
+    }
+  }
+}
+
+@media all and (max-width:991.5px){
+    .dropstart .dropdown-toggle::after {
+        display: inline-block;
+        margin-left: 0.255em;
+        vertical-align: 0.255em;
+        content: "";
+    }
+
+    .dropstart .dropdown-toggle::before {
+      display: none;
+      margin-right: 0.255em;
+      vertical-align: 0.255em;
+      content: "";
+      border-top: 0.3em solid transparent;
+      border-right: 0.3em solid;
+      border-bottom: 0.3em solid transparent;
+    }
+
+    .dropdown-menu[data-bs-popper] {
+      top: 100% !important;
+      // transform: translateX(-50%);
+      left: -119% ;
+      margin-top: 0.125rem !important;
+    }
+  }
+
+@media all and (max-width:1100px) and (min-width:992px){
+  #navbarSupportedContent{
+    font-size: 13px;
+  }
+}
+
+.dropdown-menu {
+  min-width: 400px !important;
+}
+.profileList li:hover{
+  color: $main;
+}
+
+@media all and (max-width:499px){
+  .dropdown-menu {
+      left: -15% !important;
+      min-width: 200px !important;
+  }
+  .useremail,.username{
+    font-size: 12px;
+  }
+}
+
+.over-flow-shadow{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: -1;
+}
+
+.menu-header{
+  border-bottom-left-radius:0 ;
+  border-bottom-right-radius:0 ;
+}
+.menu-body{
+  border-top-left-radius:0 ;
+  border-top-right-radius:0 ;
+}

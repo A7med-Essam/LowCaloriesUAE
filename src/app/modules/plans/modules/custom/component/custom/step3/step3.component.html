@@ -1,0 +1,592 @@
+<h4>{{"customPlan.step3.selectYourMeals" | translate}}</h4>
+<owl-carousel-o [options]="categoryOptions" ngClass="categories" *ngIf="categories.length > 0;else categories_skeleton">
+    <ng-container *ngFor="let category of categories; let i = index">
+        <ng-template carouselSlide >
+            <div class="item bg-white px-5 rounded-md py-3 font-weight-500"
+            [ngClass]="{'active': i == category_index}" (click)="toggleCategories($event, i)">
+            {{category?.name}}
+        </div>
+        </ng-template>
+    </ng-container>
+</owl-carousel-o>
+
+<owl-carousel-o [options]="MenuOptions" *ngIf="Meals.length > 0 || Snacks.length > 0;else meals_skeleton">
+    <ng-container>
+        <ng-container *ngFor="let Meal of Meals;let i = index">
+            <ng-template carouselSlide >
+                <div class="bg-white p-3 shadow rounded-md mx-3 text-start h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <img [src]="Meal?.image" class="img-fluid rounded-lg" alt="">
+                        <h5 class="txt-black mt-3">
+                            {{Meal?.name}}
+                        </h5>
+                        <input type="text" hidden [value]="Meal?.id" #MealId>
+                        <input type="text" hidden [value]="Meal?.type" #MealType>
+                    </div>
+                    <div class="text-muted">
+                        <p class="my-1">
+                            {{Meal?.description}}
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap flex-md-nowrap">
+                        <button class="btn bg-black text-white px-4 py-2 mt-2 w-100 me-2 font-weight-500" (click)="getDetails(MealId,MealType);isSorted=true;">
+                            {{"buttons.details" | translate}}
+                        </button>
+                        <button class="btn bg-main text-white px-4 py-2 mt-2 w-100 ms-2 font-weight-500" (click)="pickMeal(MealId,MealType, true)">
+                            {{"buttons.select" | translate}}
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </ng-container>
+    </ng-container>
+    <ng-container>
+        <ng-container *ngFor="let Meal of Snacks;let i = index">
+            <ng-template carouselSlide >
+                <div class="bg-white p-3 shadow rounded-md mx-3 text-start h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <img [src]="Meal?.image" class="img-fluid rounded-lg" alt="">
+                        <h5 class="txt-black mt-3">
+                            {{Meal?.name}}
+                        </h5>
+                        <input type="text" hidden [value]="Meal?.id" #MealId>
+                        <input type="text" hidden [value]="Meal?.type" #MealType>
+                    </div>
+                    <div class="text-muted">
+                        <p class="my-1">
+                            {{Meal?.description}}
+                        </p>
+                    </div>
+                    <div class="d-flex mt-3">
+                        <button class="btn bg-black text-white px-4 py-2 mt-2 me-2 w-50 font-weight-500" (click)="getDetails(MealId,MealType);isSorted=true;">
+                            {{"buttons.details" | translate}}
+                        </button>
+                        <button class="btn bg-main text-white px-4 py-2 mt-2 ms-2 w-50 font-weight-500" (click)="pickMeal(MealId,MealType, true)">
+                            {{"buttons.select" | translate}}
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </ng-container>
+    </ng-container>
+</owl-carousel-o>
+
+<div class="bg-white rounded-lg shadow-lg mx-3 p-4" *ngIf="CardsOfDates.length > 0 ;else selectedMeals_skeleton">
+        <h5 class="mb-2">{{"customPlan.step3.mealsSelected" | translate}}</h5>
+        <div class="row">
+            <div class="col-md-6 col-lg-4 col-xl-3 my-2 day-card" #MealsCard *ngFor="let card of CardsOfDates;let i = index;" [attr.card]="i">
+                <div class="bg-white rounded-lg shadow item px-3 py-2 meal_card">
+                    <div>
+                        <fa-icon [icon]="faCalendarAlt" class="txt-main"></fa-icon>
+                        <div><b>
+                            {{card?.day}}
+                            , </b> <span class="txt-font">{{card?.date}}</span></div>
+                    </div>
+                    <div class="mt-3">
+                        <h6>{{"customPlan.step3.meals" | translate}}</h6>
+                        <div class="d-flex flex-wrap">
+                            <img *ngFor="let meal of counter(meal_count);" #mealIcon 
+                            (click)="getSelectedIcon(mealIcon); OpenMealDetailsModal(mealIcon, 'meal');openRandomSelectionModal(mealIcon, 'meal')"
+                            src="../../../../../../../../assets//images/custom-plan/choose.png" 
+                            style="width: 50px;height: 50px;" class="pointer img-fluid mx-2 my-2 Meal_Icon" alt="" >
+                        </div>
+                    </div>
+                    <div class="mt-3" *ngIf="snack_count">
+                        <h6>{{"customPlan.step3.snacks" | translate}}</h6>
+                        <div class="d-flex flex-wrap">
+                            <img *ngFor="let snack of counter(snack_count)" #snackIcon 
+                            (click)="getSelectedIcon(snackIcon); OpenMealDetailsModal(snackIcon, 'snack');openRandomSelectionModal(snackIcon,'snack')"
+                            src="../../../../../../../../assets//images/custom-plan/choose.png" 
+                            style="width: 50px;height: 50px;" class="pointer img-fluid mx-2 my-2 Snack_Icon" alt="" >
+                        </div>
+                    </div>
+                    <div class="text-end mt-2 text-muted" #viewSelectedMeals>
+                        <fa-icon [icon]="faCheckCircle" class="me-1"></fa-icon>
+                        <u class="pointer" (click)="viewMealsPerCard(MealsCard, viewSelectedMeals);">
+                            <small>{{"customPlan.step3.viewSelectedMeals" | translate}}</small>
+                        </u>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+<ng-template #categories_skeleton>
+    <div class="row mx-0">
+        <div class="col-md-3 col-6">
+            <p-skeleton width="100%" height="3rem" styleClass="my-3"></p-skeleton>
+        </div>
+        <div class="col-md-3 col-6">
+            <p-skeleton width="100%" height="3rem" styleClass="my-3"></p-skeleton>
+        </div>
+        <div class="col-md-3 col-6">
+            <p-skeleton width="100%" height="3rem" styleClass="my-3"></p-skeleton>
+        </div>
+        <div class="col-md-3 col-6">
+            <p-skeleton width="100%" height="3rem" styleClass="my-3"></p-skeleton>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #meals_skeleton>
+    <div class="row mx-0">
+        <div class="col-lg-3 col-md-6">
+            <p-skeleton width="100%" height="25rem" styleClass="my-3"></p-skeleton>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <p-skeleton width="100%" height="25rem" styleClass="my-3"></p-skeleton>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <p-skeleton width="100%" height="25rem" styleClass="my-3"></p-skeleton>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <p-skeleton width="100%" height="25rem" styleClass="my-3"></p-skeleton>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #selectedMeals_skeleton>
+    <div class="bg-white rounded-lg shadow-lg mx-3 p-4">
+        <div class="row mx-0">
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+            <div class="col-md-3">
+                <p-skeleton width="100%" height="5rem" styleClass="my-3"></p-skeleton>
+            </div>
+
+
+        </div>
+    </div>
+</ng-template>
+
+<!-- display meal after selected -->
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="SelectedMealModal" *ngIf="SelectedMealModal" [transitionOptions]="'200ms'">
+    <div>
+        <div class="text-center">
+            <img [src]="MealDetails?.image" class="img-fluid mb-4 rounded-lg" alt="">
+            <h5 class="txt-main">
+                <!-- {{MealDetails_name?.[translate.currentLang] | titlecase}} -->
+                {{MealDetails?.name}}
+            </h5>
+            <span class="font-weight-600 txt-font">
+                <!-- {{MealDetails_desc?.[translate.currentLang] | titlecase}} -->
+                {{MealDetails?.description}}
+            </span>
+        </div>
+        <hr>
+        <div class="row text-center">
+            <div class="col-sm-6 border-end">
+                <h6 class="txt-main mb-3 ms-3">
+                <!-- {{MealDetails_mainName?.[translate.currentLang] | titlecase}} -->
+                {{MealDetails?.main_dish?.item}}
+                </h6>
+                <div class="qty d-flex align-items-center justify-content-center">
+                    <span class="minus" (click)="countDown(main_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'">-</span>
+                    <span class="minus" (click)="countDown(main_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() != 'gm'">-</span>
+                    <input type="number" class="count" name="qty" status="main" [attr.haveside]="MealDetails?.side_dish?true:false" disabled
+                    [min]="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'?50:1" 
+                    [value]="MealDetails?.main_dish?.user_max"
+                    [max]="MealDetails?.main_dish?.max"
+                    #main_dish_counter readonly>
+                    <span class="plus" (click)="countUp(main_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'">+</span>
+                    <span class="plus" (click)="countUp(main_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() != 'gm'">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        {{MealDetails?.main_dish?.unit}}
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-6" [class.d-none]="MealDetails?.side_dish == null">
+                <h6 class="txt-main mb-3 ms-3">
+                    <!-- {{MealDetails_sideName?.[translate.currentLang] | titlecase}} -->
+                    {{MealDetails?.side_dish?.item}}
+                </h6>
+                <div class="qty d-flex align-items-center justify-content-center">
+                    <span class="minus" (click)="countDown(side_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'">-</span>
+                    <span class="minus" (click)="countDown(side_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() != 'gm'">-</span>
+                    <input type="number" class="count" name="qty"  status="side" disabled
+                    [min]="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'?50:1" 
+                    [value]="MealDetails?.side_dish?.user_max"
+                    [max]="MealDetails?.side_dish?.max"
+                    #side_dish_counter readonly>
+                    <span class="plus" (click)="countUp(side_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'">+</span>
+                    <span class="plus" (click)="countUp(side_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() != 'gm'">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        {{MealDetails?.side_dish?.unit}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.calories" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.calories)?.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.fat" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.fat)?.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.protein" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.protein)?.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.carb" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.carb)?.toFixed(2)}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 d-flex">
+            <button  type="button" 
+            class="btn bg-danger rounded-pill text-white py-3 txt-font-bold f-size-md ms-3 w-50"
+            (click)="SelectedMealModal=false;deleteMeal(MealDetails?.UniqueId,MealDetails?.type)">{{"buttons.delete" | translate}}</button>
+            <button  type="button" 
+            class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md ms-3 w-50"
+            (click)="SelectedMealModal=false;onCloseModal(MealDetails)">
+            {{"buttons.confirm" | translate}}
+            </button>
+        </div>
+    </div>
+</p-dialog>
+
+<!-- MEAL CATEGORIES MODAL -->
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" *ngIf="toggleFlag_RandomSelectionModal_meal" (onHide)="close_RandomSelectionModal_meal()" [(visible)]="RandomSelectionModal_meal" [transitionOptions]="'200ms'">
+    <owl-carousel-o ngClass="categories" #carousel1 [options]="categoryOptions" >
+        <ng-container *ngFor="let category of categories; let i = index" >
+            <ng-template carouselSlide *ngIf="(category?.type)?.toLowerCase() == 'meal'">
+                <div class="item bg-white px-5 rounded-md py-3 font-weight-500"
+                [ngClass]="{'active': i == category_index}" (click)="toggleCategories($event, i);refreshCarousel(carousel2)">
+                    {{category?.name}}
+                </div>
+            </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+    
+    <owl-carousel-o [options]="MenuOptions" #carousel2>
+        <ng-container>
+            <ng-container *ngFor="let Meal of Meals;let i = index">
+                <ng-template carouselSlide >
+                    <div class="bg-white p-3 shadow rounded-md mx-3 text-start h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <img [src]="Meal?.image" class="img-fluid rounded-lg" alt="">
+                            <h5 class="txt-black mt-3">
+                                {{Meal?.name}}
+                            </h5>
+                            <input type="text" hidden [value]="Meal?.id" #MealId>
+                            <input type="text" hidden [value]="Meal?.type" #MealType>
+                        </div>
+                        <div class="text-muted">
+                            <p class="my-1">
+                                {{Meal?.description}}
+                            </p>
+                        </div>
+                        <div class="d-flex mt-3">
+                            <button class="btn bg-black text-white px-4 py-2 mt-2 me-2 w-50 font-weight-500" (click)="getDetails(MealId,MealType)">
+                                {{"buttons.details" | translate}}
+                            </button>
+                            <button class="btn bg-main text-white px-4 py-2 mt-2 ms-2 w-50 font-weight-500" (click)="pickMeal(MealId,MealType, false);RandomSelectionModal_meal=false;">
+                                {{"buttons.select" | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </ng-container>
+    </owl-carousel-o>
+</p-dialog>
+
+<!-- SNACK CATEGORIES MODAL -->
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" *ngIf="toggleFlag_RandomSelectionModal_snack" (onHide)="close_RandomSelectionModal_snack()"
+    (onShow)="show_RandomSelectionModal_snack()" [(visible)]="RandomSelectionModal_snack"  [transitionOptions]="'200ms'">
+    <owl-carousel-o ngClass="categories" #carousel3 [options]="categoryOptions" >
+        <ng-container *ngFor="let category of categories; let i = index" >
+            <ng-template carouselSlide *ngIf="(category?.type)?.toLowerCase() == 'snack'">
+                <div class="item bg-white px-5 rounded-md py-3 font-weight-500"
+                ngClass="active"
+                (click)="toggleCategories($event, i);refreshCarousel(carousel4)">
+                    {{category?.name}}
+                </div>
+            </ng-template>
+        </ng-container>
+    </owl-carousel-o>
+    
+    <owl-carousel-o [options]="MenuOptions" #carousel4>
+        <ng-container>
+            <ng-container *ngFor="let Meal of Snacks;let i = index">
+                <ng-template carouselSlide *ngIf="Snacks.length != 0">
+                    <div class="bg-white p-3 shadow rounded-md mx-3 text-start h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <img [src]="Meal?.image" class="img-fluid rounded-lg" alt="">
+                            <h5 class="txt-black mt-3">
+                                {{Meal?.name}}
+                            </h5>
+                            <input type="text" hidden [value]="Meal?.id" #MealId>
+                            <input type="text" hidden [value]="Meal?.type" #MealType>
+                        </div>
+                        <div class="text-muted">
+                            <p class="my-1">
+                                {{Meal?.description}}
+                            </p>
+                        </div>
+                        <div class="d-flex mt-3">
+                            <button class="btn bg-black text-white px-4 py-2 mt-2 me-2 w-50 font-weight-500" (click)="getDetails(MealId,MealType)">
+                                {{"buttons.details" | translate}}
+                            </button>
+                            <button class="btn bg-main text-white px-4 py-2 mt-2 ms-2 w-50 font-weight-500" (click)="pickMeal(MealId,MealType, false);RandomSelectionModal_snack=false;">
+                                {{"buttons.select" | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
+        </ng-container>
+    </owl-carousel-o>
+</p-dialog>
+
+<!-- Details Modal before select -->
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="DetailsModal" *ngIf="DetailsModal"  [transitionOptions]="'200ms'">
+    <div>
+        <div class="text-center">
+            <img [src]="MealDetails?.image" class="img-fluid mb-4 rounded-lg" alt="">
+            <input type="text" hidden [value]="MealDetails?.id" #MealId>
+            <input type="text" hidden [value]="MealDetails?.type" #MealType>
+            <h5 class="txt-main">
+                <!-- {{MealDetails_name?.[translate.currentLang] | titlecase}} -->
+                {{MealDetails?.name}}
+            </h5>
+            <span class="font-weight-600 txt-font">
+                <!-- {{MealDetails_desc?.[translate.currentLang] | titlecase}} -->
+                {{MealDetails?.description}}
+            </span>
+        </div>
+        <hr>
+        <div class="row text-center">
+            <div class="col-sm-6 border-end">
+                <h6 class="txt-main mb-3 ms-3">
+                    <!-- {{MealDetails_mainName?.[translate.currentLang] | titlecase}} -->
+                    {{MealDetails?.main_dish?.item}}
+                </h6>
+                <div class="qty d-flex align-items-center justify-content-center">
+                    <span class="minus" (click)="countDown(main_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'">-</span>
+                    <span class="minus" (click)="countDown(main_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() != 'gm'">-</span>
+                    <input type="number" class="count" name="qty" status="main" [attr.haveside]="MealDetails?.side_dish?true:false" disabled
+                    [min]="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'?50:1" 
+                    [value]="MealDetails?.main_dish?.user_max"
+                    [max]="MealDetails?.main_dish?.max"
+                    #main_dish_counter readonly>
+                    <span class="plus" (click)="countUp(main_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() == 'gm'">+</span>
+                    <span class="plus" (click)="countUp(main_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.main_dish?.unit)?.toLowerCase() != 'gm'">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        {{MealDetails?.main_dish?.unit}}
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-6" [class.d-none]="MealDetails?.side_dish == null">
+                <h6 class="txt-main mb-3 ms-3">
+                    <!-- {{MealDetails_sideName?.[translate.currentLang] | titlecase}} -->
+                    {{MealDetails?.side_dish?.item}}
+                </h6>
+                <div class="qty d-flex align-items-center justify-content-center">
+                    <span class="minus" (click)="countDown(side_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'">-</span>
+                    <span class="minus" (click)="countDown(side_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() != 'gm'">-</span>
+                    <input type="number" class="count" name="qty"  status="side" disabled
+                    [min]="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'?50:1" 
+                    [value]="MealDetails?.side_dish?.max"
+                    [max]="MealDetails?.side_dish?.max"
+                    #side_dish_counter readonly>
+                    <span class="plus" (click)="countUp(side_dish_counter,5);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() == 'gm'">+</span>
+                    <span class="plus" (click)="countUp(side_dish_counter,1);editNutrations(MealDetails, main_dish_counter, side_dish_counter)" *ngIf="(MealDetails?.side_dish?.unit)?.toLowerCase() != 'gm'">+</span>
+                    <span class="txt-main txt-font ms-2">
+                        {{MealDetails?.side_dish?.unit}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.calories" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.calories)?.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.fat" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.fat)?.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.protein" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.protein)?.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.carb" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.carb)?.toFixed(2)}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4" *ngIf="isSorted">
+            <button  type="button"
+            class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md w-100"
+            (click)="DetailsModal=false;pickMeal(MealId,MealType, true);isSorted=false;onCloseModal(MealDetails)">{{"buttons.select" | translate}}</button>
+        </div>
+        <div class="mt-4" *ngIf="!isSorted">
+            <button  type="button"
+            class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md w-100"
+            (click)="DetailsModal=false;pickMeal(MealId,MealType, false);RandomSelectionModal_meal=false;RandomSelectionModal_snack=false;onCloseModal(MealDetails)">{{"buttons.select" | translate}}</button>
+        </div>
+    </div>
+</p-dialog>
+
+<!-- VIEW SELECTED MEALS -->
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="viewSelectedMealsModal" *ngIf="viewSelectedMealsModal" ngClass="viewSelectedMeals" [transitionOptions]="'200ms'">
+    <div *ngIf="viewMeals.length > 0">
+        <h6 class="txt-main">{{"customPlan.step3.meals" | translate}}</h6>
+        <hr class="m-0" >
+        <owl-carousel-o [options]="MenuOptions" #carousel5>
+            <ng-container>
+                <ng-container *ngFor="let Meal of viewMeals;let i = index">
+                        <ng-template carouselSlide >
+                            <div class="bg-white p-3 shadow rounded-md mx-3 text-start h-100 d-flex flex-column justify-content-between my-4">
+                                <div class="text-center">
+                                    <img [src]="Meal?.image" class="img-fluid rounded-lg" alt="">
+                                    <h5 class="txt-black mt-3">
+                                        {{Meal?.name}}
+                                    </h5>
+                                    <input type="text" hidden [value]="Meal?.UniqueId" #MealId>
+                                    <input type="text" hidden [value]="Meal?.type" #MealType>
+                                </div>
+                                <div class="text-muted">
+                                    <p class="my-1">
+                                        {{Meal?.description}}
+                                    </p>
+                                </div>
+                                <button  type="button" class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md w-100"
+                                (click)="DetailsModal_ViewSelectedMeals=true;getDetails_ViewSelectedMeal(MealId,MealType)">{{"buttons.details" | translate}}</button>
+                            </div>
+                        </ng-template>
+                </ng-container>
+            </ng-container>
+        </owl-carousel-o>
+    </div>
+
+    <div *ngIf="viewSnacks.length > 0">
+        <h6  class="txt-main">{{"customPlan.step3.snacks" | translate}}</h6>
+        <hr class="m-0">
+        <owl-carousel-o [options]="MenuOptions" #carousel6 >
+            <ng-container >
+                <ng-container *ngFor="let Meal of viewSnacks;let i = index">
+                        <ng-template carouselSlide >
+                            <div class="bg-white p-3 shadow rounded-md mx-3 text-start h-100 d-flex flex-column justify-content-between my-4">
+                                <div class="text-center">
+                                    <img [src]="Meal?.image" class="img-fluid rounded-lg" alt="">
+                                    <h5 class="txt-black mt-3">
+                                        {{Meal?.name}}
+                                    </h5>
+                                    <input type="text" hidden [value]="Meal?.UniqueId" #MealId>
+                                    <input type="text" hidden [value]="Meal?.type" #MealType>
+                                </div>
+                                <div class="text-muted">
+                                    <p class="my-1">
+                                        {{Meal?.description}}
+                                    </p>
+                                </div>
+                                <button  type="button" class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md w-100"
+                                (click)="DetailsModal_ViewSelectedMeals=true;getDetails_ViewSelectedMeal(MealId,MealType)">{{"buttons.details" | translate}}</button>
+                            </div>
+                        </ng-template>
+                </ng-container>
+            </ng-container>
+        </owl-carousel-o>
+    </div>
+</p-dialog>
+
+<!-- VIEW SELECTED MEALS DETAILS -->
+<p-dialog [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="DetailsModal_ViewSelectedMeals" *ngIf="DetailsModal_ViewSelectedMeals" [transitionOptions]="'200ms'">
+    <div>
+        <div class="text-center">
+            <img [src]="MealDetails?.image" class="img-fluid mb-4 rounded-lg" alt="">
+            <input type="text" hidden [value]="MealDetails?.id" #MealId>
+            <input type="text" hidden [value]="MealDetails?.type" #MealType>
+            <h5 class="txt-main">
+                <!-- {{MealDetails_name?.[translate.currentLang] | titlecase}} -->
+                {{MealDetails?.name}}
+            </h5>
+            <span class="font-weight-600 txt-font">
+                <!-- {{MealDetails_desc?.[translate.currentLang] | titlecase}} -->
+                {{MealDetails?.description}}
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.calories" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.calories)?.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.fat" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.fat)?.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.protein" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.protein)?.toFixed(2)}}</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6 my-2 postion-relative">
+                <div class="content shadow-lg rounded-lg text-center pb-3 d-flex flex-column">
+                    <span class="text-white bg-main postion-absolute rounded-lg mb-2 font-weight-500 px-4 py-1 font-main f-size-xs top-0">{{"nutrition.carb" | translate}}</span>
+                    <span class="txt-font-bold">{{(MealDetails?.carb)?.toFixed(2)}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button  type="button" class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md w-100" (click)="DetailsModal_ViewSelectedMeals=false;">{{"buttons.close" | translate}}</button>
+        </div>
+    </div>
+</p-dialog>

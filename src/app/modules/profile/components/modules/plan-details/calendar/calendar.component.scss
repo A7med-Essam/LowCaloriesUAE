@@ -1,0 +1,143 @@
+@import '../../../../../../../assets/styles/variables/colors.scss';
+
+.subDay{
+    border-radius: 6px;
+    width: 110px;
+    margin: 0px;
+    cursor: pointer;
+}
+
+.delivered .subDay{
+    border-bottom: 7px solid $main;
+}
+
+.delivered .subDay .status{
+    background-image: url('../../../../../../../assets/images/profile/calendar/delivered.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 25px;
+    height: 15px;
+    position: relative;
+    margin-top: 13px;
+}
+
+.delivered .subDay .status:after{
+    content: 'Delivered';
+    position: absolute;
+    font-size: 14px;
+    top: -2px;
+    left: 28px;
+    color: $main;
+    font-family: "Lato Regular", sans-serif;
+}
+
+.hold .subDay .status{
+    background-image: url('../../../../../../../assets/images/profile/calendar/hold.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 25px;
+    height: 23px;
+    position: relative;
+}
+
+.hold .subDay .status:after{
+    content: 'Hold';
+    position: absolute;
+    font-size: 14px;
+    top: 3px;
+    left: 28px;
+    color: $muted;
+    font-family: "Lato Regular", sans-serif;
+}
+
+.off .subDay .status{
+    background-image: url('../../../../../../../assets/images/profile/calendar/off.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 20px;
+    height: 21px;
+    position: relative;
+}
+
+.off .subDay .status:after{
+    content: 'Off';
+    position: absolute;
+    font-size: 14px;
+    top: 0px;
+    left: 24px;
+    color: $danger;
+    font-family: "Lato Regular", sans-serif;
+}
+
+.preparing .subDay .status{
+    background-image: url('../../../../../../../assets/images/profile/calendar/preparing.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 18px;
+    height: 20px;
+    position: relative;
+}
+
+.preparing .subDay .status:after{
+    content: 'Preparing';
+    position: absolute;
+    font-size: 14px;
+    top: 1px;
+    left: 24px;
+    color: $black;
+    font-family: "Lato Regular", sans-serif;
+}
+
+.restricted .subDay .status{
+    background-image: url('../../../../../../../assets/images/profile/calendar/restricted.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 18px;
+    height: 18px;
+    position: relative;
+}
+
+.restricted .subDay .status:after{
+    content: 'Restricted';
+    position: absolute;
+    font-size: 14px;
+    top: -1px;
+    left: 23px;
+    color: $warning;
+    font-family: "Lato Regular", sans-serif;
+}
+
+.off .subDay{
+    border-bottom: 7px solid $danger;
+}
+
+.hold .subDay{
+    border-bottom: 7px solid $muted;
+}
+
+.preparing .subDay{
+    border-bottom: 7px solid $black;
+}
+
+.restricted .subDay{
+    border-bottom: 7px solid $warning;
+}
+
+
+// calendar
+// .table-calendar {
+//     border-collapse: collapse;
+//     width: 100%;
+// }
+
+// .table-calendar td, .table-calendar th {
+//     padding: 5px;
+//     border: 1px solid #e2e2e2;
+//     text-align: center;
+//     vertical-align: top;
+// }

@@ -1,0 +1,93 @@
+<section class="bg-img-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <h1 class="fa-4x">
+                    <span class="txt-main">
+                        {{ProgramDetails?.name}}
+                    </span>
+                </h1>
+                <p class="text-muted txt-font">
+                    {{"normalPlan.step1.desc" | translate}}
+                </p>
+                <form [formGroup]='ProgramDetailsForm' (ngSubmit)='onSubmit(ProgramDetailsForm)' class="mt-4" >
+                    <div class="row">
+                        <div class="col-12 my-2">
+                            <div class="mb-2"><label>{{"normalPlan.step1.numberOfDays" | translate}} <span class="text-danger">*</span></label></div>
+                            <p-dropdown [options]="ProgramDetails?.subscription_days!" formControlName='Number_of_Days'
+                            optionLabel="day_count" optionValue="day_count" placeholder='{{"normalPlan.step1.numberOfDays" | translate}}'></p-dropdown>
+                            <small class="text-danger " *ngIf="ProgramDetailsForm.get('Number_of_Days')?.touched &&
+                            ProgramDetailsForm.get('Number_of_Days')?.invalid">{{"errors.required" | translate}}</small>
+                        </div>
+                        <div class="col-12 my-2" *ngIf="ProgramDetails?.meal_types?.length != 0">
+                            <label>{{"normalPlan.step1.numberOfMeals" | translate}} <span class="text-danger">*</span></label>
+                            <div class="d-flex justify-content-start align-items-center txt-main mt-1 flex-wrap" #MealsType>
+                                <div *ngFor="let meal_type of ProgramDetails?.meal_types">
+                                    <input type="checkbox" [value]="meal_type?.meal_type_name" formControlName='Type_of_Meals' (click)="checkTypeOfMeals()"
+                                    class="mt-1" [id]="meal_type?.id" [name]="meal_type?.meal_name_backend"> 
+                                    <label class="me-4 ms-1" [for]="meal_type?.id">{{meal_type?.meal_type_name}}</label>
+                                </div>
+                            </div>
+                            <div>
+                                <small class="text-danger " *ngIf="ProgramDetailsForm.get('Type_of_Meals')?.touched &&
+                                ProgramDetailsForm.get('Type_of_Meals')?.invalid">{{"errors.minMeals" | translate}} {{ProgramDetails?.min_meals}}</small>
+                            </div>
+                        </div>
+                        <div class="col-12 my-2" *ngIf="ProgramDetails?.snack_types?.length != 0">
+                            <label>{{"normalPlan.step1.numberOfSnacks" | translate}}</label>
+                            <div class="d-flex justify-content-start align-items-center txt-main mt-1 flex-wrap" #SnacksType>
+                                <div *ngFor="let snack_type of ProgramDetails?.snack_types">
+                                    <input type="checkbox" [value]="snack_type?.id" formControlName='Type_of_Snacks'
+                                    class="mt-1" [id]="'Snack'+snack_type?.id" [name]="snack_type?.meal_name_backend"> 
+                                    <label class="me-4 ms-1" [for]="'Snack'+snack_type?.id">{{snack_type?.meal_type_name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 my-2" >
+                            <div class="mb-2"><label>{{"normalPlan.step1.startDate" | translate}} <span class="text-danger">*</span></label></div>
+                            <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true" (onSelect)="onSelectedDate($event,deliveredDays)" 
+                            placeholder="dd-mm-yy" formControlName='Start_Date' [minDate]="uaeDate" [disabledDays]="disabledDays"></p-calendar>
+                            <small class="text-danger" *ngIf="ProgramDetailsForm.get('Start_Date')?.touched &&
+                            ProgramDetailsForm.get('Start_Date')?.invalid">{{"errors.required" | translate}}</small>
+                        </div>
+                        <div class="col-12 my-2">
+                            <label>{{"normalPlan.step1.deliveryDays.title" | translate}} <span class="text-danger">*</span></label>
+                            <div><small><span class="text-muted">{{"normalPlan.step1.deliveryDays.desc" | translate}}</span></small></div>
+                            <div class="row mt-3 deliveredDays" #deliveredDays>
+                                <div class="col-md-3 col-6 col-xl-3 col-lg-4" *ngFor="let delivery_day of ProgramDetails?.delivery_days; let i = index">
+                                    <label class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md dayWeek" [for]="'day'+i"
+                                        [attr.day]="getDayNumber(delivery_day?.day_name)" #CurrentDay 
+                                        [attr.dayName]="delivery_day?.day_name" (click)="checkDeliveryDays(CurrentDay);">
+                                        {{deliveryNames[i][translate.currentLang] | titlecase}}
+                                    </label>
+                                    <input type="checkbox" hidden  formControlName='CheckDays' [id]="'day'+i">
+                                </div>
+                                <div class="col-md-3 col-6 col-xl-3 col-lg-4">
+                                    <label class="item w-100 shadow-lg me-3 my-2 ms-0 px-3 py-2 bg-white rounded-md allWeek" day="8" [for]="'day8'"
+                                    (click)="checkAllWeekBtn(AllWeek);" #AllWeek>{{"normalPlan.step1.allWeek" | translate}}</label>
+                                    <input type="checkbox" hidden  formControlName='CheckDays' [id]="'day8'">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 my-2">
+                            <button class="btn bg-main text-white w-100 font-weight-500" type="submit"
+                            [disabled]="ProgramDetailsForm.invalid">{{"normalPlan.step1.apply" | translate}}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-5 flex-center my-3">
+                <img [src]="ProgramDetails?.image" class="w-75" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<p-dialog [modal]="true" [(visible)]="displayDeliveryMsg" [style]="{width: '50vw'}">
+    <h6 class="txt-font text-center">
+        {{DeliveryMsg}}
+    </h6>
+    <hr>
+    <button type="button" class="btn bg-main rounded-pill w-100 text-white py-3 txt-font-bold f-size-md" (click)="displayDeliveryMsg=false"
+    data-bs-dismiss="modal">{{"buttons.confirm" | translate}}</button>
+</p-dialog>

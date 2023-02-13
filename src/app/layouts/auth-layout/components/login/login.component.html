@@ -1,0 +1,109 @@
+<section style="position: relative; z-index:99;">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <!-- <p-dropdown [options]="lang" [(ngModel)]="currentLang" (onChange)="changeLang(currentLang)" optionLabel="name" optionValue="code"></p-dropdown> -->
+                <p-dropdown [options]="lang" [(ngModel)]="currentLang" optionLabel="name"
+                    (onChange)="changeLang(currentLang.code)">
+                    <ng-template let-currentLang pTemplate="item">
+                        <div class="country-item d-flex justify-content-center align-items-center">
+                            <i class="fas fa-language me-1"></i>
+                            <div>{{currentLang.name}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="selectedItem">
+                        <div class="country-item country-item-value d-flex justify-content-center align-items-center"
+                            *ngIf="currentLang">
+                            <i class="fas fa-globe me-1"></i>
+                            <div>{{currentLang.name}}</div>
+                        </div>
+                    </ng-template>
+
+                </p-dropdown>
+            </div>
+        </nav>
+        <div class="row mt-3">
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <img src="../../../../../assets/images/logo/LC_LOGO (1).png" alt="" class="img-fluid pointer"
+                        routerLink="../../home">
+                </div>
+                <h1 class="my-4 text-center h2">
+                    <span class="txt-main">{{"Auth.login.title" | translate}}</span>
+                </h1>
+                <div class="text-center w-75 m-auto txt-font">
+                    <form [formGroup]='loginForm' (ngSubmit)='onSubmit(loginForm)'>
+                        <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" placeholder="{{'Auth.login.email' | translate}}"
+                                type="email" formControlName='email' />
+                            <fa-icon [icon]="faEnvelope" class="icon-controller txt-main position-left"></fa-icon>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
+                                    loginForm.get('email')?.hasError('email')">{{'errors.email' | translate}}</small>
+                                <small class="text-danger ms-1" *ngIf="loginForm.get('email')?.touched &&
+                                    loginForm.get('email')?.hasError('required')">{{'errors.required' |
+                                    translate}}</small>
+                            </div>
+                        </div>
+                        <div class="my-3 position-relative">
+                            <input class="p-3 form-controller" placeholder="{{'Auth.login.password' | translate}}"
+                                type="password" #PasswordInput formControlName='password' />
+                            <fa-icon [icon]="faLock" class="txt-main icon-controller position-left"></fa-icon>
+                            <fa-icon [icon]="faEye" class="txt-main icon-controller position-right"
+                                (click)="togglePassword(PasswordInput)"></fa-icon>
+                            <div class="text-start">
+                                <small class="text-danger ms-1" *ngIf="loginForm.get('password')?.touched &&
+                                    loginForm.get('password')?.hasError('required')">{{'errors.required' |
+                                    translate}}</small>
+                            </div>
+                        </div>
+                        <p class="txt-main my-0 text-end">
+                            <a [routerLink]="['../forgot-password']"
+                                class="text-reset text-decoration-none">{{'Auth.login.forgot' | translate}}</a>
+                        </p>
+                        <p class="txt-main mt-1 mb-4 text-start">
+                            <input type="checkbox" id="rememberMe"> <label class="mx-1"
+                                for="rememberMe">{{'Auth.login.remember' | translate}}</label>
+                        </p>
+                        <button class="btn bg-main text-white rounded-pill px-5 py-3 header-font f-size-md w-100"
+                            type="submit" [disabled]="loginForm.invalid">{{'Auth.login.login' | translate}}</button>
+                    </form>
+                </div>
+                <div class="text-center mt-4 txt-font">
+                    <p>{{'Auth.login.noAccount' | translate}} <a class="txt-main"
+                            [routerLink]="['../register']">{{'Auth.login.register' | translate}}</a></p>
+                    <p>{{'Auth.login.termsAgree' | translate}} <a class="txt-main pointer" data-bs-toggle="modal"
+                            (click)="getTerms()" data-bs-target="#TermsModal">{{'Auth.login.terms' | translate}}</a></p>
+                </div>
+            </div>
+            <div class="col-lg-6 flex-center my-3">
+                <img src="../../../../../assets/images/kisspng-hamburg.png" class="w-80" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <video autoplay muted loop id="myVideo">
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-veggie-salad-2446-large.mp4" type="video/mp4">
+</video> -->
+
+
+<!-- terms modal -->
+<div class="modal fade" id="TermsModal" tabindex="-1" aria-labelledby="TermsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div *ngFor="let term of terms">
+                    <h3 class="txt-main mb-4 text-center">{{term.header}}</h3>
+                    <div class="mb-4" [innerHTML]="term.description"></div>
+                </div>
+            </div>
+            <div class="modal-footer container">
+                <button type="button" class="btn bg-main rounded-pill w-100 text-white py-2 txt-font-bold f-size-md"
+                    data-bs-dismiss="modal">{{'terms.accept' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

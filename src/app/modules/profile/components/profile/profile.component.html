@@ -1,0 +1,91 @@
+<section class="bg-img-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                <div class="list bg-white rounded-lg shadow-lg position-relative text-center">
+                    <div>
+                        <img src="../../../../../assets/images/profile/Group 38953.png" class="img-fluid" alt="">
+                        <img [src]="user.image"
+                        #userImage class="img-fluid rounded-circle" id="profile-img" alt="">
+                        <img src="../../../../../assets/images/profile/camera.png" (click)="importImage(userImage)" class="img-fluid" id="edit-img" alt="">
+                    </div>
+                    <div class="mt-5">
+                        <h4 class="txt-main m-0">{{user.name}}</h4>
+                        <span class="txt-font-bold">{{user.email}}</span>
+                    </div>
+                    <div class="mt-4">
+                        <ul class="txt-font-bold">
+                            <li class="active p-3 pointer" #PersonalInfo (click)="toggleProfile(1,PersonalInfo);scrollToContent()" routerLink="../1">
+                                <img src="../../../../../assets/images/profile/person_white.png"
+                                src1="../../../../../assets/images/profile/person_white.png"
+                                src2="../../../../../assets/images/profile/person_green.png"
+                                class="img-fluid me-3 pointer" style="width: 18px;" alt=""> <span>{{"profile.personalInformation.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" #Plans (click)="toggleProfile(2,Plans);scrollToContent()" routerLink="../2">
+                                <img src="../../../../../assets/images/profile/plans_green.png"
+                                src1="../../../../../assets/images/profile/plans_white.png"
+                                src2="../../../../../assets/images/profile/plans_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.myPlans.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" #Addresses (click)="toggleProfile(3,Addresses);scrollToContent()" routerLink="../3">
+                                <img src="../../../../../assets/images/profile/location_green.png"
+                                src1="../../../../../assets/images/profile/location_white.png"
+                                src2="../../../../../assets/images/profile/location_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.myAddresses.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" #ChangePassword (click)="toggleProfile(4,ChangePassword);scrollToContent()" routerLink="../4">
+                                <img src="../../../../../assets/images/profile/lock_green.png"
+                                src1="../../../../../assets/images/profile/lock_white.png"
+                                src2="../../../../../assets/images/profile/lock_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.changePassword.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" #Menu (click)="toggleProfile(5,Menu);scrollToContent()" routerLink="../5">
+                                <img src="../../../../../assets/images/profile/menu_green.png"
+                                src1="../../../../../assets/images/profile/menu_white.png"
+                                src2="../../../../../assets/images/profile/menu_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.menu.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" #Chat (click)="toggleProfile(6,Chat);scrollToContent()" routerLink="../6">
+                                <img src="../../../../../assets/images/profile/chat_green.png"
+                                src1="../../../../../assets/images/profile/chat_white.png"
+                                src2="../../../../../assets/images/profile/chat_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> 
+                                <span>{{"profile.chatWithUs.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" #Ask (click)="toggleProfile(7,Ask);scrollToContent()" routerLink="../7">
+                                <img src="../../../../../assets/images/profile/ask_green.png"
+                                src1="../../../../../assets/images/profile/ask_white.png"
+                                src2="../../../../../assets/images/profile/ask_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.askUs.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" #Settings (click)="toggleProfile(8,Settings);scrollToContent()" routerLink="../8">
+                                <img src="../../../../../assets/images/profile/setting_green.png"
+                                src1="../../../../../assets/images/profile/setting_white.png"
+                                src2="../../../../../assets/images/profile/setting_green.png"
+                                class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.settings.title" | translate}}</span>
+                            </li>
+                            <li class="p-3 pointer" (click)="logout()">
+                                <img src="../../../../../assets/images/profile/power_green.png" class="img-fluid me-3 " style="width: 18px;" alt=""> <span>{{"profile.logOut" | translate}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8 col-md-7" #content>
+                <app-personal-information *ngIf="currIndex == 1"></app-personal-information>
+                <app-plans *ngIf="currIndex == 2"></app-plans>
+                <app-my-addresses *ngIf="currIndex == 3"></app-my-addresses>
+                <app-change-password *ngIf="currIndex == 4"></app-change-password>
+                <app-menu *ngIf="currIndex == 5"></app-menu>
+                <app-chat-with-us *ngIf="currIndex == 6"></app-chat-with-us>
+                <app-ask-us *ngIf="currIndex == 7"></app-ask-us>
+                <app-settings (Notifications)="getNotifications($event)" (Menu)="getMenu($event)" 
+                (Terms)="getTerms($event)" (Branches)="getBranches($event)" *ngIf="currIndex == 8"></app-settings>
+                <app-terms *ngIf="currIndex == 10"></app-terms>
+                <app-notifications *ngIf="currIndex == 11"></app-notifications>
+                <app-branches (branchId)="getBranchId($event)" (branchDetails)="getBranchDetails($event)" *ngIf="currIndex == 12"></app-branches>
+                <app-branch-details [branchId]="branchId" *ngIf="currIndex == 13"></app-branch-details>
+            </div>
+        </div>
+    </div>
+</section>

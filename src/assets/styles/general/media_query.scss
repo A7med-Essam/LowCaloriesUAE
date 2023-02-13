@@ -1,0 +1,17 @@
+@media all and (max-width: 1200px) {
+    .bg-img-main h1 {
+        font-size: 50px;
+    }
+}
+
+@media all and (max-width: 992px) {
+    .bg-img-main h1 {
+        font-size: 40px;
+    }
+}
+
+@media all and (max-width: 991px) {
+    .bg-img-main .icons {
+        margin: auto;
+    }
+}

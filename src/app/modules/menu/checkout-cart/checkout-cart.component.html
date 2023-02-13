@@ -1,0 +1,232 @@
+<section class="bg-img-main">
+    <div class="container">
+        <h1 class="fa-4x">
+            <span class="txt-main">{{"checkout.title" | translate}}</span>
+        </h1>
+        <div class="row mt-5">
+            <div class="col-lg-3 col-md-4 my-3">
+                <div class="item shadow-lg bg-white py-4 rounded-lg text-center h-100">
+                    <img src="../../../../assets/images/kisspng-hamburg.png" class="img-fluid w-50 mx-auto mb-3" alt="">
+                    <h6>{{"cart.type" | translate}}</h6>
+                    <!-- <div><small>{{"checkout.numberofMeals" | translate}}:</small>
+                        <span>
+                            1
+                        </span>
+                    </div>
+                    <div><small>{{"checkout.numberofDays" | translate}}:</small>
+                        <span>
+                            1
+                        </span>
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8 my-3">
+                <div class="item shadow-lg bg-white py-4 rounded-lg text-center h-100">
+                    <div class="container">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <img id="meal_img" src="../../../../assets/images/check-out/noun-gift-46445.png"
+                                class="img-fluid" alt="">
+                            <h5 class="txt-main mb-0 mx-2">{{"checkout.giftCode" | translate}}</h5>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-center mt-3 mb-4">
+                            <input type="text" class="form-control"
+                                placeholder='{{"checkout.enterGiftCode" | translate}}' #inputGiftCode>
+                            <button class="btn bg-main text-white px-5 ms-2 font-weight-500"
+                                (click)="applyGiftCode(inputGiftCode)">{{"buttons.apply" | translate}}</button>
+                        </div>
+                        <hr>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"checkout.total" | translate}}</span> <span
+                                    class="txt-main">{{shoppingCartPrice}} {{"currency" | translate}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"checkout.giftCodeApply" | translate}}</span> <span
+                                    class="txt-main">{{code_apply}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"checkout.bagPrice" | translate}}</span> <span
+                                    class="txt-main">{{bag_price}}</span>
+                            </div>
+                            <div class="d-flex justify-content-between my-3 font-weight-500">
+                                <span>{{"checkout.vat" | translate}}</span> <span class="txt-main">{{vat * 100}}%</span>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3 font-weight-500">
+                                <span>{{"checkout.grandTotal" | translate}}</span> <span
+                                    class="txt-main">{{total_price}}
+                                    {{"currency" | translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 my-3" *ngIf="!isLoggedIn">
+                <div class="item shadow-lg bg-white py-4 rounded-lg text-center">
+                    <div class="container">
+                        <div class="d-flex justify-content-between flex-wrap">
+                            <h5>{{"checkout.enterYourLocation" | translate}}</h5>
+                        </div>
+                        <form class="mt-4 text-start" [formGroup]='NewAddressForm'>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <p-dropdown [options]="delivery_days" formControlName='delivery_days'
+                                                placeholder='{{"cart.checkout.delivery_days" | translate}}'>
+                                            </p-dropdown>
+                                        </span>
+                                        <small class="text-danger" *ngIf="NewAddressForm.get('delivery_days')?.touched &&
+                                        NewAddressForm.get('delivery_days')?.invalid">{{"errors.required" |
+                                            translate}}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true"
+                                                formControlName='start_date' [minDate]="today">
+                                            </p-calendar>
+                                            <label for="float-input">{{"cart.checkout.start_date" | translate}}</label>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <input type="text" pInputText ngClass="w-100" formControlName='name'>
+                                            <label for="float-input">{{"userInfo.username" | translate}}</label>
+                                        </span>
+                                        <small class="text-danger" *ngIf="NewAddressForm.get('name')?.touched &&
+                                        NewAddressForm.get('name')?.invalid">{{"errors.required" | translate}}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <input type="text" pInputText ngClass="w-100" formControlName='email'>
+                                            <label for="float-input">{{"userInfo.email" | translate}}</label>
+                                        </span>
+                                        <small class="text-danger "
+                                            *ngIf="NewAddressForm.get('email')?.touched && NewAddressForm.get('email')?.hasError('required')">
+                                            {{"errors.required" | translate}}
+                                        </small>
+                                        <small class="text-danger "
+                                            *ngIf="NewAddressForm.get('email')?.touched && NewAddressForm.get('email')?.hasError('email')">
+                                            {{"errors.email" | translate}}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <input type="text" pInputText ngClass="w-100" formControlName='mobile'
+                                                maxlength="10"
+                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                                            <label for="float-input">{{"userInfo.mobile" | translate}}</label>
+                                        </span>
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1" *ngIf="NewAddressForm.get('mobile')?.touched &&
+                                            NewAddressForm.get('mobile')?.hasError('required')">{{"errors.required" |
+                                                translate}}</small>
+                                        </div>
+                                        <div class="text-start">
+                                            <small class="text-danger ms-1" *ngIf="NewAddressForm.get('mobile')?.touched &&
+                                            NewAddressForm.get('mobile')?.hasError('pattern')">{{"errors.mobile" |
+                                                translate}}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3 text-start">
+                                        <p-dropdown [options]="emirate" optionLabel="name" optionValue="id"
+                                            formControlName='emirate' placeholder='{{"location.emirate" | translate}}'
+                                            (ngModelChange)="getAreas($event)"></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3 text-start">
+                                        <p-dropdown [options]="Areas" optionLabel="area_en" optionValue="id"
+                                            placeholder='{{"location.area" | translate}}' formControlName='area_id'>
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <input type="text" pInputText ngClass="w-100" formControlName='address'>
+                                            <label for="float-input">{{"location.address" | translate}}</label>
+                                        </span>
+                                        <small class="text-danger " *ngIf="NewAddressForm.get('address')?.touched &&
+                                        NewAddressForm.get('address')?.invalid">{{"errors.required" |
+                                            translate}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <button class="btn bg-main text-white w-100" type="button"
+                                [disabled]="NewAddressForm.invalid" (click)="checkoutWithoutAuth(NewAddressForm)">
+                                {{"buttons.checkOut" | translate}}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 my-3" *ngIf="isLoggedIn">
+                <div class="item shadow-lg bg-white py-4 rounded-lg text-center">
+                    <div class="container">
+                        <div class="d-flex justify-content-between flex-wrap">
+                            <h5>{{"checkout.enterYourLocation" | translate}}</h5>
+                        </div>
+                        <form class="mt-4 text-start" [formGroup]='checkoutForm'>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <p-dropdown [options]="Addresses" formControlName='address_id'
+                                                optionLabel="address" optionValue="id"
+                                                placeholder='{{"profile.myAddresses.title" | translate}}'>
+                                            </p-dropdown>
+                                        </span>
+                                        <small class="text-danger" *ngIf="NewAddressForm.get('address_id')?.touched &&
+                                        NewAddressForm.get('address_id')?.invalid">
+                                            {{"errors.required" | translate}}
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <p-dropdown [options]="delivery_days" formControlName='delivery_days'
+                                                placeholder='{{"cart.checkout.delivery_days" | translate}}'>
+                                            </p-dropdown>
+                                        </span>
+                                        <small class="text-danger" *ngIf="checkoutForm.get('delivery_days')?.touched &&
+                                        checkoutForm.get('delivery_days')?.invalid">{{"errors.required" |
+                                            translate}}</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="my-3">
+                                        <span class="p-float-label">
+                                            <p-calendar dateFormat="dd-mm-yy DD" [showIcon]="true"
+                                                formControlName='start_date' [minDate]="today">
+                                            </p-calendar>
+                                            <label for="float-input">{{"cart.checkout.start_date" | translate}}</label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <button class="btn bg-main text-white w-100" type="button" [disabled]="checkoutForm.invalid"
+                                (click)="checkoutWithAuth(checkoutForm)">
+                                {{"buttons.checkOut" | translate}}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

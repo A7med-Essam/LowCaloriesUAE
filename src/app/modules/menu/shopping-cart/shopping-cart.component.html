@@ -1,0 +1,58 @@
+<section class="bg-img-main">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="fa-3x">
+                <span class="txt-main">{{"cart.title" | translate}}</span>
+            </h1>
+        </div>
+
+        <div *ngIf="shoppingCartItems.length;else other_content">
+            <div class="item bg-white row px-2 py-3 rounded-lg shadow-lg my-4"
+                *ngFor="let meal of shoppingCartItems; let i = index">
+                <div class="col-3 d-flex">
+                    <img [src]="meal?.image" alt="" class="img-fluid rounded-lg menuImage">
+                </div>
+                <div class="col-9 d-flex justify-content-between flex-column">
+                    <div class="content mt-xl-3 mt-md-0 mt-3">
+                        <h4>
+                            {{meal?.item}}
+                        </h4>
+                        <p class="text-muted">
+                            {{meal?.description}}
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="txt-main txt-font mx-3">
+                                <small>{{"nutrition.calories" | translate}} {{meal?.calories?.toFixed(2)}} -
+                                    {{"nutrition.fat" | translate}} {{meal?.fat?.toFixed(2)}} - {{"nutrition.protein" |
+                                    translate}} {{meal?.protein?.toFixed(2)}} - {{"nutrition.carb" | translate}}
+                                    {{meal?.carb?.toFixed(2)}}</small>
+                            </div>
+                            <div class="price mx-3" style="font-size: 20px;" *ngIf="meal.price > 0">
+                                <b>{{meal?.price}}{{"currency" | translate}}</b>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn bg-danger" *ngIf="isLoggedIn" (click)="removeFromCart(meal.cart_id)"><i
+                                    class="fa fa-trash text-white"></i></button>
+                            <button class="btn bg-danger" *ngIf="!isLoggedIn"
+                                (click)="removeFromCart_WithoutAuth(meal.id)"><i
+                                    class="fa fa-trash text-white"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn bg-main w-100" (click)="getCheckout()">
+                <span class="text-white">{{"buttons.checkOut" | translate}}</span>
+            </button>
+        </div>
+
+        <ng-template #other_content>
+            <div class="text-danger" style="height: 100vh;">
+                <span>{{"cart.empty" | translate}}</span>
+            </div>
+        </ng-template>
+
+    </div>
+</section>

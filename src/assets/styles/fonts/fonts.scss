@@ -1,0 +1,54 @@
+@font-face {
+    font-family: "Lato Black";
+    src: url("../../fonts/Small_texts/Lato-Black.ttf"), url("../../fonts/Small_texts/Lato-Black.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Lato Bold";
+    src: url("../../fonts/Small_texts/Lato-Bold.ttf"), url("../../fonts/Small_texts/Lato-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Lato Regular";
+    src: url("../../fonts/Small_texts/Lato-Regular_1.ttf"), url("../../fonts/Small_texts/Lato-Regular_1.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "HelveticaWorld";
+    src: url("../../fonts/Headers/HelveticaWorld-Bold.ttf"), url("../../fonts/Headers/HelveticaWorld-Bold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Cairo";
+    src: url("../../fonts/ar-font/Cairo-VariableFont_wght.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.header-font{
+    font-family: 'HelveticaWorld', sans-serif;
+}
+
+.txt-font{
+    font-family: 'Lato Regular', sans-serif;
+}
+
+.txt-font-bold{
+    font-family: 'Lato Bold', sans-serif;
+}
+
+.txt-font-Black{
+    font-family: 'Lato Bold', sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'HelveticaWorld', sans-serif;
+}

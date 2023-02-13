@@ -1,0 +1,26 @@
+<div>
+    <h4>{{ "customPlan.step1.desc" | translate }}</h4>
+    <div class="text-start mt-5">
+        <p class="h6 mt-4">{{ "customPlan.step1.numberofMeals" | translate }}</p>
+        <div class="qty">
+            <div class="mb-4"><label for="">{{ "customPlan.step1.maximum" | translate }}:{{max_meals?.value}}</label></div>
+            <span (click)="countDown(mealCount)" class="minus">-</span>
+            <input type="number" class="count meals" name="qty" value="0" readonly 
+            [max]="max_meals?.property == 'max_meals' ? max_meals?.value : 0" 
+            [min]="min_meals?.property == 'min_meals' ? min_meals?.value : 0" disabled #mealCount>
+            <span (click)="countUp(mealCount)" class="plus">+</span>
+        </div>
+    </div>
+    <div class="text-start mt-5">
+        <p class="h6 mt-4">{{ "customPlan.step1.numberofSnacks" | translate }}</p>
+        <div class="qty">
+            <div class="mb-4"><label for="">{{ "customPlan.step1.maximum" | translate }}:{{max_snacks?.value}}</label></div>
+            <span (click)="countDown(snackCount)" class="minus">-</span>
+            <input type="number" class="count snacks" name="qty" value="0" readonly 
+            [max]="max_snacks?.property == 'max_snacks' ? max_snacks?.value : 0" 
+            [min]="min_snacks?.property == 'min_snacks' ? min_snacks?.value : 0" disabled #snackCount>
+            <span (click)="countUp(snackCount)" class="plus">+</span>
+        </div>
+    </div>
+</div>
+

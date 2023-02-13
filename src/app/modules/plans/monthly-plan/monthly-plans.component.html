@@ -1,0 +1,58 @@
+<section class="bg-img-main monthlyPlans">
+    <div class="container" >
+        <div class="row">
+            <div class="col-lg-6">
+                <h1 class="fa-4x">
+                    <span class="txt-main">{{'monthlyPlans.title' | translate}}</span>
+                </h1>
+                <p class="text-muted txt-font">
+                    {{'monthlyPlans.desc' | translate}}
+                </p>
+
+                <div class="row icons" *ngIf="Layers.length > 0; else other_content">
+                        <div class="col-md-6 my-3" *ngFor="let Layer of Layers;let i = index">
+                                <div *ngIf="Layer?.id == 1" class="item shadow-lg bg-white py-4 rounded-lg text-center header-font" #PlanType [routerLink]="['../programs', Layer?.id]" 
+                                (mouseover)="hover(PlanType, '../../../../../assets/images/monthly-plans/lose_weight_white.png');" 
+                                (mouseout)="unhover(PlanType, '../../../../../assets/images/monthly-plans/lose_weight_green.png');">
+                                    <div class="flex-center flex-column h-100">
+                                        <img src="../../../../../assets/images/monthly-plans/lose_weight_green.png"  alt="">
+                                        <div class="pt-2">
+                                            {{LayerName[i][translate.currentLang] | titlecase}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="Layer?.id == 2" class="item shadow-lg bg-white py-4 rounded-lg text-center header-font" #PlanType [routerLink]="['../programs', Layer?.id]" 
+                                (mouseover)="hover(PlanType, '../../../../../assets/images/monthly-plans/muscle_white.png');" 
+                                (mouseout)="unhover(PlanType, '../../../../../assets/images/monthly-plans/muscle_green.png');">
+                                    <div class="flex-center flex-column h-100">
+                                        <img src="../../../../../assets/images/monthly-plans/muscle_green.png"  alt="">
+                                        <div class="pt-2">
+                                            {{LayerName[i][translate.currentLang] | titlecase}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="Layer.id > 2" class="item shadow-lg bg-white py-4 rounded-lg text-center header-font" #PlanType [routerLink]="['../programs', Layer?.id]" 
+                                (mouseover)="hover(PlanType, '../../../../../assets/images/monthly-plans/gain_weight_white.png');" 
+                                (mouseout)="unhover(PlanType, '../../../../../assets/images/monthly-plans/gain_weight_green.png');">
+                                    <div class="flex-center flex-column h-100">
+                                        <img src="../../../../../assets/images/monthly-plans/gain_weight_green.png"  alt="">
+                                        <div class="pt-2">
+                                            {{LayerName[i][translate.currentLang] | titlecase}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+                <ng-template #other_content>
+                    <div class="d-flex flex-wrap">
+                        <p-skeleton width="16rem" height="8rem" styleClass="m-3"></p-skeleton>
+                        <p-skeleton width="16rem" height="8rem" styleClass="m-3"></p-skeleton>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="col-lg-6 flex-center my-3">
+                <img src="../../../../../assets/images/kisspng-hamburg.png" class="w-80" alt="">
+            </div>
+        </div>
+    </div>
+</section>

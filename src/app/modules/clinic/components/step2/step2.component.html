@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="my-3" [ngClass]="{'col-12': !isSelectedDate,'col-xl-7': isSelectedDate}">
+        <p-calendar [inline]="true" [(ngModel)]="minDate" [defaultDate]="minDate" [minDate]="minDate" [maxDate]="maxDate" [disabledDates]="invalidDates" 
+        (onSelect)="getCurrentDate($event)"></p-calendar>
+    </div>
+    <div class="col-xl-5 my-3" *ngIf="isSelectedDate">
+        <div class="text-center shadow-lg rounded-lg bg-white p-3" id="Appointments">
+            <h5>{{"clinic.step2.availableAppointments" | translate}}</h5>
+            <h6 class="txt-main">{{SelectedAppointment[0]?.date}}</h6>
+            <div class="row my-3" *ngIf="SelectedAppointment[0]?.times?.length; else noTimes">
+                <div class="col-6 my-2" *ngFor="let time of SelectedAppointment[0]?.times">
+                    <div class="f-size-sm Dates text-center shadow rounded-lg bg-white p-3 font-weight-500"  
+                    (click)="toggleAppointments($event);getCurrentTime(time.id)">
+                        {{time?.time_from}} - {{time?.time_to}}
+                    </div>
+                </div>
+            </div>
+            <ng-template #noTimes>
+                <span>{{"clinic.step2.noTimes" | translate}}</span> <br>
+                <a href="https://api.whatsapp.com/send?phone={{mobile}}&text=*Clinic Reservation*%0AName: {{msg?.name}}%0AEmail: {{msg?.email}}%0AEmirate: {{msg?.emirate}}%0AMobile: {{msg?.mobile}}%0ADate: {{msg?.date}}%0ADay: {{msg?.day}}%0A"
+                target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp mr-2"></i> {{"clinic.step2.here" | translate}}</a>
+            </ng-template>
+        </div>
+    </div>
+    <div class="col-12" *ngIf="isSelectedDate">
+        <div class="text-start shadow-lg rounded-lg bg-white py-3">
+            <p class="h6 mb-3 mt-3 ms-4">
+                <i class="fa fa-user txt-main"></i>
+                {{"clinic.step2.members" | translate}}
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="ms-4">
+                    <div class="qty">
+                        <span (click)="countDown(people_count)" class="minus">-</span>
+                        <input type="number" class="count meals" name="qty" value="1" readonly min="1" [max]="SelectedAppointment[0]?.max_people" disabled #people_count>
+                        <span (click)="countUp(people_count)" class="plus">+</span>
+                    </div>
+                </div>
+                <h5 class="me-5 mt-2">
+                        <fa-icon [icon]="faClinicMedical"  class="txt-main"></fa-icon>
+                        {{"clinic.step2.inbodyPrice" | translate}} : <span class="txt-main">{{price}}</span>
+                </h5>
+            </div>
+        </div>
+    </div>
+</div>

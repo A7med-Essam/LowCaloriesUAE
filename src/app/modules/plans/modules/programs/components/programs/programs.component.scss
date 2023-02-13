@@ -1,0 +1,8 @@
+:host{
+    ::ng-deep .owl-item{
+        width: 300px !important;
+    }
+    ::ng-deep #AllPrograms .owl-item:first-child{
+        margin-left: 100px;
+    }
+}

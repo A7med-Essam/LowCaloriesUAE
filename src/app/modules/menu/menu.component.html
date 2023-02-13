@@ -1,0 +1,235 @@
+<section class="bg-img-main">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1 class="fa-3x">
+                <span class="txt-main">{{"menu.title" | translate}}</span>
+            </h1>
+            <h1 class="txt-main" (click)="goToShoppingCartPage()">
+                <i class="fa fa-cart-plus txt-main pointer"></i>
+                <span *ngIf="isLoggedIn" style="font-size: 20px;">{{cart.length}}</span>
+                <span *ngIf="!isLoggedIn" style="font-size: 20px;">{{cart_WithoutAuth.length}}</span>
+            </h1>
+        </div>
+        <owl-carousel-o [options]="Categories_customOptions" ngClass="categories"
+            *ngIf="ProgramMeals.length >0; else categories_skeleton">
+            <ng-container *ngFor="let category of ProgramMeals; let i = index">
+                <ng-template carouselSlide>
+                    <div class="item bg-white px-5 rounded-md py-3 font-weight-500" [ngClass]="{'active': i == 0}"
+                        (click)="toggleCategories($event,i)">
+                        {{category?.name}}
+                    </div>
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+
+        <div *ngIf="ProgramMeals.length > 0;else meals_skeleton">
+            <div class="item bg-white row px-2 py-3 rounded-lg shadow-lg my-4" [class.pointer]="!mobileMode"
+                *ngFor="let meal of ProgramMeals[category_index]?.meal_details; let i = index"
+                (click)="!mobileMode? getMealDetails(meal): '' ">
+                <div class="col-3 d-flex">
+                    <img [src]="meal?.image" alt="" class="img-fluid rounded-lg menuImage">
+                </div>
+                <div class="col-9 d-flex justify-content-between flex-column">
+                    <div class="content mt-xl-3 mt-md-0 mt-3">
+                        <h4>
+                            {{meal?.item}}
+                        </h4>
+                        <p class="text-muted" *ngIf="mobileMode">
+                            {{meal?.description}}
+                        </p>
+                        <p class="text-muted" *ngIf="!mobileMode">
+                            {{meal?.description | slice:0:30}}...
+                        </p>
+                    </div>
+                    <div *ngIf="mobileMode" class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="txt-main txt-font mx-3">
+                                <small>{{"nutrition.calories" | translate}} {{meal?.calories?.toFixed(2)}} -
+                                    {{"nutrition.fat" | translate}} {{meal?.fat?.toFixed(2)}} - {{"nutrition.protein" |
+                                    translate}} {{meal?.protein?.toFixed(2)}} - {{"nutrition.carb" | translate}}
+                                    {{meal?.carb?.toFixed(2)}}</small>
+                            </div>
+                            <div class="price mx-3" style="font-size: 20px;" *ngIf="meal.price > 0">
+                                <b>{{meal?.price}}{{"currency" | translate}}</b>
+                            </div>
+                            <div class="price d-flex flex-wrap" style="font-size: 20px;"
+                                *ngIf="meal?.price == 0 || (meal.price+'') == 'undefined'">
+                                <button class="btn bg-dark m-2"
+                                    (click)="getMealPrice(meal,ProgramMeals[category_index].hundred_gram)">
+                                    <b class="mx-3">
+                                        <span class="txt-main">100 {{"menu.gram" | translate}} :</span>
+                                        <span class="txt-main">
+                                            {{ProgramMeals[category_index].hundred_gram}} {{"currency" | translate}}
+                                        </span>
+                                    </b>
+                                    <i class="fa fa-cart-plus text-white"></i>
+                                </button>
+                                <button class="btn bg-dark m-2"
+                                    (click)="getMealPrice(meal,ProgramMeals[category_index].hundred_fifty_gram)">
+                                    <b class="mx-3">
+                                        <span class="txt-main">150 {{"menu.gram" | translate}} :</span>
+                                        <span class="txt-main">
+                                            {{ProgramMeals[category_index].hundred_fifty_gram}} {{"currency" |
+                                            translate}}
+                                        </span>
+                                    </b>
+                                    <i class="fa fa-cart-plus text-white"></i>
+                                </button>
+
+                                <button class="btn bg-dark m-2"
+                                    (click)="getMealPrice(meal,ProgramMeals[category_index].two_hundred_gram)">
+                                    <b class="mx-3">
+                                        <span class="txt-main">200 {{"menu.gram" | translate}} :</span>
+                                        <span class="txt-main">
+                                            {{ProgramMeals[category_index].two_hundred_gram}} {{"currency" |
+                                            translate}}
+                                        </span>
+                                    </b>
+                                    <i class="fa fa-cart-plus text-white"></i>
+                                </button>
+                                <!-- <b class="mx-3"><span>150 {{"menu.gram" | translate}}</span> : <span
+                                        class="txt-main">{{ProgramMeals[category_index]?.hundred_fifty_gram}}
+                                        {{"currency" | translate}}</span></b>
+                                <b class="mx-3"><span>200 {{"menu.gram" | translate}}</span> : <span
+                                        class="txt-main">{{ProgramMeals[category_index]?.two_hundred_gram}} {{"currency"
+                                        | translate}}</span></b> -->
+                            </div>
+                        </div>
+                        <div *ngIf="meal.price > 0">
+                            <button *ngIf="isLoggedIn" class="btn bg-main" (click)="addToCart(meal)"><i
+                                    class="fa fa-cart-plus text-white"></i></button>
+                            <button *ngIf="!isLoggedIn" class="btn bg-main" (click)="addToCartWithoutAuth(meal)"><i
+                                    class="fa fa-cart-plus text-white"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #categories_skeleton>
+            <div class="row mx-0">
+                <div class="col-md-3 col-6">
+                    <p-skeleton width="100%" height="3rem" styleClass="my-3"></p-skeleton>
+                </div>
+                <div class="col-md-3 col-6">
+                    <p-skeleton width="100%" height="3rem" styleClass="my-3"></p-skeleton>
+                </div>
+                <div class="col-md-3 col-6">
+                    <p-skeleton width="100%" height="3rem" styleClass="my-3"></p-skeleton>
+                </div>
+                <div class="col-md-3 col-6">
+                    <p-skeleton width="100%" height="3rem" styleClass="my-3"></p-skeleton>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #meals_skeleton>
+            <div class="row mx-0">
+                <div class="col-12">
+                    <p-skeleton width="100%" height="15rem" styleClass="my-3"></p-skeleton>
+                </div>
+                <div class="col-12">
+                    <p-skeleton width="100%" height="15rem" styleClass="my-3"></p-skeleton>
+                </div>
+                <div class="col-12">
+                    <p-skeleton width="100%" height="15rem" styleClass="my-3"></p-skeleton>
+                </div>
+                <div class="col-12">
+                    <p-skeleton width="100%" height="15rem" styleClass="my-3"></p-skeleton>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</section>
+
+<p-dialog [style]="{width: '90%'}" [modal]="true" [draggable]="false" [resizable]="false" [(visible)]="menuItemModal"
+    [transitionOptions]="'200ms'">
+    <div class="text-center" *ngIf="currentMeal">
+        <div class="row">
+            <div class="col-12 text-center">
+                <img [src]="currentMeal.image" alt="" class="img-fluid rounded-lg menuImage">
+            </div>
+            <div class="col-12 d-flex justify-content-between flex-column">
+                <div class="content mt-xl-3 mt-md-0 mt-3">
+                    <h4>
+                        {{currentMeal.item}}
+                    </h4>
+                    <i *ngIf="currentMeal.price > 0" class="fa fa-cart-plus txt-main pointer"
+                        (click)="addToCart(currentMeal)"></i>
+                    <p class="text-muted">
+                        {{currentMeal.description}}
+                    </p>
+                </div>
+                <div>
+                    <div class="txt-main txt-font mx-3">
+                        <small>
+                            {{"nutrition.calories" | translate}} {{currentMeal.calories.toFixed(2)}} -
+                            {{"nutrition.fat" | translate}} {{currentMeal.fat.toFixed(2)}} -
+                            {{"nutrition.protein" | translate}} {{currentMeal.protein.toFixed(2)}} -
+                            {{"nutrition.carb" | translate}} {{currentMeal.carb.toFixed(2)}}
+                        </small>
+                    </div>
+                    <div class="price mx-3" style="font-size: 20px;" *ngIf="currentMeal.price > 0">
+                        <b>{{currentMeal.price}}{{"currency" | translate}}</b>
+                    </div>
+                    <div class="price d-flex flex-wrap justify-content-center mt-3"
+                        *ngIf="currentMeal?.price == 0 || (currentMeal.price+'') == 'undefined'">
+                        <!-- <b class="mx-3">
+                            <span>100 {{"menu.gram" | translate}}</span> :
+                            <span class="txt-main">{{ProgramMeals[category_index].hundred_gram}} {{"currency" |
+                                translate}}</span>
+                        </b>
+                        <b class="mx-3">
+                            <span>150 {{"menu.gram" | translate}}</span> :
+                            <span class="txt-main">{{ProgramMeals[category_index].hundred_fifty_gram}} {{"currency" |
+                                translate}}</span>
+                        </b>
+                        <b class="mx-3">
+                            <span>200 {{"menu.gram" | translate}}</span> :
+                            <span class="txt-main">{{ProgramMeals[category_index].two_hundred_gram}} {{"currency" |
+                                translate}}</span>
+                        </b> -->
+                        <button class="btn bg-dark m-2"
+                            (click)="getMealPrice(currentMeal,ProgramMeals[category_index].hundred_gram)">
+                            <b class="mx-3">
+                                <span class="txt-main">100 {{"menu.gram" | translate}} :</span>
+                                <span class="txt-main">
+                                    {{ProgramMeals[category_index].hundred_gram}} {{"currency" | translate}}
+                                </span>
+                            </b>
+                            <i class="fa fa-cart-plus text-white"></i>
+                        </button>
+                        <button class="btn bg-dark m-2"
+                            (click)="getMealPrice(currentMeal,ProgramMeals[category_index].hundred_fifty_gram)">
+                            <b class="mx-3">
+                                <span class="txt-main">150 {{"menu.gram" | translate}} :</span>
+                                <span class="txt-main">
+                                    {{ProgramMeals[category_index].hundred_fifty_gram}} {{"currency" |
+                                    translate}}
+                                </span>
+                            </b>
+                            <i class="fa fa-cart-plus text-white"></i>
+                        </button>
+
+                        <button class="btn bg-dark m-2"
+                            (click)="getMealPrice(currentMeal,ProgramMeals[category_index].two_hundred_gram)">
+                            <b class="mx-3">
+                                <span class="txt-main">200 {{"menu.gram" | translate}} :</span>
+                                <span class="txt-main">
+                                    {{ProgramMeals[category_index].two_hundred_gram}} {{"currency" |
+                                    translate}}
+                                </span>
+                            </b>
+                            <i class="fa fa-cart-plus text-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4">
+        <button type="button" class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md w-100"
+            (click)="menuItemModal=false">{{"buttons.close" | translate}}</button>
+        <!-- <button class="btn bg-main rounded-pill text-white py-3 txt-font-bold f-size-md "><i class="fa fa-cart-plus text-white"></i></button> -->
+    </div>
+</p-dialog>

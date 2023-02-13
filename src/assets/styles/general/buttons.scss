@@ -1,0 +1,23 @@
+button.bg-main{
+    transition: $transitionTime;
+}
+
+button.bg-main:hover{
+    background-color: $black;
+    color: $main !important;
+}
+
+.login-btn:hover,
+.register-btn:hover {
+    background-color: #141a1f;
+    color: $main !important;
+}
+
+.register-btn,
+.login-btn {
+    transition: $transitionTime;
+}
+
+button:focus{
+    box-shadow: none !important;
+}

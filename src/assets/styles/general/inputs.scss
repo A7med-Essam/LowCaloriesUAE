@@ -1,0 +1,187 @@
+input,
+textarea,
+select {
+    box-shadow: none !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: $main !important;
+}
+
+input[type="radio"]:checked {
+    background-color: $main;
+    border: $main;
+}
+
+input[required]:valid+label {
+    display: none;
+}
+
+input[type=date]:required:invalid::-webkit-datetime-edit {
+    color: transparent;
+}
+
+input[type=date][value=""]:focus::-webkit-datetime-edit {
+    color: $black !important;
+}
+
+input[type=date]::-webkit-datetime-edit-day-field:focus,
+input[type=date]::-webkit-datetime-edit-month-field:focus,
+input[type=date]::-webkit-datetime-edit-year-field:focus {
+    background-color: $main !important;
+}
+
+// .select-lang{
+//     background-position: left 65%;
+//     border: 0px;
+//     padding: 0px 20px;
+//     background-image: url('../../images/step-1/download.jpg');
+//     background-size: 12px;
+//     width: 120px;
+// }
+
+input.form-controller{
+    border: none;
+    border-bottom: 1px solid $black;
+    outline: none;
+    text-align: center;
+    width: 100%;
+}
+
+input[type="checkbox"]{
+    accent-color: $main;
+}
+
+// Plans
+input[type="date"].plansDate {
+position: relative;
+border-width: 0.5px;
+}
+
+input[type="date"].plansDate::-webkit-calendar-picker-indicator {
+color: transparent;
+background: none;
+z-index: 1;
+}
+
+input[type="date"].plansDate:before {
+    color: transparent;
+    background: $main;
+    display: block;
+    font-family: "Font Awesome 5 Free";
+    content: '\f073';
+    width: 40px;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Counter
+input[name="qty"]{  
+    border: 0;
+    width: 2%;
+}
+
+.qty {
+    .count {
+        display: inline-block;
+        vertical-align: top;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 30px;
+        padding: 0 2px;
+        min-width: 70px;
+        min-height: 37px;
+        text-align: center;
+        margin: 0px 3px;
+        border: 1px solid $off-white;
+        }
+    .plus {
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: top;
+        color: $white;
+        width: 36px;
+        height: 36px;
+        font: 34px/1 Arial,sans-serif;
+        text-align: center;
+        background-color: $main;
+        }
+    .minus {
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: top;
+        color: $white;
+        width: 36px;
+        height: 36px;
+        font: 34px/1 Arial,sans-serif;
+        text-align: center;
+        background-clip: padding-box;
+        background-color: $main;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+}
+
+// dropdown 
+    .p-dropdown{
+        width: 100%;
+        transition: $transitionTime;
+        box-shadow: none !important;
+    }
+
+
+    .p-dropdown:not(.p-disabled).p-focus{
+        border: 1px solid $main;
+    }
+    
+    .p-dropdown:not(.p-disabled):hover{
+        border: 1px solid $main;
+    }
+
+    // // input text
+    .p-inputtext:not(.p-disabled):hover{
+        border-color: $main;
+    }
+
+// calendar (date input)
+    .p-calendar{
+        width: 100%;
+        position: relative;
+        border-width: 0.5px;
+        .p-inputtext:hover{
+            border: 1px solid $main;
+        }
+        .p-button{
+            background-color: $main !important; 
+            border-color: $main;
+            &:hover{
+                border-color: $main;
+            }
+        }
+        thead tr{
+            text-align: center;
+        }
+    }
+
+    // remove icons in input type number
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
