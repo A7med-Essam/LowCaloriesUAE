@@ -60,7 +60,7 @@ export class AuthInterceptor implements HttpInterceptor {
   checkToken(): Observable<IDefaultResponse> {
     // let token: number = this._SharedService.getFormData({token: this.token}) as number;
     // return this.http.post(environment.UrlEndPoint + 'checkToken', token)
-    return this._ApiService.postReq('checkToken', { token: this.token });
+    return this._ApiService.postReq('checkAEToken', { token: this.token });
   }
 
   intercept(

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ToastrService } from 'ngx-toastr';
@@ -33,6 +33,7 @@ export class ApiService {
   getReq(url: string, params?: HttpParams): Observable<any> {
     this.ngxService.start();
     return this.http.get(environment.BaseUrl + url, { params: params }).pipe(
+      retry(3),
       tap(
         (res: any) => {
           if (res.status == 1) {
@@ -87,6 +88,7 @@ export class ApiService {
     return this.http
       .post(environment.BaseUrl + url, body, { params: params })
       .pipe(
+        retry(3),
         tap(
           (res: any) => {
             if (res.status == 1) {
@@ -153,6 +155,7 @@ export class ApiService {
     return this.http
       .put(environment.BaseUrl + url, body, { params: params })
       .pipe(
+        retry(3),
         tap(
           (res: any) => {
             if (res.status == 1) {
@@ -209,6 +212,7 @@ export class ApiService {
       params: params,
     };
     return this.http.get(environment.BaseUrl + url, RequestOptions).pipe(
+      retry(3),
       tap(
         (res: any) => {
           if (res.status == 1) {
@@ -267,6 +271,7 @@ export class ApiService {
     return this.http
       .post(environment.BaseUrl + url, body, { params: params })
       .pipe(
+        retry(3),
         tap(
           (res: any) => {
             if (res.status == 1) {
