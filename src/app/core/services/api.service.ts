@@ -58,10 +58,14 @@ export class ApiService {
           this.ngxService.stop();
         },
         (err) => {
-          if (err.error.status == 20) {
-            this._ToastrService.warning(err.name, this.PleaseLogin, {
-              timeOut: 4000,
-            });
+          if (err.status == 401) {
+            this._ToastrService.warning(
+              err.error.error ? err.error.error : err.name,
+              this.Notification,
+              {
+                timeOut: 4000,
+              }
+            );
             localStorage.clear();
             setTimeout(() => {
               this._Router.navigate(['./auth/login']);
@@ -70,9 +74,13 @@ export class ApiService {
               }, 100);
             }, 1000);
           } else {
-            this._ToastrService.error(err.name, this.Notification, {
-              timeOut: 4000,
-            });
+            this._ToastrService.error(
+              err.error.error ? err.error.error : err.name,
+              this.Notification,
+              {
+                timeOut: 4000,
+              }
+            );
             setTimeout(() => {
               this._Router.navigate(['./home']);
             }, 1000);
@@ -118,13 +126,39 @@ export class ApiService {
             }
             this.ngxService.stop();
           },
+          // (err) => {
+          //   if (err.error.status == 20) {
+          //     this._ToastrService.warning(
+          //       err.name,
+          //       this._LocalService.getJsonValue('currentLang') == 'ar'
+          //         ? 'برجاء تسجيل الدخول'
+          //         : 'Please Login',
+          //       {
+          //         timeOut: 4000,
+          //       }
+          //     );
+          //     localStorage.clear();
+          //     setTimeout(() => {
+          //       this._Router.navigate(['./auth/login']);
+          //       setTimeout(() => {
+          //         location.reload();
+          //       }, 100);
+          //     }, 1000);
+          //   } else {
+          //     this._ToastrService.error(err.name, this.Notification, {
+          //       timeOut: 4000,
+          //     });
+          //     setTimeout(() => {
+          //       this._Router.navigate(['./home']);
+          //     }, 1000);
+          //   }
+          //   this.ngxService.stop();
+          // }
           (err) => {
-            if (err.error.status == 20) {
+            if (err.status == 401) {
               this._ToastrService.warning(
-                err.name,
-                this._LocalService.getJsonValue('currentLang') == 'ar'
-                  ? 'برجاء تسجيل الدخول'
-                  : 'Please Login',
+                err.error.error ? err.error.error : err.name,
+                this.Notification,
                 {
                   timeOut: 4000,
                 }
@@ -137,9 +171,13 @@ export class ApiService {
                 }, 100);
               }, 1000);
             } else {
-              this._ToastrService.error(err.name, this.Notification, {
-                timeOut: 4000,
-              });
+              this._ToastrService.error(
+                err.error.error ? err.error.error : err.name,
+                this.Notification,
+                {
+                  timeOut: 4000,
+                }
+              );
               setTimeout(() => {
                 this._Router.navigate(['./home']);
               }, 1000);
