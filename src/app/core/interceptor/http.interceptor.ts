@@ -49,7 +49,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 );
               }
               this._AuthService.logOut();
-              this._Router.navigate(['./home']);
+              this._Router.navigate(['./auth/login']);
             }
           });
         }, 1);
