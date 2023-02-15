@@ -20,7 +20,11 @@ import {
   ICheckOutPriceResponse,
   IEmirateResponse,
 } from 'src/app/shared/interfaces/HttpResponse';
-import { IArea, IEmirate } from 'src/app/shared/interfaces/location';
+import {
+  IArea,
+  ICreateAddress,
+  IEmirate,
+} from 'src/app/shared/interfaces/location';
 import { IMealDetails2 } from 'src/app/shared/interfaces/menu';
 import { IUserProfile_Address } from 'src/app/shared/interfaces/profile';
 import { LocalService } from 'src/app/shared/services/local.service';
@@ -43,10 +47,13 @@ export class CheckoutCartComponent implements OnInit {
   shoppingCartPrice: number = 0;
   total_price: number = 0;
   isLoggedIn: boolean = false;
+  createAddressModal: boolean = false;
   bag_price: number = 0;
   vat: number = 0.05;
   delivery_days: string[] = [];
+  AddressForm: FormGroup = new FormGroup({});
   today: Date = new Date();
+
   constructor(
     private _FormBuilder: FormBuilder,
     private _LocationService: LocationService,
@@ -69,26 +76,35 @@ export class CheckoutCartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setCreateAddressForm();
     this.setNewAddressForm();
     this.setCheckoutForm();
     this.shoppingCartItems = this._MenuService.shoppingCartItems.value;
     if (this.shoppingCartItems == null || !this.shoppingCartItems.length) {
       this._Router.navigate(['/home']);
+    } else {
+      this.getPrice();
+      this.get_vat_bagPrice();
     }
     if (this._LocalService.getJsonValue('userInfo') != null) {
       this.isLoggedIn = true;
-    } else {
-      this.getEmirates();
+      this.getAddresses();
     }
-    this.getPrice();
-    this.getAddresses();
-    this.get_vat_bagPrice();
+    this.getEmirates();
+  }
+
+  setCreateAddressForm() {
+    this.AddressForm = this._FormBuilder.group({
+      address: new FormControl(null, Validators.required),
+      area_id: new FormControl(null, Validators.required),
+      city_id: new FormControl(null, Validators.required),
+    });
   }
 
   getPrice() {
     let listOfPrices: number[] = [];
-    this.shoppingCartItems.forEach((e: IMealDetails2) => {
-      listOfPrices.push(e.price);
+    this.shoppingCartItems?.forEach((e: IMealDetails2) => {
+      listOfPrices.push(e.price * e.count);
     });
     this.shoppingCartPrice = this.total_price = listOfPrices.reduce(
       (a, b) => a + b
@@ -160,14 +176,21 @@ export class CheckoutCartComponent implements OnInit {
     return ids;
   }
 
+  getCartItems_WithoutAuth() {
+    let obj: any = {};
+    this.shoppingCartItems.forEach((e: any) => {
+      obj[e.id] = {
+        count: 1,
+        total_price: this.total_price,
+        unit: e.menu_unit,
+        gram_pcs_count: e.gram_pcs_count ? e.gram_pcs_count : 0,
+      };
+    });
+    return obj;
+  }
+
   // ********************* GiftCode ************
   applyGiftCode(GiftCodeInput: HTMLInputElement) {
-    // let giftCodeFormData: IGiftCode_menu = this._SharedService.getFormData({
-    //   code: GiftCodeInput?.value,
-    //   price: this.shoppingCartPrice,
-    //   item_ids: this.getCartItemsId(),
-    // }) as any as IGiftCode_menu;
-
     const code: IGiftCode_menu = {
       code: GiftCodeInput.value,
       price: this.shoppingCartPrice,
@@ -226,7 +249,7 @@ export class CheckoutCartComponent implements OnInit {
 
   checkoutWithoutAuth(form: FormGroup) {
     let receipt: IReceipt_WithoutAuth = {
-      item_ids: this.getCartItemsId(),
+      item_ids: this.getCartItems_WithoutAuth(),
       start_date: new Date(form.value.start_date)
         .toLocaleDateString('pt-br')
         .split('/')
@@ -244,7 +267,12 @@ export class CheckoutCartComponent implements OnInit {
     };
     this._MenuService.checkoutWithoutAuth(receipt).subscribe({
       next: (res) => {
-        window.location.href = res.data;
+        if (res.status == 1) {
+          // window.location.href = res.data;
+          console.log(res);
+        } else {
+          this._ToastrService.error(res.message, '', { timeOut: 3000 });
+        }
       },
     });
   }
@@ -276,5 +304,34 @@ export class CheckoutCartComponent implements OnInit {
           this.total_price = res.data.grand_total;
         },
       });
+  }
+
+  addNewAddress(data: FormGroup) {
+    if (data.valid) {
+      delete data.value.city_id;
+      let AddressData: ICreateAddress = this._SharedService.getFormData(
+        data.value
+      ) as any as ICreateAddress;
+      this._LocationService
+        .createAddress(AddressData)
+        .subscribe((res: IAddressResponse) => {
+          this.createAddressModal = false;
+          this.getAddresses();
+        });
+    } else {
+      if (this.translate.currentLang == 'ar') {
+        this._ToastrService.error(
+          'جميع المدخلات مطلوبة!',
+          'فشلت محاولة إنشاء عنوان جديد',
+          { timeOut: 4000 }
+        );
+      } else {
+        this._ToastrService.error(
+          'All inputs are required!',
+          'Create new address attempt failed',
+          { timeOut: 4000 }
+        );
+      }
+    }
   }
 }

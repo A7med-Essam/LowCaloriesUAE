@@ -55,7 +55,7 @@
                             <div class="price d-flex flex-wrap" style="font-size: 20px;"
                                 *ngIf="meal?.price == 0 || (meal.price+'') == 'undefined'">
                                 <button class="btn bg-dark m-2"
-                                    (click)="getMealPrice(meal,ProgramMeals[category_index].hundred_gram)">
+                                    (click)="getMealPrice(meal,ProgramMeals[category_index].hundred_gram,100)">
                                     <b class="mx-3">
                                         <span class="txt-main">100 {{"menu.gram" | translate}} :</span>
                                         <span class="txt-main">
@@ -65,7 +65,7 @@
                                     <i class="fa fa-cart-plus text-white"></i>
                                 </button>
                                 <button class="btn bg-dark m-2"
-                                    (click)="getMealPrice(meal,ProgramMeals[category_index].hundred_fifty_gram)">
+                                    (click)="getMealPrice(meal,ProgramMeals[category_index].hundred_fifty_gram,150)">
                                     <b class="mx-3">
                                         <span class="txt-main">150 {{"menu.gram" | translate}} :</span>
                                         <span class="txt-main">
@@ -77,7 +77,7 @@
                                 </button>
 
                                 <button class="btn bg-dark m-2"
-                                    (click)="getMealPrice(meal,ProgramMeals[category_index].two_hundred_gram)">
+                                    (click)="getMealPrice(meal,ProgramMeals[category_index].two_hundred_gram,200)">
                                     <b class="mx-3">
                                         <span class="txt-main">200 {{"menu.gram" | translate}} :</span>
                                         <span class="txt-main">
@@ -190,7 +190,7 @@
                                 translate}}</span>
                         </b> -->
                         <button class="btn bg-dark m-2"
-                            (click)="getMealPrice(currentMeal,ProgramMeals[category_index].hundred_gram)">
+                            (click)="getMealPrice(currentMeal,ProgramMeals[category_index].hundred_gram,100)">
                             <b class="mx-3">
                                 <span class="txt-main">100 {{"menu.gram" | translate}} :</span>
                                 <span class="txt-main">
@@ -200,7 +200,7 @@
                             <i class="fa fa-cart-plus text-white"></i>
                         </button>
                         <button class="btn bg-dark m-2"
-                            (click)="getMealPrice(currentMeal,ProgramMeals[category_index].hundred_fifty_gram)">
+                            (click)="getMealPrice(currentMeal,ProgramMeals[category_index].hundred_fifty_gram,150)">
                             <b class="mx-3">
                                 <span class="txt-main">150 {{"menu.gram" | translate}} :</span>
                                 <span class="txt-main">
@@ -212,7 +212,7 @@
                         </button>
 
                         <button class="btn bg-dark m-2"
-                            (click)="getMealPrice(currentMeal,ProgramMeals[category_index].two_hundred_gram)">
+                            (click)="getMealPrice(currentMeal,ProgramMeals[category_index].two_hundred_gram,200)">
                             <b class="mx-3">
                                 <span class="txt-main">200 {{"menu.gram" | translate}} :</span>
                                 <span class="txt-main">

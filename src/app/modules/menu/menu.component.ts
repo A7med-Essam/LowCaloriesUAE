@@ -107,12 +107,19 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  addToCart(meal: IMealDetails) {
+  addToCart(meal: IMealDetails, gram_count?: number) {
     if (!this.cart.find((m: ICart) => m.item_id == meal.id)) {
       const item = this.getShoppingCartItem(meal);
+      gram_count ? (item.gram_pcs_count = gram_count) : false;
       this._MenuService.addToShoppingCart(item).subscribe({
         next: (res) => {
-          this.getShoppingCart();
+          if (res.status == 1) {
+            this.getShoppingCart();
+          } else {
+            this._ToastrService.success(res.message, '', {
+              timeOut: 3000,
+            });
+          }
         },
       });
     } else {
@@ -123,9 +130,10 @@ export class MenuComponent implements OnInit {
   // Without Auth Shopping Cart
   cart_WithoutAuth: ICart[] = [];
 
-  addToCartWithoutAuth(meal: IMealDetails) {
+  addToCartWithoutAuth(meal: IMealDetails, gram_count?: number) {
     if (!this.cart_WithoutAuth.find((m: ICart) => m.item_id == meal.id)) {
       const item = this.getShoppingCartItem(meal);
+      gram_count ? (item.gram_pcs_count = gram_count) : false;
       this.cart_WithoutAuth.push(item);
       this.saveShoppingCartInSession();
       this.shoppingCart_SuccessNotify();
@@ -152,6 +160,8 @@ export class MenuComponent implements OnInit {
       count: 1,
       total_price: meal.price,
       item_id: meal.id,
+      unit: meal.menu_unit,
+      gram_pcs_count: meal.menu_unit == 'GM' ? 150 : 1,
     };
     return item;
   }
@@ -190,6 +200,10 @@ export class MenuComponent implements OnInit {
           if (meal.id == cart.item_id) {
             meal.cart_id = cart.id;
             meal.price = cart.total_price;
+            meal.count = cart.count;
+            cart.gram_pcs_count
+              ? (meal.gram_pcs_count = cart.gram_pcs_count)
+              : (meal.gram_pcs_count = null);
             myCart.push(meal);
           }
         });
@@ -213,7 +227,7 @@ export class MenuComponent implements OnInit {
   }
 
   // ********************
-  getMealPrice(meal: IMealDetails, price: number) {
+  getMealPrice(meal: IMealDetails, price: number, gram_count: number) {
     let CART_ITEM: IMealDetails = {
       calories: meal.calories,
       carb: meal.carb,
@@ -231,9 +245,9 @@ export class MenuComponent implements OnInit {
       price: price,
     };
     if (this.isLoggedIn) {
-      this.addToCart(CART_ITEM);
+      this.addToCart(CART_ITEM, gram_count);
     } else {
-      this.addToCartWithoutAuth(CART_ITEM);
+      this.addToCartWithoutAuth(CART_ITEM, gram_count);
     }
   }
 }

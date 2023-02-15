@@ -34,6 +34,8 @@ export interface ICart {
   created_at?: string;
   updated_at?: string;
   user_id?: number;
+  gram_pcs_count: number;
+  unit: string;
 }
 
 export interface IMealDetails2 {
@@ -52,4 +54,5 @@ export interface IMealDetails2 {
   protein: number;
   unit: number;
   cart_id: number;
+  count: number;
 }

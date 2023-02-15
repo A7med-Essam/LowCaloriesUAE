@@ -28,6 +28,10 @@ export class MenuService {
     return this._ApiService.postReq('removeFromCartAuth', { cart_item_id });
   }
 
+  updateShoppingCart(items: any): Observable<any> {
+    return this._ApiService.postReq('updateCartAuth', items);
+  }
+
   checkoutWithAuth(receipt: any): Observable<any> {
     return this._ApiService.postReq('checkOutCartAuth', receipt);
   }
