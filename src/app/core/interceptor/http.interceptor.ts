@@ -4,6 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpHeaders,
   // HttpClient
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -60,7 +61,10 @@ export class AuthInterceptor implements HttpInterceptor {
   checkToken(): Observable<IDefaultResponse> {
     // let token: number = this._SharedService.getFormData({token: this.token}) as number;
     // return this.http.post(environment.UrlEndPoint + 'checkToken', token)
-    return this._ApiService.postReq('checkToken', { token: this.token });
+    // return this._ApiService.postReq('checkToken', { token: this.token });
+    const HTTP_HEADER = new HttpHeaders().set('token', this.token);
+
+    return this._ApiService.post_withoutLoader('checkToken', '', HTTP_HEADER);
   }
 
   intercept(

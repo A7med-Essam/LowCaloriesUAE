@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap, retry } from 'rxjs/operators';
@@ -385,5 +385,65 @@ export class ApiService {
           }
         )
       );
+  }
+
+  post_withoutLoader(
+    url: string,
+    body: any,
+    headers?: HttpHeaders
+  ): Observable<any> {
+    return this.http.post(environment.BaseUrl + url, body, { headers }).pipe(
+      retry(3),
+      tap(
+        (res: any) => {
+          if (res.status == 20) {
+            this._ToastrService.warning(
+              res.message,
+              this._LocalService.getJsonValue('currentLang') == 'ar'
+                ? 'برجاء تسجيل الدخول'
+                : 'Please Login',
+              {
+                timeOut: 3000,
+              }
+            );
+            localStorage.clear();
+            setTimeout(() => {
+              this._Router.navigate(['./auth/login']);
+            }, 1000);
+          }
+        },
+        (err) => {
+          if (err.status == 401) {
+            this._ToastrService.warning(
+              err.name,
+              this._LocalService.getJsonValue('currentLang') == 'ar'
+                ? 'برجاء تسجيل الدخول'
+                : 'Please Login',
+              {
+                timeOut: 4000,
+              }
+            );
+            localStorage.clear();
+            setTimeout(() => {
+              this._Router.navigate(['./auth/login']);
+              // setTimeout(() => {
+              // location.reload();
+              // }, 100);
+            }, 1000);
+          } else {
+            setTimeout(() => {
+              this._Router.navigate(['./home']);
+            }, 1000);
+            this._ToastrService.error(
+              err.error.error ? err.error.error : err.name,
+              this.Notification,
+              {
+                timeOut: 3000,
+              }
+            );
+          }
+        }
+      )
+    );
   }
 }
