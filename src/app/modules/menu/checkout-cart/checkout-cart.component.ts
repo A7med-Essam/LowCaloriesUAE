@@ -268,8 +268,7 @@ export class CheckoutCartComponent implements OnInit {
     this._MenuService.checkoutWithoutAuth(receipt).subscribe({
       next: (res) => {
         if (res.status == 1) {
-          // window.location.href = res.data;
-          console.log(res);
+          window.location.href = res.data;
         } else {
           this._ToastrService.error(res.message, '', { timeOut: 3000 });
         }
