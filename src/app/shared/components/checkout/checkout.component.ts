@@ -149,6 +149,12 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     });
   }
 
+  toTitleCase(str: any) {
+    return str.replace(/\w\S*/g, function (txt: any) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
   getCustomCheckoutMeals() {
     const DATES = this._LocalService.getJsonValue('SubscriptionDates');
     const MEALS = this._LocalService.getJsonValue('ClientMeals');
@@ -159,8 +165,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
     DATES.forEach((e: any) => {
       list_days.push({
-        day: e.date,
-        date: e.day,
+        day: e.day,
+        date: e.date,
         meals: [],
       });
     });
@@ -177,6 +183,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
 
     list_days.forEach((e) => {
       e.meals.forEach((m: any) => {
+        m.type = this.toTitleCase(m.type);
         m.meal_id = m.id;
         m.main_unit = m?.main_dish?.unit;
         m.max_main = m?.main_dish?.user_max;
