@@ -1,3 +1,5 @@
+import { Ilist_days } from './customPlan';
+
 export interface ICustomCheckOut_WithAuth {
   subscription_days: number;
   program_id: number;
@@ -11,6 +13,7 @@ export interface ICustomCheckOut_WithAuth {
   area_id?: number;
   address?: number;
   subscription_from: string;
+  list_days: Ilist_days[];
 }
 
 export interface INormalCheckOut_WithAuth {
@@ -64,6 +67,7 @@ export interface ICustomCheckOut {
   address: string;
   landline: number;
   subscription_from: string;
+  list_days: Ilist_days[];
 }
 
 export interface IClinicCheckOutSubInfo {

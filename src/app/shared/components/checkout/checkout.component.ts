@@ -47,9 +47,10 @@ import {
 import { IArea, ICreateAddress, IEmirate } from '../../interfaces/location';
 import { IUserProfile_Address } from '../../interfaces/profile';
 import { ISubscriptionData_NormalPlan } from '../../interfaces/normalPlan';
-import { ISubscribtionDetails } from '../../interfaces/customPlan';
+import { Ilist_days, ISubscribtionDetails } from '../../interfaces/customPlan';
 import { TermsService } from '../../services/terms/terms.service';
 import { ITerms } from '../../interfaces/terms';
+import { LocalService } from '../../services/local.service';
 
 @Component({
   selector: 'app-checkout',
@@ -94,6 +95,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     private _LocationService: LocationService,
     private _ToastrService: ToastrService,
     private _FormBuilder: FormBuilder,
+    private _LocalService: LocalService,
     private _AuthService: AuthService,
     private _TermsService: TermsService,
     private _Router: Router,
@@ -145,6 +147,65 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
     this.SubscribtionData?.delivery_days.forEach((res: any) => {
       this.deliveryDays.push({ en: res, ar: this.getWeekDaysInAr(res) });
     });
+  }
+
+  getCustomCheckoutMeals() {
+    const DATES = this._LocalService.getJsonValue('SubscriptionDates');
+    const MEALS = this._LocalService.getJsonValue('ClientMeals');
+    const MEALS_PER_DAY =
+      Number(this.SubscribtionData.meal_count) +
+      Number(this.SubscribtionData.snack_count);
+    let list_days: Ilist_days[] = [];
+
+    DATES.forEach((e: any) => {
+      list_days.push({
+        day: e.date,
+        date: e.day,
+        meals: [],
+      });
+    });
+
+    for (let i = 0; i < list_days.length; i++) {
+      list_days[i].meals.push(
+        MEALS.slice(i * MEALS_PER_DAY, (i + 1) * MEALS_PER_DAY)
+      );
+    }
+
+    list_days.forEach((e) => {
+      e.meals = e.meals[0];
+    });
+
+    list_days.forEach((e) => {
+      e.meals.forEach((m: any) => {
+        m.meal_id = m.id;
+        m.main_unit = m?.main_dish?.unit;
+        m.max_main = m?.main_dish?.user_max;
+        m.side_unit =
+          m?.side_dish?.unit == undefined ? 'NONE' : m?.side_dish?.unit;
+        m.max_side =
+          m?.side_dish?.user_max == undefined ? 0 : m?.side_dish?.user_max;
+      });
+    });
+
+    list_days.forEach((e) => {
+      e.meals.forEach((m: any) => {
+        delete m.UniqueId;
+        delete m.calories;
+        delete m.carb;
+        delete m.description;
+        delete m.description_ar;
+        delete m.fat;
+        delete m.image;
+        delete m.name;
+        delete m.name_ar;
+        delete m.program_id;
+        delete m.protein;
+        delete m.main_dish;
+        delete m.side_dish;
+        delete m.id;
+      });
+    });
+    return list_days;
   }
 
   getWeekDaysInAr(day: string): string {
@@ -422,6 +483,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           subscription_from: 'web',
           meal_count: this.SubscribtionData.meal_count,
           snack_count: this.SubscribtionData.snack_count.length,
+          list_days: this.getCustomCheckoutMeals(),
         };
         this._CheckoutService
           .getCustomCheckOut_WithAuth(SubData)
@@ -466,6 +528,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           subscription_from: 'web',
           meal_count: this.SubscribtionData.meal_count,
           snack_count: this.SubscribtionData.snack_count.length,
+          list_days: this.getCustomCheckoutMeals(),
         };
         this._CheckoutService
           .getCustomCheckOut_WithAuth(SubData)
@@ -528,6 +591,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit {
           address: NewAddressForm.controls.address?.value,
           landline: NewAddressForm.controls.landline?.value,
           subscription_from: 'web',
+          list_days: this.getCustomCheckoutMeals(),
         };
         this._CheckoutService
           .getCustomCheckOut_WithOutAuth(SubData)
